@@ -28,3 +28,4 @@ _ReSharper*/
 *.userprefs
 /src/.vs/
 .idea/*
+.vs/*
