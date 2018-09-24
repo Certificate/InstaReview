@@ -10,7 +10,12 @@ using Autofac;
 
 namespace InstantReview.Droid
 {
-    [Activity(Label = "InstantReview", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    [Activity(
+        Label = "InstantReview", 
+        Icon = "@mipmap/icon", 
+        Theme = "@style/MainTheme.Splash", 
+        MainLauncher = true, 
+        ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         protected override void OnCreate(Bundle bundle)

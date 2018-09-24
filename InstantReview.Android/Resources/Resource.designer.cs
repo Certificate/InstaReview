@@ -4683,6 +4683,9 @@ namespace InstantReview.Droid
 			// aapt resource value: 0x7f0c0190
 			public const int MainTheme_Base = 2131493264;
 			
+			// aapt resource value: 0x7f0c0192
+			public const int MainTheme_Splash = 2131493266;
+			
 			// aapt resource value: 0x7f0c002d
 			public const int Platform_AppCompat = 2131492909;
 			
