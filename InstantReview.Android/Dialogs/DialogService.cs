@@ -17,7 +17,7 @@ namespace InstantReview.Droid.Dialogs
 
         public void showAlert(string text)
         {
-            AlertDialog.Builder alert = new AlertDialog.Builder(context, Resource.Style.AppCompatDialogStyle);
+            AlertDialog.Builder alert = new AlertDialog.Builder(context);
             alert.SetTitle(text);
             alert.SetMessage("General Kenobi!");
             alert.SetPositiveButton("Hello There!", (senderAlert, args) => {
