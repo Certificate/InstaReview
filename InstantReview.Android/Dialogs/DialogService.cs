@@ -11,20 +11,21 @@ namespace InstantReview.Droid.Dialogs
 {
     public class DialogService : IDialogService
     {
-        readonly Context appContext = Forms.Context;
-        
+
+        private readonly Context context = MainActivity.Instance;
+
 
         public void showAlert(string text)
         {
-            AlertDialog.Builder alert = new AlertDialog.Builder(appContext);
+            AlertDialog.Builder alert = new AlertDialog.Builder(context, Resource.Style.AppCompatDialogStyle);
             alert.SetTitle(text);
             alert.SetMessage("General Kenobi!");
             alert.SetPositiveButton("Hello There!", (senderAlert, args) => {
-                Toast.MakeText(appContext, "Fight!!", Short).Show();
+                Toast.MakeText(context, "Fight!!", Short).Show();
             });
 
             alert.SetNegativeButton("<do nothing>", (senderAlert, args) => {
-                Toast.MakeText(appContext, "You escaped!", Short).Show();
+                Toast.MakeText(context, "You escaped!", Short).Show();
             });
 
             Dialog dialog = alert.Create();
