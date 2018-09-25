@@ -24,6 +24,11 @@ namespace InstantReview
             MainPage = new MainPage(Container.Resolve<MainPageViewModel>());
         }
 
+        public App()
+        {
+            InitializeComponent();
+        }
+
         protected override void OnStart()
         {
             // Handle when your app starts

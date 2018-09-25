@@ -14,5 +14,10 @@ namespace InstantReview
             InitializeComponent();
             BindingContext = mainPage;
         }
+
+        public MainPage()
+        {
+            InitializeComponent();
+        }
     }
 }
