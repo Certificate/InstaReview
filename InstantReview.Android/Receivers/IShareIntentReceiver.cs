@@ -2,7 +2,7 @@ using System;
 
 namespace InstantReview.Droid.Receivers
 {
-    public struct IShareIntentReceiver
+    public interface IShareIntentReceiver
     {
         event EventHandler<EventArgs> ItemSentEvent;
     }

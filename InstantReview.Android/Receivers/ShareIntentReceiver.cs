@@ -3,21 +3,36 @@ using Android.Content;
 using Android.Hardware.Usb;
 using Android.Widget;
 using Common.Logging;
+using Xamarin.Forms;
 
 namespace InstantReview.Droid.Receivers
 {
-    public class ShareIntentReceiver : BroadcastReceiver
+    public class ShareIntentReceiver : IShareIntentReceiver
     {
         public event EventHandler<EventArgs> ItemSentEvent;
         private static readonly ILog Log = LogManager.GetLogger<ShareIntentReceiver>();
 
 
-        public override void OnReceive(Context context, Intent intent)
+        public void OnReceive(Context context, Intent intent)
         {
             Log.Debug($"Received an event: {intent}");
             if (intent.Action.Equals(Intent.ActionSend))
             {
-                Log.Debug("Event was caught successfully.");
+
+                var uriFromExtras = intent.GetParcelableExtra(Intent.ExtraStream) as Android.Net.Uri; 
+                var subject = intent.GetStringExtra(Intent.ExtraSubject);
+                
+                Log.Debug(uriFromExtras);
+                Log.Debug(subject);
+                
+                var image = new Image { Source = subject };
+                
+                
+                ItemSentEvent?.Invoke(this, EventArgs.Empty);
+            }
+            else if (intent.Action.Equals(Intent.ActionSendMultiple))
+            {
+                Log.Debug("Multiple pictures received!");
                 ItemSentEvent?.Invoke(this, EventArgs.Empty);
             }
         }

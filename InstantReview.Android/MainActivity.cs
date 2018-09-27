@@ -22,7 +22,7 @@ namespace InstantReview.Droid
         Theme = "@style/MainTheme.Splash", 
         MainLauncher = true, 
         ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
-    [IntentFilter(new[] { Android.Content.Intent.ActionSend })]
+    [IntentFilter(new[] { Intent.ActionSend }, Categories = new[] { Intent.CategoryDefault }, DataMimeType = @"image/*")]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         internal static MainActivity Instance { get; private set; }
@@ -32,7 +32,7 @@ namespace InstantReview.Droid
         static MainActivity()
         {
             LogManager.Adapter = new LogCatFactoryAdapter(
-                "MaintenanceTool", LogLevel.Debug, true, true, true, "yyyy-MM-dd HH:mm:ss.fff");
+                "InstaReview", LogLevel.Debug, true, true, true, "yyyy-MM-dd HH:mm:ss.fff");
         }
 
         protected override void OnCreate(Bundle bundle)
@@ -42,10 +42,13 @@ namespace InstantReview.Droid
             ToolbarResource = Resource.Layout.Toolbar;
             base.OnCreate(bundle);
             
-            
-            myReceiver = new ShareIntentReceiver();
             intentFilter = new IntentFilter(Intent.ActionSend);
-            RegisterReceiver(myReceiver, intentFilter);
+            myReceiver = new ShareIntentReceiver();
+            if (Intent.Action == Intent.ActionSend) 
+            { 
+                myReceiver.OnReceive(this, Intent);
+            }
+
 
             var builder = new ContainerBuilder();
 
