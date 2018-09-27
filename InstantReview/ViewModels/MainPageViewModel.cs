@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Windows.Input;
 using Xamarin.Forms;
-namespace InstantReview
+
+namespace InstantReview.ViewModels
 {
     public class MainPageViewModel
     {
