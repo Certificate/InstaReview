@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 using Common.Logging;
+using InstantReview.Receivers;
 using Xamarin.Forms;
 
 namespace InstantReview.ViewModels
@@ -10,10 +11,10 @@ namespace InstantReview.ViewModels
         private readonly IDialogService dialogService;
         private static readonly ILog Log = LogManager.GetLogger<MainPageViewModel>();
 
-        public MainPageViewModel(IDialogService dialogService)
+
+        public MainPageViewModel(IDialogService dialogService )
         {
             this.dialogService = dialogService;
-            Console.WriteLine("Started ButtonHandler class");
         }
 
 
@@ -23,5 +24,7 @@ namespace InstantReview.ViewModels
             Log.Debug("LogTest!");
             dialogService.showAlert("Encounter with a robot!");
         }
+
+
     }
 }

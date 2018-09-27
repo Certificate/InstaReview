@@ -17,7 +17,7 @@ using LogManager = Common.Logging.LogManager;
 namespace InstantReview.Droid
 {
     [Activity(
-        Label = "InstantReview", 
+        Label = "InstaReview", 
         Icon = "@mipmap/icon", 
         Theme = "@style/MainTheme.Splash", 
         MainLauncher = true, 
@@ -28,7 +28,8 @@ namespace InstantReview.Droid
         internal static MainActivity Instance { get; private set; }
         private ShareIntentReceiver myReceiver;
         private IntentFilter intentFilter;
-        
+        private ImageOperations imageOperations;
+
         static MainActivity()
         {
             LogManager.Adapter = new LogCatFactoryAdapter(
@@ -38,23 +39,21 @@ namespace InstantReview.Droid
         protected override void OnCreate(Bundle bundle)
         {
             Instance = this;
+
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
+
             base.OnCreate(bundle);
-            
+
             intentFilter = new IntentFilter(Intent.ActionSend);
             myReceiver = new ShareIntentReceiver();
-            if (Intent.Action == Intent.ActionSend) 
-            { 
-                myReceiver.OnReceive(this, Intent);
-            }
-
-
-            var builder = new ContainerBuilder();
-
+            imageOperations = new ImageOperations(myReceiver);
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
             LoadApplication(new App(ContainerCreator.CreateContainerBuilder(this)));
+
+            
+            myReceiver.OnReceive(this, Intent);
         }
     }
 }
