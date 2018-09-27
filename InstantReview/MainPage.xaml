@@ -3,39 +3,44 @@
 
 
     <StackLayout BackgroundColor="Gray">
-        
+
         <Label
-             LineBreakMode="WordWrap"
-             FontAttributes="Bold"
-             HorizontalOptions="Center" 
-             VerticalOptions="CenterAndExpand"
-             TextColor="Yellow"
-            Margin="15">
-        <Label.FontSize>
-          <OnPlatform x:TypeArguments="x:Double"
-                      iOS="100"
-                      Android="30" />
-        </Label.FontSize>
-        <Label.Text>
-          <OnPlatform x:TypeArguments="x:String"
+            LineBreakMode="WordWrap"
+            FontAttributes="Bold"
+            HorizontalOptions="Center" 
+            VerticalOptions="CenterAndExpand"
+            TextColor="Yellow"
+            Margin="15"
+            FontSize ="90">
+            <Label.Text>
+                <OnPlatform x:TypeArguments="x:String"
                       iOS="Hello World on iOS!"
                       Android="Hello World on Android" />
-        </Label.Text>
-      </Label>
-      <Label Text="This is the Project Work-app for Autumn 2018"
+            </Label.Text>
+        </Label>
+
+        <Label Text="This is the Project Work-app for Autumn 2018"
              LineBreakMode="WordWrap"
              FontAttributes="Bold"
              Margin="15, 15, 15, 15"
              HorizontalOptions="Center" 
              VerticalOptions="CenterAndExpand"
              TextColor="Yellow">
-             </Label>
-        
+        </Label>
+
+        <!--<Image>
+            <Image.Triggers>
+                <DataTrigger></DataTrigger>
+            </Image.Triggers>
+        </Image>-->
+
         <Button Text="Click me"
                 TextColor="Yellow"
                 HorizontalOptions="Center" 
                 VerticalOptions="CenterAndExpand"
                 WidthRequest="100"
                 Command="{Binding ButtonPressCommand}"></Button>
+
+        <Image></Image>
     </StackLayout>
 </ContentPage>
