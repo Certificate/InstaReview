@@ -1,7 +1,9 @@
 ﻿using System;
 
 using Android.App;
+using Android.Content;
 using Android.Content.PM;
+using Android.Hardware.Usb;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
@@ -9,6 +11,7 @@ using Android.OS;
 using Autofac;
 using Common.Logging;
 using InstantReview.Droid.Logging;
+using InstantReview.Droid.Receivers;
 using LogManager = Common.Logging.LogManager;
 
 namespace InstantReview.Droid
@@ -19,9 +22,12 @@ namespace InstantReview.Droid
         Theme = "@style/MainTheme.Splash", 
         MainLauncher = true, 
         ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    [IntentFilter(new[] { Android.Content.Intent.ActionSend })]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         internal static MainActivity Instance { get; private set; }
+        private ShareIntentReceiver myReceiver;
+        private IntentFilter intentFilter;
         
         static MainActivity()
         {
@@ -35,6 +41,11 @@ namespace InstantReview.Droid
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
             base.OnCreate(bundle);
+            
+            
+            myReceiver = new ShareIntentReceiver();
+            intentFilter = new IntentFilter(Intent.ActionSend);
+            RegisterReceiver(myReceiver, intentFilter);
 
             var builder = new ContainerBuilder();
 
