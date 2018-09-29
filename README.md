@@ -1,1 +1,1 @@
-Insta Review
+Insta Review - A reveiw collector tool
