@@ -1,1 +1,1 @@
-# ReviewCollector
+Insta Review
