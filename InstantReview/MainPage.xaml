@@ -2,14 +2,14 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:local="clr-namespace:InstantReview" x:Class="InstantReview.MainPage">
 
 
-    <StackLayout BackgroundColor="Gray">
+    <StackLayout BackgroundColor="FloralWhite">
 
         <Label
             LineBreakMode="WordWrap"
             FontAttributes="Bold"
             HorizontalOptions="Center" 
             VerticalOptions="CenterAndExpand"
-            TextColor="Yellow"
+            TextColor="Salmon"
             Margin="15"
             FontSize ="90">
             <Label.Text>
@@ -23,9 +23,10 @@
              LineBreakMode="WordWrap"
              FontAttributes="Bold"
              Margin="15, 15, 15, 15"
+             FontSize="26"
              HorizontalOptions="Center" 
              VerticalOptions="CenterAndExpand"
-             TextColor="Yellow">
+             TextColor="Salmon">
         </Label>
 
         <!--<Image>
