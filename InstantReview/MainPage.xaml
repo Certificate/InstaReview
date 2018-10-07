@@ -36,7 +36,7 @@
         </Image>-->
 
         <Button Text="Click me"
-                TextColor="Yellow"
+                TextColor="Black"
                 HorizontalOptions="Center" 
                 VerticalOptions="CenterAndExpand"
                 WidthRequest="100"
