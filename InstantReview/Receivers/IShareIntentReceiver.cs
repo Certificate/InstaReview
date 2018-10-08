@@ -7,6 +7,5 @@ namespace InstantReview.Receivers
     public interface IShareIntentReceiver
     {
         event EventHandler<EventArgs> ItemsReceivedEvent;
-        IList<Image> Images();
     }
 }

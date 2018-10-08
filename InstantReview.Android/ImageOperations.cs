@@ -23,8 +23,6 @@ namespace InstantReview.Droid
         private void OnItemsReceivedEvent(object sender, EventArgs e)
         {
             Log.Debug("Received event in ViewModel!");
-            reviewImage = intentReceiver.Images()[0];
-
         }
 
         

@@ -1,13 +1,17 @@
 using System;
 using System.Collections.Generic;
-using System.Runtime.Remoting.Messaging;
+using System.IO;
 using Android.Content;
-using Android.Hardware.Usb;
+using Android.Graphics;
 using Android.Widget;
 using Common.Logging;
 using InstantReview.Receivers;
+using Java.IO;
+using Java.Nio.Channels;
 using Xamarin.Forms;
-using Xamarin.Forms.Platform.Android;
+using Console = System.Console;
+using File = Java.IO.File;
+using FileNotFoundException = Java.IO.FileNotFoundException;
 
 namespace InstantReview.Droid.Receivers
 {
@@ -15,10 +19,6 @@ namespace InstantReview.Droid.Receivers
     {
         public event EventHandler<EventArgs> ItemsReceivedEvent;
         private static readonly ILog Log = LogManager.GetLogger<ShareIntentReceiver>();
-        private IList<Image> images { get; }
-
-
-        public IList<Image> Images() => images;
 
         public void OnReceive(Context context, Intent intent)
         {
@@ -26,27 +26,23 @@ namespace InstantReview.Droid.Receivers
             if (intent.Action.Equals(Intent.ActionSend))
             {
                 Log.Debug("Action directed to ACTION_SEND");
-                var uriFromExtras = intent.GetParcelableExtra(Intent.ExtraStream) as Android.Net.Uri; 
-                var subject = intent.GetStringExtra(Intent.ExtraSubject);
-                var file = intent.ClipData.GetItemAt(0);
+                
+                var uri = (Android.Net.Uri) intent.GetParcelableExtra(Intent.ExtraStream);
 
-
-                // Open a stream from the URI 
-                var dataStream = context.ContentResolver.OpenInputStream(file.Uri);
-
-                // Save it over 
-                var memOfPdf = new System.IO.MemoryStream();
-                dataStream.CopyTo(memOfPdf);
-                var docsPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
-                var filePath = System.IO.Path.Combine(docsPath, "temp.jpg");
-
-                System.IO.File.WriteAllBytes(filePath, memOfPdf.ToArray());
-
-                var image = new Image { Source = filePath };
-                //images.Add(image);
-
-                Toast.MakeText(context, "Image Received", ToastLength.Short).Show();
-                ItemsReceivedEvent?.Invoke(this, EventArgs.Empty);
+                if (uri != null)
+                {
+                    try
+                    {
+                        ExportBitmapAsPNG(GetBitmap(uri));
+                    }
+                    catch (Exception e)
+                    {
+                        Log.Error(e);
+                    }
+                    
+                    Toast.MakeText(context, "Image Received", ToastLength.Short).Show();
+                    ItemsReceivedEvent?.Invoke(this, EventArgs.Empty);
+                }
             }
             else if (intent.Action.Equals(Intent.ActionSendMultiple))
             {
@@ -54,7 +50,22 @@ namespace InstantReview.Droid.Receivers
                 ItemsReceivedEvent?.Invoke(this, EventArgs.Empty);
             }
         }
-
+        
+        private Android.Graphics.Bitmap GetBitmap(Android.Net.Uri uriImage)
+        {
+            Android.Graphics.Bitmap mBitmap = null;
+            mBitmap = Android.Provider.MediaStore.Images.Media.GetBitmap(MainActivity.Instance.ContentResolver, uriImage);
+            return mBitmap;
+        }
+        
+        void ExportBitmapAsPNG(Bitmap bitmap)
+        {
+            var path = MainActivity.Instance.GetExternalFilesDir(null).AbsolutePath;
+            var filePath = System.IO.Path.Combine(path, "example.png");
+            var stream = new FileStream(filePath, FileMode.Create);
+            bitmap.Compress(Bitmap.CompressFormat.Png, 100, stream);
+            stream.Close();
+        }
 
     }
 }
