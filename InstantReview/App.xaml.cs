@@ -23,6 +23,7 @@ namespace InstantReview
             Container = CreateContainer(containerBuilder);
 
             MainPage = new MainPage(Container.Resolve<MainPageViewModel>());
+            //MainPage = new LogInUI();
         }
 
         public App()
