@@ -2,19 +2,77 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="InstantReview.LogInUI">
-    
-    <ContentPage.Content>
 
-        <RelativeLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" 
-                   
-                RelativeLayout.XConstraint="{ConstraintExpression
-                Type=RelativeToParent,
-                Property=Width,
-                Factor= 0.5}" />
-        </RelativeLayout>
-       
-    </ContentPage.Content>
+	<ContentPage.Content>
+
+		<RelativeLayout>
+
+			<BoxView x:Name ="boxView"
+               
+               RelativeLayout.WidthConstraint = "{ConstraintExpression
+               Type = RelativeToParent,
+               Property = Width,
+               Factor = 1}"
+        
+               RelativeLayout.HeightConstraint ="{ConstraintExpression
+               Type = RelativeToParent,
+               Property = Height,
+               Factor = 0.3}">
+
+			</BoxView>
+
+			<StackLayout
+               RelativeLayout.WidthConstraint = "{ConstraintExpression
+               Type = RelativeToParent,
+               Property = Width,
+               Factor = 1}"
+        
+               RelativeLayout.YConstraint ="{ConstraintExpression
+               Type = RelativeToView,
+               ElementName = boxView,
+               Property = Height,
+               Factor = 0.65}">
+
+				<Label Text ="InstaReview" HorizontalOptions ="Center" VerticalOptions ="End" FontSize ="40"/>
+
+			</StackLayout>
+
+			<StackLayout
+                RelativeLayout.WidthConstraint = "{ConstraintExpression
+                Type = RelativeToParent,
+                Property = Width,
+                Factor = 1}"
+        
+                RelativeLayout.YConstraint ="{ConstraintExpression
+                Type = RelativeToView,
+                ElementName = boxView,
+                Property = Height,
+                Factor = 1,
+                Constant = 50}">
+
+				<Entry Keyboard ="Email" Placeholder ="Email"></Entry>
+				<Entry IsPassword ="True" Placeholder ="Password"></Entry>
+				<Button Text ="Sign in" HorizontalOptions ="End"></Button>
+
+			</StackLayout>
+
+			<StackLayout
+                RelativeLayout.WidthConstraint = "{ConstraintExpression
+                Type = RelativeToParent,
+                Property = Width,
+                Factor = 1}"
+        
+                RelativeLayout.YConstraint ="{ConstraintExpression
+                Type = RelativeToParent,
+                Property = Height,
+                Factor = .90}">
+				<Button Text ="Don't have an account?" HorizontalOptions ="Center"></Button>
+
+
+			</StackLayout>
+
+		</RelativeLayout>
+
+	</ContentPage.Content>
+
 </ContentPage>
