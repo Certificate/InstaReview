@@ -12,7 +12,6 @@ namespace InstantReview.Droid
         private static readonly ILog Log = LogManager.GetLogger<MainPageViewModel>();
         private IShareIntentReceiver intentReceiver;
 
-        private Image reviewImage;
 
         public ImageOperations(IShareIntentReceiver intentReceiver)
         {
