@@ -24,15 +24,16 @@ namespace InstantReview
         public App(ContainerBuilder containerBuilder)
         {
             InitializeComponent();
+            
 
             navigationPage = CreateNavigationPage();
+
+            Container = CreateContainer(containerBuilder);
 
             navigationPage.PushAsync(CreateMainPage());
             masterDetailPage = CreateMasterDetailPage(navigationPage);
             MainPage = masterDetailPage;
 
-
-            Container = CreateContainer(containerBuilder);
         }
 
         private MasterDetailPage CreateMasterDetailPage(Page detailPage)
@@ -58,8 +59,8 @@ namespace InstantReview
         {
             var page = new NavigationPage()
             {
-                BarBackgroundColor = Color.AntiqueWhite,
-                BarTextColor = Color.DarkSalmon
+                BarBackgroundColor = Color.Salmon,
+                BarTextColor = Color.Black,
             };
 
             Navigation = page.Navigation;
@@ -84,7 +85,7 @@ namespace InstantReview
 
         private IContainer CreateContainer(ContainerBuilder builder)
         {
-            builder.RegisterModule<ModuleRegistry>();
+            builder.RegisterModule<UiModule>();
 
             builder.RegisterInstance(Navigation).As<INavigation>();
             builder.RegisterInstance(this).As<IContainerResolver>();

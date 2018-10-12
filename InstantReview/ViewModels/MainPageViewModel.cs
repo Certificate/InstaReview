@@ -2,6 +2,7 @@
 using System.Windows.Input;
 using Common.Logging;
 using InstantReview.Receivers;
+using InstantReview.Views;
 using Xamarin.Forms;
 
 namespace InstantReview.ViewModels
@@ -9,22 +10,33 @@ namespace InstantReview.ViewModels
     public class MainPageViewModel
     {
         private readonly IDialogService dialogService;
+        private readonly INavigation navigation;
+        private readonly IPageFactory pageFactory;
+        private readonly IReviewPageViewModel reviewPageViewModel;
         private static readonly ILog Log = LogManager.GetLogger<MainPageViewModel>();
 
 
-        public MainPageViewModel(IDialogService dialogService )
+        public MainPageViewModel(
+            IDialogService dialogService, 
+            INavigation navigation, 
+            IPageFactory pageFactory, IReviewPageViewModel reviewPageViewModel)
         {
             this.dialogService = dialogService;
+            this.navigation = navigation;
+            this.pageFactory = pageFactory;
+            this.reviewPageViewModel = reviewPageViewModel;
         }
 
+        public ICommand NewReviewCommand => new Command(NavigateToReviewPage);
 
-        public ICommand ButtonPressCommand => new Command(ClickButton);
-
-        private void ClickButton(){
-            Log.Debug("LogTest!");
-            dialogService.showAlert("Encounter with a robot!");
+        private async void NavigateToReviewPage(){
+            Log.Debug("Navigating to Reviews!");
+            await navigation.PushAsyncSingle(CreateReviewPage());
         }
 
-
+        private Page CreateReviewPage()
+        {
+            return pageFactory.CreatePage<ReviewPage, IReviewPageViewModel>(reviewPageViewModel);
+        }
     }
 }
