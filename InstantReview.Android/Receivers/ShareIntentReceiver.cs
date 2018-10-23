@@ -20,6 +20,8 @@ namespace InstantReview.Droid.Receivers
         public event EventHandler<EventArgs> ItemsReceivedEvent;
         private static readonly ILog Log = LogManager.GetLogger<ShareIntentReceiver>();
 
+        public Image UserImage { get; set; }
+
         public void OnReceive(Context context, Intent intent)
         {
             Log.Debug($"Received an event: {intent}");
@@ -33,7 +35,7 @@ namespace InstantReview.Droid.Receivers
                 {
                     try
                     {
-                        ExportBitmapAsPNG(GetBitmap(uri));
+                        UserImage = GenerateImage(GetBitmap(uri));
                     }
                     catch (Exception e)
                     {
@@ -51,21 +53,26 @@ namespace InstantReview.Droid.Receivers
             }
         }
         
-        private Android.Graphics.Bitmap GetBitmap(Android.Net.Uri uriImage)
+        private Bitmap GetBitmap(Android.Net.Uri uriImage)
         {
-            Android.Graphics.Bitmap mBitmap = null;
-            mBitmap = Android.Provider.MediaStore.Images.Media.GetBitmap(MainActivity.Instance.ContentResolver, uriImage);
-            return mBitmap;
-        }
-        
-        void ExportBitmapAsPNG(Bitmap bitmap)
-        {
-            var path = MainActivity.Instance.GetExternalFilesDir(null).AbsolutePath;
-            var filePath = System.IO.Path.Combine(path, "example.png");
-            var stream = new FileStream(filePath, FileMode.Create);
-            bitmap.Compress(Bitmap.CompressFormat.Png, 100, stream);
-            stream.Close();
+            var bitmap = Android.Provider.MediaStore.Images.Media.GetBitmap(MainActivity.Instance.ContentResolver, uriImage);
+            return bitmap;
         }
 
+        private Image GenerateImage(Bitmap bitmap)
+        {
+            Image image = new Image();
+
+            var imgsrc = ImageSource.FromStream(() =>
+            {
+                MemoryStream ms = new MemoryStream();
+                bitmap.Compress(Bitmap.CompressFormat.Jpeg, 100, ms);
+                ms.Seek(0L, SeekOrigin.Begin);
+                return ms;
+            });
+
+            image.Source = imgsrc;
+            return image;
+        }
     }
 }
