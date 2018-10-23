@@ -63,7 +63,6 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IImageOperations.cs" />
     <Compile Include="ImageOperations.cs" />
     <Compile Include="Logging\LogCatLogger.cs" />
     <Compile Include="Logging\LogCatLoggerFactoryAdapter.cs" />

@@ -1,17 +1,12 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
 using Android.Content;
 using Android.Graphics;
 using Android.Widget;
 using Common.Logging;
 using InstantReview.Receivers;
-using Java.IO;
-using Java.Nio.Channels;
 using Xamarin.Forms;
-using Console = System.Console;
-using File = Java.IO.File;
-using FileNotFoundException = Java.IO.FileNotFoundException;
+
 
 namespace InstantReview.Droid.Receivers
 {
