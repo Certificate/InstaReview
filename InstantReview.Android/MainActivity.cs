@@ -3,10 +3,6 @@
 using Android.App;
 using Android.Content;
 using Android.Content.PM;
-using Android.Hardware.Usb;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
 using Android.OS;
 using Autofac;
 using Common.Logging;
@@ -50,7 +46,7 @@ namespace InstantReview.Droid
             imageOperations = new ImageOperations(myReceiver);
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
-            LoadApplication(new App(ContainerCreator.CreateContainerBuilder(this)));
+            LoadApplication(new App(ContainerCreator.CreateContainerBuilder(this, imageOperations)));
 
             
             myReceiver.OnReceive(this, Intent);
