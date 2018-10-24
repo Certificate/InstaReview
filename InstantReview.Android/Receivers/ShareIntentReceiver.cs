@@ -19,6 +19,8 @@ namespace InstantReview.Droid.Receivers
 
         public void OnReceive(Context context, Intent intent)
         {
+            if (intent.Action == null) return;
+
             Log.Debug($"Received an event: {intent}");
             if (intent.Action.Equals(Intent.ActionSend))
             {
@@ -33,7 +35,7 @@ namespace InstantReview.Droid.Receivers
                         UserImage = GenerateImage(GetBitmap(uri));
                     }
                     catch (Exception e)
-                    {
+                   { 
                         Log.Error(e);
                     }
                     

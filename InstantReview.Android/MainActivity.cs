@@ -23,7 +23,7 @@ namespace InstantReview.Droid
     {
         internal static MainActivity Instance { get; private set; }
         private ShareIntentReceiver myReceiver;
-        private IntentFilter intentFilter;
+
 
         static MainActivity()
         {
@@ -40,7 +40,6 @@ namespace InstantReview.Droid
 
             base.OnCreate(bundle);
 
-            intentFilter = new IntentFilter(Intent.ActionSend);
             myReceiver = new ShareIntentReceiver();
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
