@@ -71,6 +71,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ContainerCreator.cs" />
     <Compile Include="Dialogs\DialogService.cs" />
+    <Compile Include="UriTool.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
