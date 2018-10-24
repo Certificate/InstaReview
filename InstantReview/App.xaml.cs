@@ -24,15 +24,16 @@ namespace InstantReview
         public App(ContainerBuilder containerBuilder)
         {
             InitializeComponent();
-            
 
+            //Commented out, so that i can easily test the UI
             navigationPage = CreateNavigationPage();
 
             Container = CreateContainer(containerBuilder);
 
             navigationPage.PushAsync(CreateMainPage());
-            masterDetailPage = CreateMasterDetailPage(navigationPage);
-            MainPage = masterDetailPage;
+            MainPage = new SwipingPageUI();//You can remove me
+            //masterDetailPage = CreateMasterDetailPage(navigationPage);
+            //MainPage = masterDetailPage;
 
         }
 

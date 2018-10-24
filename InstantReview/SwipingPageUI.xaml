@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="InstantReview.SwipingPageUI"
+             Title="SwipingPageUI"
+             BackgroundColor="#FEFFFF">
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="2*" />
+                <RowDefinition Height="2*" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <!--Quetion title x/y-->
+            <Label Text="Question X/Y" FontSize="35" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="5" HorizontalOptions="Center" VerticalOptions="Center"/>
+
+            <!--Quetion-->
+            <Label Text="Question placement here" FontSize="25" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="5" HorizontalOptions="Center" VerticalOptions="Center"/>
+
+            <!--Swipe guide text-->
+            <Label Text="Swiper left or right" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="5" HorizontalOptions="Center" VerticalOptions="End"/>
+            
+            <!--YES and NO buttons-->
+            <Button Text="No" BackgroundColor = "Red" BorderColor="Black" BorderWidth="2"  BorderRadius = "5" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" VerticalOptions="Center"/>
+
+            <Button Text="Yes" BackgroundColor = "LightGreen" BorderColor="Black" BorderWidth="2"  BorderRadius = "5" Grid.Row="6" Grid.Column="4" Grid.ColumnSpan="2" VerticalOptions="Center"/>
+
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
