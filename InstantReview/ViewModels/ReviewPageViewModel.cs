@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Text;
 using Common.Logging;
-using InstantReview.Droid;
 using InstantReview.Receivers;
 using Xamarin.Forms;
 
@@ -12,21 +11,15 @@ namespace InstantReview.ViewModels
     {
         private static readonly ILog Log = LogManager.GetLogger<ReviewPageViewModel>();
 
-        private readonly IImageOperations imageOperations;
 
-        private Image userImage;
-
-        public ReviewPageViewModel(IImageOperations ImageOperations)
+        public ReviewPageViewModel(IShareIntentReceiver intentReceiver)
         {
-            this.imageOperations = ImageOperations;
-            imageOperations.ImageReceivedEvent += ImageOperationsOnImageReceivedEvent;
-            
+            intentReceiver.ItemsReceivedEvent += IntentReceiverOnItemsReceivedEvent;
         }
 
-        private void ImageOperationsOnImageReceivedEvent(object sender, EventArgs e)
+        private void IntentReceiverOnItemsReceivedEvent(object sender, EventArgs e)
         {
-            userImage = imageOperations.UserImage;
-            Log.Debug("Got image to Review VM.");
+            Log.Debug("Notified at ReviewViewModel");
         }
     }
 }

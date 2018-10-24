@@ -24,7 +24,6 @@ namespace InstantReview.Droid
         internal static MainActivity Instance { get; private set; }
         private ShareIntentReceiver myReceiver;
         private IntentFilter intentFilter;
-        private ImageOperations imageOperations;
 
         static MainActivity()
         {
@@ -43,10 +42,9 @@ namespace InstantReview.Droid
 
             intentFilter = new IntentFilter(Intent.ActionSend);
             myReceiver = new ShareIntentReceiver();
-            imageOperations = new ImageOperations(myReceiver);
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
-            LoadApplication(new App(ContainerCreator.CreateContainerBuilder(this, imageOperations)));
+            LoadApplication(new App(ContainerCreator.CreateContainerBuilder(this, myReceiver)));
 
             
             myReceiver.OnReceive(this, Intent);
