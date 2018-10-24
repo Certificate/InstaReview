@@ -4,14 +4,9 @@
              x:Class="InstantReview.Views.ReviewPage">
     <ContentPage.Content>
         <StackLayout>
-            <Image BackgroundColor="Red"
-            Source="{Binding userImage}"/>
-            
-            
             <Image BackgroundColor="Blue"
-                   Source="{Binding Paska}"
-                   WidthRequest="50"
-                   HeightRequest="100"/>
+                   Source="{Binding ImagePath}"></Image>
+
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
