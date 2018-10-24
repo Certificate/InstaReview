@@ -20,15 +20,24 @@ namespace InstantReview.ViewModels
             IDialogService dialogService, 
             INavigation navigation, 
             IPageFactory pageFactory, 
-            IReviewPageViewModel reviewPageViewModel )
+            IReviewPageViewModel reviewPageViewModel,
+            IShareIntentReceiver intentReceiver)
         {
             this.dialogService = dialogService;
             this.navigation = navigation;
             this.pageFactory = pageFactory;
             this.reviewPageViewModel = reviewPageViewModel;
+            reviewPageViewModel.ViewModelReadyEvent += IntentReceiver_ItemsReceivedEvent;
         }
 
         public ICommand NewReviewCommand => new Command(NavigateToReviewPage);
+
+        void IntentReceiver_ItemsReceivedEvent(object sender, EventArgs e)
+        {
+            Log.Debug("Received VM Ready event. Navigating to review page.");
+            NavigateToReviewPage();
+        }
+
 
         public async void NavigateToReviewPage(){
             Log.Debug("Navigating to Reviews!");

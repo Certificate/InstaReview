@@ -16,6 +16,7 @@ namespace InstantReview.Droid.Receivers
         private static readonly ILog Log = LogManager.GetLogger<ShareIntentReceiver>();
 
         public Image UserImage { get; set; }
+        public string ImagePath { get; set; }
 
         public void OnReceive(Context context, Intent intent)
         {
@@ -32,7 +33,8 @@ namespace InstantReview.Droid.Receivers
                 {
                     try
                     {
-                        UserImage = GenerateImage(GetBitmap(uri));
+                        //UserImage = GenerateImage(GetBitmap(uri));
+                        ImagePath = BitmapToFolder(GetBitmap(uri));
                     }
                     catch (Exception e)
                    { 
@@ -70,6 +72,36 @@ namespace InstantReview.Droid.Receivers
 
             image.Source = imgsrc;
             return image;
+        }
+
+        private string BitmapToFolder(Bitmap bitmap)
+        {
+
+            var path = MainActivity.Instance.GetExternalFilesDir(null).AbsolutePath + "/temp";
+
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+
+            }
+            var filePath = System.IO.Path.Combine(path, "sharedPicture.png");
+            var stream = new FileStream(filePath, FileMode.Create);
+            bitmap.Compress(Bitmap.CompressFormat.Png, 100, stream);
+            stream.Flush();
+            stream.Close();
+            
+            
+            Image ass = new Image();
+            ass.Source = ImageSource.FromStream(() => new FileStream(filePath, FileMode.Open));
+            Log.Debug(ass.Height);
+            Log.Debug(ass.Width);
+            Log.Debug("Siin o");
+            UserImage = ass;
+
+            return filePath;
+            
+            
+
         }
     }
 }
