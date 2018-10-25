@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  dev-mysql:
+    build: ./Design
+    restart: always
+    command: --default-authentication-plugin=mysql_native_password
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD:development
+    volumes:
+      - ./Design/:/usr/mysql
+    
+
+  mobile-api:
+    build: ./MobileAPI
+    volumes:
+      - ./MobileAPI:/usr/src/app
+    ports:
+      - 80:80
