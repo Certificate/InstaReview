@@ -33,6 +33,7 @@ namespace InstantReview
             navigationPage.PushAsync(CreateMainPage());
             masterDetailPage = CreateMasterDetailPage(navigationPage);
             MainPage = masterDetailPage;
+            MainPage = new ThankYouPage();
 
         }
 
