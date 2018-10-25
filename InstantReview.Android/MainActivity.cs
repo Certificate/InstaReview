@@ -52,7 +52,7 @@ namespace InstantReview.Droid
             global::Xamarin.Forms.Forms.Init(this, bundle);
             LoadApplication(new App(ContainerCreator.CreateContainerBuilder(this, myReceiver)));
 
-            
+            myReceiver.RequestPermision();
             myReceiver.OnReceive(this, Intent);
         }
     }
