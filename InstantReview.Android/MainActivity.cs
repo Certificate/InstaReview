@@ -53,7 +53,7 @@ namespace InstantReview.Droid
             LoadApplication(new App(ContainerCreator.CreateContainerBuilder(this, myReceiver)));
 
             
-            //myReceiver.OnReceive(this, Intent);
+            myReceiver.OnReceive(this, Intent);
         }
     }
 }

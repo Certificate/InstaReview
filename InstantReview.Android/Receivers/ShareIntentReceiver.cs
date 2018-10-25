@@ -1,7 +1,11 @@
 using System;
 using System.IO;
+using Android;
 using Android.Content;
+using Android.Content.PM;
 using Android.Graphics;
+using Android.Support.V4.App;
+using Android.Support.V4.Content;
 using Android.Widget;
 using Common.Logging;
 using InstantReview.Receivers;
@@ -20,6 +24,24 @@ namespace InstantReview.Droid.Receivers
 
         public void OnReceive(Context context, Intent intent)
         {
+
+            if (ContextCompat.CheckSelfPermission(MainActivity.Instance, Manifest.Permission.ReadExternalStorage)
+                != Permission.Granted)
+            {
+                Log.Debug("Permission not granted.");
+                if (ActivityCompat.ShouldShowRequestPermissionRationale(MainActivity.Instance,
+                    Manifest.Permission.ReadExternalStorage))
+                {
+                    Log.Debug("TODO: Explain permission.");
+                }
+                else
+                {
+                    // No explanation needed; request the permission
+                    ActivityCompat.RequestPermissions(MainActivity.Instance,
+                        new String[] { Manifest.Permission.ReadExternalStorage }, 1);
+                }
+            }
+
             if (intent.Action == null) return;
 
             Log.Debug($"Received an event: {intent}");
