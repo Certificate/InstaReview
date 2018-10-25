@@ -33,6 +33,11 @@ namespace InstantReview.Droid
                 "InstaReview", LogLevel.Debug, true, true, true, "yyyy-MM-dd HH:mm:ss.fff");
         }
 
+        protected override void OnNewIntent(Intent intent)
+        {
+            myReceiver.OnReceive(this, intent);
+        }
+
         protected override void OnCreate(Bundle bundle)
         {
             Instance = this;
@@ -48,7 +53,7 @@ namespace InstantReview.Droid
             LoadApplication(new App(ContainerCreator.CreateContainerBuilder(this, myReceiver)));
 
             
-            myReceiver.OnReceive(this, Intent);
+            //myReceiver.OnReceive(this, Intent);
         }
     }
 }

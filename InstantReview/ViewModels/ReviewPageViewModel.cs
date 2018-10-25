@@ -24,6 +24,7 @@ namespace InstantReview.ViewModels
         private void IntentReceiverOnItemsReceivedEvent(object sender, EventArgs e)
         {
             Log.Debug("Notified at ReviewViewModel");
+            Log.Debug(ImagePath);
             ImagePath = intentReceiver.ImagePath;
             ViewModelReadyEvent?.Invoke(this, EventArgs.Empty);
         }
