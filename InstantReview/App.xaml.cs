@@ -60,7 +60,8 @@ namespace InstantReview
             var page = new NavigationPage()
             {
                 BarBackgroundColor = Color.Salmon,
-                BarTextColor = Color.Black,
+                BarTextColor = Color.FloralWhite,
+                
             };
 
             Navigation = page.Navigation;
