@@ -16,6 +16,7 @@ sequelize.authenticate()
     })
     .catch(err => {
         console.error('Couldn\'t connect to database:', err);
+        process.exit(1);
     });
 
 //Load up models

@@ -1,8 +1,17 @@
+const JWT = require('jsonwebtoken');
 const { User } = require('../database/models');
+
+signToken = user => {
+    return JWT.sign({
+        iss: 'ReviewCollector',
+        sub: user.id,
+        iat: Math.round(Date.now() / 1000), //Issued at
+        exp: Math.round(Date.now() / 1000) + 24*60*60 //Expiration (1 day)
+    }, process.env.JWT_SECRET);
+}
 
 module.exports = {
     signUp: async(req, res, next) => {
-        console.log('AuthController.signUp() called', req.values.body);
         const { email, password } = req.values.body;
         
         //Check for existing user accounts
@@ -10,8 +19,7 @@ module.exports = {
             return res
                 .status(409)
                 .json({
-                    success: false,
-                    status: 'User already exists.'
+                    error: 'User already exists.'
                 });
         }
 
@@ -21,20 +29,20 @@ module.exports = {
             password
         });
         await newUser.save();
-
-        res
-            .status(201)
-            .json({
-                success: true,
-                status: 'Successfully signed up'
-            });
+        
+        //Respond with token
+        const token = signToken(newUser);
+        res.status(200).json({ token });
     },
 
     logIn: async(req, res, next) => {
-        console.log('AuthController.logIn() called');
+        const token = signToken(req.user);
+        res.status(200).json({ token });
     },
 
     secret: async(req, res, next) => {
         console.log('AuthController.secret() called');
+        const secret = 'asd';
+        res.status(200).json({ secret });
     }
 }
