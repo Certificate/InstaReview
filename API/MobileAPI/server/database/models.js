@@ -1,6 +1,8 @@
 //Set up Sequelize
 const Sequelize = require('sequelize');
-const sequelize = new Sequelize(process.env.DB_CONNECTION);
+const sequelize = new Sequelize(process.env.DB_CONNECTION, {
+    logging: (process.env.NODE_ENV == 'test') ? false : true
+});
 
 models = {
     Sequelize: Sequelize,

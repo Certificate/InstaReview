@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     //Use hook to encrypt passwords
-    User.hook('beforeSave', async (user, options) => {
+    User.addHook('beforeSave', async (user, options) => {
         try {
             const salt = await bcrypt.genSalt(10);
             user.password = await bcrypt.hash(user.password, salt);

@@ -1,7 +1,9 @@
-const app = require('./server/app');
+const { app, dbSync } = require('./server/app');
 
-//Start server
-const port = process.env.PORT || 80;
-const host = process.env.HOST || '0.0.0.0';
+dbSync().then(() => {    
+    //Start server
+    const port = process.env.PORT || 80;
+    const host = process.env.HOST || '0.0.0.0';
 
-app.listen(port, host, () => console.log(`API is running on ${host}:${port}`));
+    app.listen(port, host, () => console.log(`API is running on ${host}:${port}`));
+});
