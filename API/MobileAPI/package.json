@@ -4,8 +4,8 @@
   "description": "API for handling requests coming from the mobile application.",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js",
-    "start-dev": "nodemon app.js"
+    "start": "node index.js",
+    "start-dev": "nodemon index.js"
   },
   "repository": {
     "type": "git",
@@ -28,5 +28,13 @@
     "passport-local": "^1.0.0",
     "sequelize": "^4.41.0"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-http": "^4.2.0",
+    "faker": "^4.1.0",
+    "mocha": "^5.2.0",
+    "rewire": "^4.0.1",
+    "sinon": "^7.1.0",
+    "sinon-chai": "^3.2.0"
+  }
 }

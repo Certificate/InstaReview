@@ -23,20 +23,26 @@ sequelize.authenticate()
 const models = require('./database/models');
 
 //In development, force tables to the db
-models.sequelize.sync({force: true})
-    .then(() => {
-        console.log('Models loaded');
-    });
+if(process.env.NODE_ENV == 'dev' || process.env.NODE_ENV == 'test') {
+    models.sequelize.sync({force: true})
+        .then(() => {
+            console.log('Models loaded and synced. Database emptied.');
+        });
+} else {
+    models.sequelize.sync()
+        .then(() => {
+            console.log('Models loaded and synced.');
+        });
+}
+
 
 //Middlewares
-app.use(morgan('dev'));
+if(!process.env.NODE_ENV === 'test') {
+    app.use(morgan('dev'));
+}
 app.use(bodyParser.json());
 
 //Routes
 app.use('/auth', require('./routes/auth'));
 
-//Start server
-const port = process.env.PORT || 80;
-const host = process.env.HOST || '0.0.0.0';
-
-app.listen(port, host, () => console.log(`API is running on ${host}:${port}`));
+module.exports = app;
