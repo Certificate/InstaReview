@@ -26,7 +26,8 @@ module.exports = {
         //Create a new user
         const newUser = User.build({
             email,
-            password
+            password,
+            authMethod: User.authMethods.LOCAL
         });
         await newUser.save();
         
@@ -37,6 +38,17 @@ module.exports = {
 
     logIn: async(req, res, next) => {
         const token = signToken(req.user);
+        res.status(200).json({ token });
+    },
+
+    logInGoogle: async(req, res, next) => {
+        const token = signToken(req.user);
+        res.status(200).json({ token });
+    },
+
+    logInFacebook: async(req, res, next) => {
+        const token = signToken(req.user);
+        console.log(req.user);
         res.status(200).json({ token });
     },
 

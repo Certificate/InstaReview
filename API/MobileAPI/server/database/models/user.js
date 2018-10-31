@@ -11,15 +11,39 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false
         },
+        authMethod: {
+            type: DataTypes.ENUM('local', 'google', 'facebook'),
+            allowNull: false
+        },
         password: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: true
+        },
+        googleId: {
+            type: DataTypes.STRING,
+            allowNull: true
+        },
+        facebookId: {
+            type: DataTypes.STRING,
+            allowNull: true
         }
+    },
+    {
+        indexes: [
+            {
+                unique: true,
+                fields: ["email"]
+            }
+        ]
     });
 
     //Use hook to encrypt passwords
     User.addHook('beforeSave', async (user, options) => {
         try {
+            if(user.authMethod !== 'local') {
+                return Promise.resolve();
+            }
+
             const salt = await bcrypt.genSalt(10);
             user.password = await bcrypt.hash(user.password, salt);
             return Promise.resolve();
@@ -34,6 +58,13 @@ module.exports = (sequelize, DataTypes) => {
         } catch (error) {
             throw error;
         }
+    }
+
+    //Set constants for user auth names
+    User.authMethods = {
+        LOCAL: 'local',
+        GOOGLE: 'google',
+        FACEBOOK: 'facebook'
     }
 
     return User;
