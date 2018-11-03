@@ -26,20 +26,25 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
+            <Grid.GestureRecognizers>
+                <SwipeGestureRecognizer Direction="Left" Swiped="OnSwiped"/>
+                <SwipeGestureRecognizer Direction="Right" Swiped="OnSwiped"/>
+            </Grid.GestureRecognizers>
+            
+            
             <!--Quetion title x/y-->
-            <Label Text="Question X/Y" FontSize="35" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="5" HorizontalOptions="Center" VerticalOptions="Center"/>
+            <Label x:Name="Question_number" Text="Question 1/10" FontSize="35" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="5" HorizontalOptions="Center" VerticalOptions="Center"/>
 
             <!--Quetion-->
-            <Label Text="Question placement here" FontSize="25" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="5" HorizontalOptions="Center" VerticalOptions="Center"/>
+            <Label  x:Name="Question_question" Text="insert q1" FontSize="25" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="5" HorizontalOptions="Center" VerticalOptions="Center"/>
 
             <!--Swipe guide text-->
             <Label Text="Swiper left or right" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="5" HorizontalOptions="Center" VerticalOptions="End"/>
-            
+
             <!--YES and NO buttons-->
             <Button Text="No" BackgroundColor = "Red" BorderColor="Black" BorderWidth="2"  BorderRadius = "5" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" VerticalOptions="Center"/>
-
             <Button Text="Yes" BackgroundColor = "LightGreen" BorderColor="Black" BorderWidth="2"  BorderRadius = "5" Grid.Row="6" Grid.Column="4" Grid.ColumnSpan="2" VerticalOptions="Center"/>
-
+            
         </Grid>
     </ContentPage.Content>
 </ContentPage>
