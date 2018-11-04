@@ -13,6 +13,11 @@
     <Compile Remove="EmptyClass.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="ViewModels\" />
+    <EmbeddedResource Update="Views\MasterPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\ReviewPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>

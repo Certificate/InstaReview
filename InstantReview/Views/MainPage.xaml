@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:local="clr-namespace:InstantReview" x:Class="InstantReview.MainPage">
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:local="clr-namespace:InstantReview" 
+             x:Class="InstantReview.MainPage"
+             Title="MAIN PAGE">
 
 
     <StackLayout BackgroundColor="FloralWhite">
@@ -15,18 +19,9 @@
             <Label.Text>
                 <OnPlatform x:TypeArguments="x:String"
                       iOS="Hello World on iOS!"
-                      Android="Hello World on Android" />
+                      Android="Insta
+                      Review" />
             </Label.Text>
-        </Label>
-
-        <Label Text="This is the Project Work-app for Autumn 2018"
-             LineBreakMode="WordWrap"
-             FontAttributes="Bold"
-             Margin="15, 15, 15, 15"
-             FontSize="26"
-             HorizontalOptions="Center" 
-             VerticalOptions="CenterAndExpand"
-             TextColor="Salmon">
         </Label>
 
         <!--<Image>
@@ -35,12 +30,14 @@
             </Image.Triggers>
         </Image>-->
 
-        <Button Text="Click me"
-                TextColor="Black"
+        <Button Text="New review"
+                TextColor="Salmon"
+                BackgroundColor="DimGray"
                 HorizontalOptions="Center" 
                 VerticalOptions="CenterAndExpand"
-                WidthRequest="100"
-                Command="{Binding ButtonPressCommand}"></Button>
+                WidthRequest="150"
+                Margin="15, 15, 15, 15"
+                Command="{Binding NewReviewCommand}"></Button>
 
         <Image></Image>
     </StackLayout>

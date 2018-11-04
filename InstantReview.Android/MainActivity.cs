@@ -3,10 +3,6 @@
 using Android.App;
 using Android.Content;
 using Android.Content.PM;
-using Android.Hardware.Usb;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
 using Android.OS;
 using Autofac;
 using Common.Logging;
@@ -20,20 +16,26 @@ namespace InstantReview.Droid
         Label = "InstaReview", 
         Icon = "@mipmap/icon", 
         Theme = "@style/MainTheme.Splash", 
-        MainLauncher = true, 
-        ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+        MainLauncher = true,
+        LaunchMode = LaunchMode.SingleInstance,
+        ScreenOrientation = ScreenOrientation.Portrait,
+        ConfigurationChanges = ConfigChanges.ScreenSize)]
     [IntentFilter(new[] { Intent.ActionSend }, Categories = new[] { Intent.CategoryDefault }, DataMimeType = @"image/*")]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         internal static MainActivity Instance { get; private set; }
         private ShareIntentReceiver myReceiver;
-        private IntentFilter intentFilter;
-        private ImageOperations imageOperations;
+
 
         static MainActivity()
         {
             LogManager.Adapter = new LogCatFactoryAdapter(
                 "InstaReview", LogLevel.Debug, true, true, true, "yyyy-MM-dd HH:mm:ss.fff");
+        }
+
+        protected override void OnNewIntent(Intent intent)
+        {
+            myReceiver.OnReceive(this, intent);
         }
 
         protected override void OnCreate(Bundle bundle)
@@ -45,14 +47,12 @@ namespace InstantReview.Droid
 
             base.OnCreate(bundle);
 
-            intentFilter = new IntentFilter(Intent.ActionSend);
             myReceiver = new ShareIntentReceiver();
-            imageOperations = new ImageOperations(myReceiver);
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
-            LoadApplication(new App(ContainerCreator.CreateContainerBuilder(this)));
+            LoadApplication(new App(ContainerCreator.CreateContainerBuilder(this, myReceiver)));
 
-            
+            myReceiver.RequestPermision();
             myReceiver.OnReceive(this, Intent);
         }
     }

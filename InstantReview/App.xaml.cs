@@ -1,6 +1,7 @@
 using System;
 using Autofac;
 using InstantReview.ViewModels;
+using InstantReview.Views;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -15,21 +16,57 @@ namespace InstantReview
     public partial class App : Application, IContainerResolver
     {
         public IContainer Container { get; }
+        private INavigation Navigation { get; set; }
+
+        private readonly MasterDetailPage masterDetailPage;
+        private readonly NavigationPage navigationPage;
 
         public App(ContainerBuilder containerBuilder)
         {
             InitializeComponent();
+            
+
+            navigationPage = CreateNavigationPage();
 
             Container = CreateContainer(containerBuilder);
 
-            MainPage = new MainPage(Container.Resolve<MainPageViewModel>());
-            //MainPage = new LogInUI();
+            navigationPage.PushAsync(CreateMainPage());
+            masterDetailPage = CreateMasterDetailPage(navigationPage);
+            MainPage = masterDetailPage;
         }
 
-        public App()
+        private MasterDetailPage CreateMasterDetailPage(Page detailPage)
         {
-            InitializeComponent();
+            var masterPageVm = Container.Resolve<MasterPageViewModel>();
+
+            //masterPageVm.NavigationRequested += OnMasterDetailNavigationRequested;
+            //masterPageVm.LogOutRequested += UpdateNavigation;
+
+            return new MasterDetailPage
+            {
+                Master = new MasterPage(masterPageVm),
+                Detail = detailPage
+            };
         }
+
+        private Page CreateMainPage()
+        {
+            return new MainPage(Container.Resolve<MainPageViewModel>());
+        }
+
+        private NavigationPage CreateNavigationPage()
+        {
+            var page = new NavigationPage()
+            {
+                BarBackgroundColor = Color.Salmon,
+                BarTextColor = Color.FloralWhite,
+                
+            };
+
+            Navigation = page.Navigation;
+            return page;
+        }
+
 
         protected override void OnStart()
         {
@@ -48,10 +85,10 @@ namespace InstantReview
 
         private IContainer CreateContainer(ContainerBuilder builder)
         {
-            builder.RegisterModule<ModuleRegistry>();
+            builder.RegisterModule<UiModule>();
 
+            builder.RegisterInstance(Navigation).As<INavigation>();
             builder.RegisterInstance(this).As<IContainerResolver>();
-
             return builder.Build();
         }
 
