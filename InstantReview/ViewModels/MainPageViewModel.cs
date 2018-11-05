@@ -19,17 +19,25 @@ namespace InstantReview.ViewModels
         public MainPageViewModel(
             IDialogService dialogService, 
             INavigation navigation, 
-            IPageFactory pageFactory, IReviewPageViewModel reviewPageViewModel)
+            IPageFactory pageFactory, 
+            IReviewPageViewModel reviewPageViewModel)
         {
             this.dialogService = dialogService;
             this.navigation = navigation;
             this.pageFactory = pageFactory;
             this.reviewPageViewModel = reviewPageViewModel;
+            reviewPageViewModel.ViewModelReadyEvent += IntentReceiver_ItemsReceivedEvent;
         }
 
         public ICommand NewReviewCommand => new Command(NavigateToReviewPage);
 
-        private async void NavigateToReviewPage(){
+        void IntentReceiver_ItemsReceivedEvent(object sender, EventArgs e)
+        {
+            NavigateToReviewPage();
+        }
+
+
+        public async void NavigateToReviewPage(){
             Log.Debug("Navigating to Reviews!");
             await navigation.PushAsyncSingle(CreateReviewPage());
         }

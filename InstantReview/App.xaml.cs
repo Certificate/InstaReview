@@ -33,8 +33,6 @@ namespace InstantReview
             navigationPage.PushAsync(CreateMainPage());
             masterDetailPage = CreateMasterDetailPage(navigationPage);
             MainPage = masterDetailPage;
-            MainPage = new QuestionPage();
-
         }
 
         private MasterDetailPage CreateMasterDetailPage(Page detailPage)
@@ -61,7 +59,8 @@ namespace InstantReview
             var page = new NavigationPage()
             {
                 BarBackgroundColor = Color.Salmon,
-                BarTextColor = Color.Black,
+                BarTextColor = Color.FloralWhite,
+                
             };
 
             Navigation = page.Navigation;

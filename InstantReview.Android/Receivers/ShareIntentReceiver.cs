@@ -1,17 +1,17 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
+using Android;
 using Android.Content;
+using Android.Content.PM;
 using Android.Graphics;
+using Android.Support.V4.App;
+using Android.Support.V4.Content;
 using Android.Widget;
 using Common.Logging;
 using InstantReview.Receivers;
-using Java.IO;
-using Java.Nio.Channels;
 using Xamarin.Forms;
-using Console = System.Console;
-using File = Java.IO.File;
-using FileNotFoundException = Java.IO.FileNotFoundException;
+
 
 namespace InstantReview.Droid.Receivers
 {
@@ -20,29 +20,31 @@ namespace InstantReview.Droid.Receivers
         public event EventHandler<EventArgs> ItemsReceivedEvent;
         private static readonly ILog Log = LogManager.GetLogger<ShareIntentReceiver>();
 
+        public Image UserImage { get; set; }
+        public string ImagePath { get; set; }
+
         public void OnReceive(Context context, Intent intent)
         {
+            if (intent.Action == null) return;
+
             Log.Debug($"Received an event: {intent}");
             if (intent.Action.Equals(Intent.ActionSend))
             {
                 Log.Debug("Action directed to ACTION_SEND");
-                
                 var uri = (Android.Net.Uri) intent.GetParcelableExtra(Intent.ExtraStream);
+                var uriTool = new UriTool();
+                ImagePath = uriTool.GetActualPathFromFile(uri);
+                Toast.MakeText(context, "Image Received", ToastLength.Short).Show();
 
-                if (uri != null)
+                while (ContextCompat.CheckSelfPermission(MainActivity.Instance, Manifest.Permission.ReadExternalStorage)
+                       != Permission.Granted)
                 {
-                    try
-                    {
-                        ExportBitmapAsPNG(GetBitmap(uri));
-                    }
-                    catch (Exception e)
-                    {
-                        Log.Error(e);
-                    }
-                    
-                    Toast.MakeText(context, "Image Received", ToastLength.Short).Show();
-                    ItemsReceivedEvent?.Invoke(this, EventArgs.Empty);
+                    ActivityCompat.RequestPermissions(MainActivity.Instance,
+                        new String[] { Manifest.Permission.ReadExternalStorage }, 1);
+                    Task.Delay(TimeSpan.FromSeconds(1.5)).Wait();
                 }
+
+                ItemsReceivedEvent?.Invoke(this, EventArgs.Empty);
             }
             else if (intent.Action.Equals(Intent.ActionSendMultiple))
             {
@@ -50,22 +52,25 @@ namespace InstantReview.Droid.Receivers
                 ItemsReceivedEvent?.Invoke(this, EventArgs.Empty);
             }
         }
-        
-        private Android.Graphics.Bitmap GetBitmap(Android.Net.Uri uriImage)
-        {
-            Android.Graphics.Bitmap mBitmap = null;
-            mBitmap = Android.Provider.MediaStore.Images.Media.GetBitmap(MainActivity.Instance.ContentResolver, uriImage);
-            return mBitmap;
-        }
-        
-        void ExportBitmapAsPNG(Bitmap bitmap)
-        {
-            var path = MainActivity.Instance.GetExternalFilesDir(null).AbsolutePath;
-            var filePath = System.IO.Path.Combine(path, "example.png");
-            var stream = new FileStream(filePath, FileMode.Create);
-            bitmap.Compress(Bitmap.CompressFormat.Png, 100, stream);
-            stream.Close();
-        }
 
+        public void RequestPermision()
+        {
+            if (ContextCompat.CheckSelfPermission(MainActivity.Instance, Manifest.Permission.ReadExternalStorage)
+                != Permission.Granted)
+            {
+                Log.Debug("Permission not granted.");
+                if (ActivityCompat.ShouldShowRequestPermissionRationale(MainActivity.Instance,
+                    Manifest.Permission.ReadExternalStorage))
+                {
+                    Log.Debug("TODO: Explain permission.");
+                }
+                else
+                {
+                    // No explanation needed; request the permission
+                    ActivityCompat.RequestPermissions(MainActivity.Instance,
+                        new String[] { Manifest.Permission.ReadExternalStorage }, 1);
+                }
+            }
+        }
     }
 }

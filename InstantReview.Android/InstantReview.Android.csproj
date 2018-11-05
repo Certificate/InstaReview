@@ -63,8 +63,6 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IImageOperations.cs" />
-    <Compile Include="ImageOperations.cs" />
     <Compile Include="Logging\LogCatLogger.cs" />
     <Compile Include="Logging\LogCatLoggerFactoryAdapter.cs" />
     <Compile Include="MainActivity.cs" />
@@ -73,6 +71,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ContainerCreator.cs" />
     <Compile Include="Dialogs\DialogService.cs" />
+    <Compile Include="UriTool.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -102,13 +101,26 @@
     <Folder Include="Resources\drawable-xhdpi\" />
     <Folder Include="Resources\drawable-xxhdpi\" />
     <Folder Include="Resources\drawable-xxxhdpi\" />
-    <Folder Include="Resources\drawable\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\InstantReview\InstantReview.csproj">
       <Project>{29994DBC-B4C9-46BF-97CA-7E7D0D329A27}</Project>
       <Name>InstantReview</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\tre3logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\InstaSplash.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\tre3margin.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\tre3small.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>

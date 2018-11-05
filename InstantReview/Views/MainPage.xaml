@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:local="clr-namespace:InstantReview" x:Class="InstantReview.MainPage">
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:local="clr-namespace:InstantReview" 
+             x:Class="InstantReview.MainPage"
+             Title="MAIN PAGE">
 
 
     <StackLayout BackgroundColor="FloralWhite">
@@ -15,7 +19,8 @@
             <Label.Text>
                 <OnPlatform x:TypeArguments="x:String"
                       iOS="Hello World on iOS!"
-                      Android="Hello World on Android" />
+                      Android="Insta
+                      Review" />
             </Label.Text>
         </Label>
 
