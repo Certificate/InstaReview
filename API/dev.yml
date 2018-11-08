@@ -19,3 +19,5 @@ services:
       - ./MobileAPI:/usr/src/app
     ports:
       - 80:80
+    links:
+      - "dev-mysql:database"
