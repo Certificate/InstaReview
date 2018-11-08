@@ -1,9 +1,9 @@
+using System;
+
 namespace InstantReview.ViewModels
 {
     public interface ILoginPageViewModel
     {
-        void SaveUsagePrivileges();
-
-        bool CheckUsagePrivileges();
+        event EventHandler<EventArgs> LoginSuccessful;
     }
 }

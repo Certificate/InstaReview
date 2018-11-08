@@ -7,7 +7,7 @@ namespace InstantReview.Views
 {
     public partial class LoginPage : ContentPage
     {
-        public LoginPage(LoginPageViewModel loginPageViewModel)
+        public LoginPage(ILoginPageViewModel loginPageViewModel)
         {
             InitializeComponent();
             BindingContext = loginPageViewModel;

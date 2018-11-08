@@ -53,7 +53,7 @@
 
                 <Entry Keyboard ="Email" Placeholder ="Email"></Entry>
                 <Entry IsPassword ="True" Placeholder ="Password"></Entry>
-                <Button Text ="Sign in" HorizontalOptions ="End"></Button>
+                <Button Text ="Sign in" HorizontalOptions ="End" Command="{Binding LoginCommand}"></Button>
 
             </StackLayout>
 
@@ -67,9 +67,9 @@
                 Type = RelativeToParent,
                 Property = Height,
                 Factor = .90}">
-                <Button Text ="PRESS ME TO LOG IN" 
+                <Button Text ="Forgot Password?" 
                         HorizontalOptions ="Center"
-                        Command="{Binding LoginCommand}"></Button>
+                        Command="{Binding ForgotPwCommand}"></Button>
 
 
             </StackLayout>

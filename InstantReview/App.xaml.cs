@@ -1,6 +1,8 @@
 using System;
+using System.Linq;
 using Autofac;
 using InstantReview.Droid;
+using InstantReview.Login;
 using InstantReview.ViewModels;
 using InstantReview.Views;
 using Xamarin.Forms;
@@ -19,13 +21,12 @@ namespace InstantReview
         public IContainer Container { get; }
         private INavigation Navigation { get; set; }
 
-        private readonly ISettingsStorage settingsStorage;
-        private readonly ILoginPageViewModel LoginPageViewModel;
         private readonly MasterDetailPage masterDetailPage;
         private readonly NavigationPage navigationPage;
+        private readonly ILoginHandler login;
 
-        private bool UsagePrivilege => LoginPageViewModel.CheckUsagePrivileges();
-        
+        private bool UsagePrivilege => login.CheckUsagePrivileges();
+
         public App(ContainerBuilder containerBuilder)
         {
             InitializeComponent();
@@ -35,6 +36,9 @@ namespace InstantReview
 
             Container = CreateContainer(containerBuilder);
 
+            login = Container.Resolve<ILoginHandler>();
+            Container.Resolve<ILoginPageViewModel>().LoginSuccessful += OnLoginStateChanged;
+
             navigationPage.PushAsync(!UsagePrivilege
                 ? new LoginPage(Container.Resolve<ILoginPageViewModel>())
                 : CreateMainPage());
@@ -43,12 +47,39 @@ namespace InstantReview
             MainPage = masterDetailPage;
         }
 
+        private void OnLoginStateChanged(object sender, EventArgs e)
+        {
+            UpdateNavigation(this, EventArgs.Empty);
+        }
+
+        private void UpdateNavigation(object sender, EventArgs eventArgs)
+        {
+            // Recreate main page to update translations
+            Device.BeginInvokeOnMainThread(async () =>
+            {
+                foreach (var page in Navigation.NavigationStack)
+                {
+                    (page as IDisposable)?.Dispose();
+                }
+
+                for (var i = 0; i < Navigation.ModalStack.Count; i++)
+                {
+                    var page = await Navigation.PopModalAsync();
+                    (page as IDisposable)?.Dispose();
+                }
+
+                Navigation.InsertPageBefore(!UsagePrivilege
+                    ? new LoginPage(Container.Resolve<ILoginPageViewModel>())
+                    : CreateMainPage(), Navigation.NavigationStack.First());
+                await Navigation.PopToRootAsync();
+            });
+        }
+
         private MasterDetailPage CreateMasterDetailPage(Page detailPage)
         {
             var masterPageVm = Container.Resolve<MasterPageViewModel>();
 
-            //masterPageVm.NavigationRequested += OnMasterDetailNavigationRequested;
-            //masterPageVm.LogOutRequested += UpdateNavigation;
+            masterPageVm.LogoutSuccessful += UpdateNavigation;
 
             return new MasterDetailPage
             {
@@ -94,6 +125,7 @@ namespace InstantReview
         private IContainer CreateContainer(ContainerBuilder builder)
         {
             builder.RegisterModule<UiModule>();
+            builder.RegisterModule<LoginModule>();
 
             builder.RegisterInstance(Navigation).As<INavigation>();
             builder.RegisterInstance(this).As<IContainerResolver>();

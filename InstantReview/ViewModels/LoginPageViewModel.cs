@@ -1,23 +1,29 @@
+using System;
+using System.Windows.Input;
 using Common.Logging;
 using InstantReview.Droid;
+using InstantReview.Login;
+using Xamarin.Forms;
 
 namespace InstantReview.ViewModels
 {
     public class LoginPageViewModel : ILoginPageViewModel
     {
-        private readonly ISettingsStorage storage;
+        public event EventHandler<EventArgs> LoginSuccessful;
         private static readonly ILog Log = LogManager.GetLogger<LoginPageViewModel>();
-        
-        public void SaveUsagePrivileges()
+        private readonly ILoginHandler login;
+
+        public LoginPageViewModel(ILoginHandler login)
         {
-            Log.Debug("Save usage privilege.");
-            storage.SetValue("user", "toBeHashed");
+            this.login = login;
         }
-        
-        public bool CheckUsagePrivileges()
+
+        public ICommand LoginCommand => new Command(LogIn);
+
+        private void LogIn()
         {
-            var readValue = storage.GetValue("user", string.Empty);
-            return true;
+            login.SaveUsagePrivileges();
+            LoginSuccessful?.Invoke(this, EventArgs.Empty);
         }
     }
 }
