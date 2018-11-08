@@ -1,5 +1,6 @@
 using System;
 using Autofac;
+using InstantReview.Droid;
 using InstantReview.ViewModels;
 using InstantReview.Views;
 using Xamarin.Forms;
@@ -18,9 +19,13 @@ namespace InstantReview
         public IContainer Container { get; }
         private INavigation Navigation { get; set; }
 
+        private readonly ISettingsStorage settingsStorage;
+        private readonly ILoginPageViewModel LoginPageViewModel;
         private readonly MasterDetailPage masterDetailPage;
         private readonly NavigationPage navigationPage;
 
+        private bool UsagePrivilege => LoginPageViewModel.CheckUsagePrivileges();
+        
         public App(ContainerBuilder containerBuilder)
         {
             InitializeComponent();
@@ -30,7 +35,10 @@ namespace InstantReview
 
             Container = CreateContainer(containerBuilder);
 
-            navigationPage.PushAsync(CreateMainPage());
+            navigationPage.PushAsync(!UsagePrivilege
+                ? new LoginPage(Container.Resolve<ILoginPageViewModel>())
+                : CreateMainPage());
+            
             masterDetailPage = CreateMasterDetailPage(navigationPage);
             MainPage = masterDetailPage;
         }

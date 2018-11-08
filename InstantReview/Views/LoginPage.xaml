@@ -67,7 +67,9 @@
                 Type = RelativeToParent,
                 Property = Height,
                 Factor = .90}">
-                <Button Text ="Don't have an account?" HorizontalOptions ="Center"></Button>
+                <Button Text ="PRESS ME TO LOG IN" 
+                        HorizontalOptions ="Center"
+                        Command="{Binding LoginCommand}"></Button>
 
 
             </StackLayout>

@@ -14,6 +14,7 @@ namespace InstantReview.Droid
             var builder = new ContainerBuilder();
             builder.RegisterType<DialogService>().As<IDialogService>().SingleInstance();
             builder.RegisterType<UriTool>().AsSelf().SingleInstance();
+            builder.RegisterType<SettingsStorage>().As<ISettingsStorage>().SingleInstance();
             builder.RegisterType<ShareIntentReceiver>().As<IShareIntentReceiver>().SingleInstance();
             builder.RegisterInstance(myReceiver).AsImplementedInterfaces();
 
