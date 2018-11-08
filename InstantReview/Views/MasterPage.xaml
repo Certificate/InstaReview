@@ -2,13 +2,23 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="InstantReview.Views.MasterPage"
-             Title="MasterPageTitle">
+             Title="MasterPageTitle"
+             BackgroundColor="DimGray">
 
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="This is the MasterPage page, which is accessible from the hamburger menu."
+            <Label Text="This is the MasterDetailPage"
                 VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+                HorizontalOptions="CenterAndExpand"
+                   TextColor="White"/>
+
+            <Button 
+                   Margin="20,20"
+                   Text="LOG OUT"
+                   TextColor="Salmon"
+                   Command="{Binding LogOutCommand}"
+                   HorizontalOptions="FillAndExpand">
+            </Button>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
