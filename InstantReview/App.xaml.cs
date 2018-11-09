@@ -72,6 +72,11 @@ namespace InstantReview
                     ? new LoginPage(Container.Resolve<ILoginPageViewModel>())
                     : CreateMainPage(), Navigation.NavigationStack.First());
                 await Navigation.PopToRootAsync();
+
+                if (!UsagePrivilege)
+                {
+                    masterDetailPage.IsPresented = false;
+                }
             });
         }
 
