@@ -4,6 +4,10 @@
              xmlns:local="clr-namespace:InstantReview" 
              x:Class="InstantReview.MainPage"
              Title="MAIN PAGE">
+    
+    <ContentPage.ToolbarItems> 
+        <ToolbarItem Text="ADD REVIEW" Clicked="NewReview_Clicked"/>
+    </ContentPage.ToolbarItems>
 
 
     <StackLayout BackgroundColor="FloralWhite">
@@ -23,22 +27,5 @@
                       Review" />
             </Label.Text>
         </Label>
-
-        <!--<Image>
-            <Image.Triggers>
-                <DataTrigger></DataTrigger>
-            </Image.Triggers>
-        </Image>-->
-
-        <Button Text="New review"
-                TextColor="Salmon"
-                BackgroundColor="DimGray"
-                HorizontalOptions="Center" 
-                VerticalOptions="CenterAndExpand"
-                WidthRequest="150"
-                Margin="15, 15, 15, 15"
-                Command="{Binding NewReviewCommand}"></Button>
-
-        <Image></Image>
     </StackLayout>
 </ContentPage>

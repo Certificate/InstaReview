@@ -20,5 +20,10 @@ namespace InstantReview
         {
             InitializeComponent();
         }
+
+        private void NewReview_Clicked(object sender, EventArgs e)
+        {
+            //TODO: Add review 
+        }
     }
 }
