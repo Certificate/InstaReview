@@ -58,7 +58,7 @@
 
                 <!--Edit button-->
                 <Button Text="Edit" TextColor="FloralWhite" BackgroundColor="Salmon" BorderColor="FloralWhite" BorderWidth="2" Grid.Row="6"
-                        Grid.Column="1" Grid.ColumnSpan="3" VerticalOptions="Center" />
+                        Grid.Column="1" Grid.ColumnSpan="3" VerticalOptions="Center" Command="{Binding DoneCommand}"/>
             </Grid>
         </ScrollView>
     </ContentPage.Content>

@@ -17,6 +17,5 @@ namespace InstantReview.Views
 	        InitializeComponent();
 	        BindingContext = viewModel;
 	    }
-
     }
 }
