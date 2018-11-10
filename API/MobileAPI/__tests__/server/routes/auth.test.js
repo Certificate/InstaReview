@@ -65,30 +65,6 @@ describe('Auth route', () => {
         });
     });
 
-    describe('secret', () => {
-        it('should return status 401', (done) => {
-            chai
-                .request(server)
-                .get(secret)
-                .end((err, res) => {
-                    expect(res.status).to.equal(401);
-                    expect(res.body).to.be.empty;
-                    done();
-                })
-        });
-
-        it('should return status 200', (done) => {
-            chai
-                .request(server)
-                .get(secret)
-                .set('Authorization', token)
-                .end((err, res) => {
-                    expect(res.status).to.equal(200);
-                    done();
-                });
-        });
-    });
-
     describe('login', () => {
         it('should return 400 if no email and password is sent', (done) => {
             let user = {};

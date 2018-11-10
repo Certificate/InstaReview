@@ -16,11 +16,13 @@ module.exports = {
         
         //Check for existing user accounts
         if( await User.findOne({where: {email}}) ) {
-            return res
+            let error = 'User already exists.';
+            res
                 .status(409)
                 .json({
-                    error: 'User already exists.'
+                    error
                 });
+            return Promise.reject(error);
         }
 
         //Create a new user
@@ -34,27 +36,28 @@ module.exports = {
         //Respond with token
         const token = signToken(newUser);
         res.status(200).json({ token });
+
+        return Promise.resolve('next');
     },
 
     logIn: async(req, res, next) => {
         const token = signToken(req.user);
         res.status(200).json({ token });
+
+        return Promise.resolve('next');
     },
 
     logInGoogle: async(req, res, next) => {
         const token = signToken(req.user);
         res.status(200).json({ token });
+
+        return Promise.resolve('next');
     },
 
     logInFacebook: async(req, res, next) => {
         const token = signToken(req.user);
-        console.log(req.user);
         res.status(200).json({ token });
-    },
 
-    secret: async(req, res, next) => {
-        console.log('AuthController.secret() called');
-        const secret = 'asd';
-        res.status(200).json({ secret });
+        return Promise.resolve('next');
     }
 }

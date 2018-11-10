@@ -23,6 +23,4 @@ if(process.env.USE_FACEBOOK_AUTH) {
     router.use('/facebook', passportAuthenticate.facebook, AuthController.logInFacebook);
 }
 
-router.use('/secret', passportAuthenticate.jwt, AuthController.secret);
-
 module.exports = router;

@@ -43,18 +43,6 @@ describe('Auth controller', () => {
         sandbox.restore();
     });
 
-    describe('secret', () => {
-        it('should return when called', () => {
-            sandbox.spy(console, 'log');
-            sandbox.spy(res, 'json');
-
-            return controller.secret(req, res).then(() => {
-                expect(console.log).to.have.been.called;
-                expect(res.json).to.have.been.calledWith({ secret: 'asd' });
-            });
-        });
-    });
-
     describe('login', () => {
         it('should return token when login is called', () => {
             sandbox.spy(res, 'json');
