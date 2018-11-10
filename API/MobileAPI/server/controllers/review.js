@@ -1,4 +1,5 @@
-const { Review, Application} = require('../database/models');
+const { Review, Application, Image } = require('../database/models');
+const fs = require('fs');
 
 module.exports = {
     create: async(req, res, next) => {
@@ -61,6 +62,46 @@ module.exports = {
         }
 
         res.status(200).json(review.toJSON());
+
+        return Promise.resolve('next');
+    },
+
+    imageUpload: async(req, res, next) => {
+        const image = req.file;
+        const { reviewId } = req.body;
+
+        if(!image) {
+            let error = 'No image received.'
+            res
+                .status(400)
+                .json({
+                    error
+                });
+            return Promise.reject(error);
+        }
+
+        console.log(image);
+
+        if(!reviewId || (reviewId && !await Review.findOne({where: {id: reviewId}}))) {
+            //Remove the image, since we don't want to save it if we can't link it to a review
+            await fs.unlink(image.destination + image.filename);
+
+            let error = 'No review id was given or couldn\'t find a review with given id.';
+            res
+                .status(400)
+                .json({
+                    error
+                });
+            return Promise.reject(error);
+        }
+
+        const newImage = Image.build({
+            reviewId,
+            fileName: image.filename
+        });
+        newImage.save();
+
+        res.status(200).json(newImage.toJSON());
 
         return Promise.resolve('next');
     }
