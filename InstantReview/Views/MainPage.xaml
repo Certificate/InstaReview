@@ -6,7 +6,7 @@
              Title="MAIN PAGE">
     
     <ContentPage.ToolbarItems> 
-        <ToolbarItem Text="ADD REVIEW" Clicked="NewReview_Clicked"/>
+        <ToolbarItem  Text="ADD" Icon="baseline_add_white_36.png" Clicked="NewReview_Clicked"/>
     </ContentPage.ToolbarItems>
 
 
