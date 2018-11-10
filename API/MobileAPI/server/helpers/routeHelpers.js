@@ -19,6 +19,17 @@ module.exports = {
         authSchema: Joi.object().keys({
             email: Joi.string().email().required(),
             password: Joi.string().required()
+        }),
+        reviewSchema: Joi.object().keys({
+            appId: Joi.number().integer().required(),
+            temporalContext: Joi.string().required().valid(['Intensive', 'Allocative']),
+            spatialContext: Joi.string().required().valid(['Visiting', 'Traveling', 'Wandering']),
+            socialContext: Joi.string().required().valid(['Constraining', 'Encouraging']),
+            textReview: Joi.string().required()
+        }),
+        applicationSchema: Joi.object().keys( {
+            name: Joi.string().required(),
+            operatingSystem: Joi.string().required().valid(['Android', 'iOS'])
         })
     }
 }

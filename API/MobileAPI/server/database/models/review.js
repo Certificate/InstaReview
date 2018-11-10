@@ -35,7 +35,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         textReview: {
             type: DataTypes.TEXT,
-            allowNull: true
+            allowNull: false
         }
     });
 

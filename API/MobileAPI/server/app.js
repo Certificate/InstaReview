@@ -43,5 +43,7 @@ app.use(bodyParser.json());
 
 //Routes
 app.use('/auth', require('./routes/auth'));
+app.use('/review', require('./routes/review'));
+app.use('/application', require('./routes/application'));
 
 module.exports = { app, dbSync };

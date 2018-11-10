@@ -3,24 +3,22 @@ module.exports = (sequelize, DataTypes) => {
         id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
-            autoIncrement: true
+            autoIncrement: true,
         },
         name: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: false,
         },
         operatingSystem: {
             type: DataTypes.ENUM('Android', 'iOS'),
-            allowNull: false
+            allowNull: false,
         }
-    },
-    {
-        indexes: [
-            {
-                unique: true,
-                fields: ["name"]
+    }, {
+        scopes: {
+            public: {
+                attributes: { exclude: ['createdAt', 'updatedAt']}
             }
-        ]
+        }
     });
 
     return Application;
