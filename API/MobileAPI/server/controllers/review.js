@@ -85,14 +85,12 @@ module.exports = {
             return Promise.reject(error);
         }
 
-        console.log(image);
-
         if(!reviewId || (reviewId && !await Review.findOne({where: {id: reviewId}}))) {
             //Remove the image, since we don't want to save it if we can't link it to a review
             await fs.unlink(image.destination + image.filename);
 
             let error = 'No review id was given or couldn\'t find a review with given id.';
-            res.status(400)
+            res.status(404)
                 .json({error});
             return Promise.reject(error);
         }
@@ -120,7 +118,7 @@ module.exports = {
         //Retrieve the image from the db
         const image = await Image.findOne({where: {fileName}});
         if(!image) {
-            let error = 'File doesn\'t exist';
+            let error = 'Image doesn\'t exist';
             res.status(404)
                 .json({error});
             return Promise.reject(error);
@@ -147,7 +145,9 @@ module.exports = {
         res.download(saveDir + image.fileName, function(err) {
             if(err) {
                 console.log('Failed to download image:', err);
-                res.status(404);
+                res.status(404).json({
+                    error: "Failed to retrieve the image file"
+                });
                 return Promise.reject(err);
             } else {
                 res.status(200);
