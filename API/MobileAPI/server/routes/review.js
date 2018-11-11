@@ -23,6 +23,8 @@ router.use('/create', passportAuth, validateBody(schemas.reviewSchema), ReviewCo
 
 router.use('/get/:id', passportAuth, ReviewController.fetch);
 
+router.use('/list', passportAuth, ReviewController.fetchAll);
+
 router.use('/image/upload', passportAuth, uploader.single('screenshot'), ReviewController.imageUpload);
 
 router.use('/image/download/:filename', passportAuth, ReviewController.imageDownload)

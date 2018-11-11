@@ -57,6 +57,23 @@ module.exports = {
         return Promise.resolve('next');
     },
 
+    fetchAll: async(req, res, next) => {
+        let reviews = await Review.findAll({where: {userId: req.user.id}});
+        if(!reviews) {
+            res.status(200)
+                .json([]);
+            return Promise.resolve('next');
+        }
+
+        reviews = reviews.map(review => {
+            return review.toJSON();
+        });
+
+        res.status(200).json(reviews);
+
+        return Promise.resolve('next');
+    },
+
     imageUpload: async(req, res, next) => {
         const image = req.file;
         const { reviewId } = req.body;
