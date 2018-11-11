@@ -13,4 +13,7 @@ models = {
     Image: sequelize.import(__dirname + '/models/image'),
 }
 
+//Set up association relations
+models.Review.hasMany(models.Image, {as: 'images', foreignKey: 'reviewId', sourceKey: 'id'});
+
 module.exports = models;

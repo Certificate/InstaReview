@@ -10,7 +10,7 @@ const passportAuth = passport.authenticate('jwt', { session: false });
 const multer = require('multer');
 const path = require('path');
 const storage = multer.diskStorage({
-    destination: './review_images/',
+    destination: process.env.IMAGE_SAVE_DIR || './review_images/',
     filename: function(req, file, next) {
         return next(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
     }
@@ -23,6 +23,8 @@ router.use('/create', passportAuth, validateBody(schemas.reviewSchema), ReviewCo
 
 router.use('/get/:id', passportAuth, ReviewController.fetch);
 
-router.use('/image/upload', passportAuth, uploader.single('screenshot'), ReviewController.imageUpload)
+router.use('/image/upload', passportAuth, uploader.single('screenshot'), ReviewController.imageUpload);
+
+router.use('/image/download/:filename', passportAuth, ReviewController.imageDownload)
 
 module.exports = router;
