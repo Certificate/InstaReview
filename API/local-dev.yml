@@ -8,13 +8,17 @@ services:
     ports:
       - 3306:3306
     environment:
-      - MYSQL_ROOT_PASSWORD:development
+      - MYSQL_ROOT_PASSWORD=development
+      - MYSQL_USER=reviewcollector
+      - MYSQL_PASSWORD=development
+      - MYSQL_DATABASE=ReviewCollector
     volumes:
       - ./Design/:/usr/mysql
     
 
   mobile-api:
     build: ./MobileAPI
+    restart: on-failure
     volumes:
       - ./MobileAPI:/usr/src/app
     ports:

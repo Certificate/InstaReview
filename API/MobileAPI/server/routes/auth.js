@@ -7,8 +7,8 @@ const passportConfig = require('../passport-config');
 const passportAuthenticate = {
     local: passport.authenticate('local', { session: false }),
     jwt: passport.authenticate('jwt', { session: false }),
-    google: passport.authenticate('googleToken', { session: false }),
-    facebook: passport.authenticate('facebookToken', { session: false })
+    google: process.env.USE_GOOGLE_AUTH ? passport.authenticate('googleToken', { session: false }) : null,
+    facebook: process.env.USE_FACEBOOK_AUTH ? passport.authenticate('facebookToken', { session: false }) : null
 }
 
 /**

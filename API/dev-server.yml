@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  mysql:
+    container_name: reviewcollector_mysql
+    restart: always
+    image: mysql:5.7
+    environment:
+      - MYSQL_ROOT_PASSWORD=
+      - MYSQL_USER=
+      - MYSQL_PASSWORD=
+      - MYSQL_DATABASE=
+    volumes:
+      - ./MobileAPI/mysql_data:/var/lib/mysql
+    ports:
+      - 3306:3306
+
+  mobile-api:
+    container_name: reviewcollector_api
+    build: ./MobileAPI
+    volumes:
+      - ./MobileAPI/review_images:/usr/src/app/review_images
+    ports:
+      - 80:80
+    links:
+      - mysql:database
+    depends_on:
+      - mysql
