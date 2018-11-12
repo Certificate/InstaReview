@@ -1,7 +1,14 @@
 ﻿using System;
+using System.IdentityModel.Tokens.Jwt;
+using System.Net.Http;
+using System.Runtime.Serialization;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using Common.Logging;
 using InstantReview.Droid;
 using InstantReview.ViewModels;
+using Newtonsoft.Json;
 
 namespace InstantReview.Login
 {
@@ -15,28 +22,67 @@ namespace InstantReview.Login
             this.storage = storage;
         }
 
-        public void SaveUsagePrivileges()
+        public void SaveUsagePrivileges(string token)
         {
-            Log.Debug("Save usage privilege.");
-            storage.SetValue("user", "toBeHashed");
+            storage.SetValue("user", token);
         }
 
         public bool CheckUsagePrivileges()
         {
             var hasPrivilege = false;
-            Log.Debug("Read usage privilege");
             var readValue = storage.GetValue("user", string.Empty);
-            if (readValue != String.Empty)
+            if (readValue != String.Empty && CheckTokenValidity(readValue))
             {
                 hasPrivilege = true;
             }
-            Log.Debug(": " + readValue);
             return hasPrivilege;
         }
 
         public void DeletePrivileges()
         {
             storage.RemoveValue("user");
+        }
+
+        public async Task<HttpResponseMessage> Login(string email, string password)
+        {
+            var infos = new LoginInfo {password = password, email = email};
+
+            HttpResponseMessage response;
+            using (var client = new HttpClient())
+            {
+                var content = new StringContent(JsonConvert.SerializeObject(infos), Encoding.UTF8, "application/json");
+                response = await client.PostAsync("http://165.227.140.152/auth/login", content, CancellationToken.None);
+            }
+
+            return response;
+        }
+
+        public bool CheckTokenValidity(string token)
+        {
+            bool active = false;
+
+            JwtSecurityTokenHandler reader = new JwtSecurityTokenHandler();
+            var jwtToken = reader.ReadJwtToken(token);
+
+            var expirationDate = jwtToken.ValidTo;
+            var currentDateTime = DateTime.UtcNow;
+            if (expirationDate >= currentDateTime)
+            {
+                Log.Debug("Token is still valid. ");
+                active = true;
+            }
+            else
+            {
+                Log.Debug("Token not valid. Need to log in again.");
+            }
+
+            return active;
+        }
+
+        protected class LoginInfo
+        {
+            public string email;
+            public string password;
         }
     }
 }

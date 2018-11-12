@@ -51,8 +51,8 @@
                 Factor = 1,
                 Constant = 50}">
 
-                <Entry Keyboard ="Email" Placeholder ="Email"></Entry>
-                <Entry IsPassword ="True" Placeholder ="Password"></Entry>
+                <Entry Keyboard ="Email" Placeholder ="Email" Text="{Binding Username}"></Entry>
+                <Entry IsPassword ="True" Placeholder ="Password" Text="{Binding Password}"></Entry>
                 <Button Text ="Sign in" HorizontalOptions ="End" Command="{Binding LoginCommand}"></Button>
 
             </StackLayout>
