@@ -67,9 +67,9 @@
                 Type = RelativeToParent,
                 Property = Height,
                 Factor = .90}">
-                <Button Text ="Forgot Password?" 
+                <Button Text ="Register" 
                         HorizontalOptions ="Center"
-                        Command="{Binding ForgotPwCommand}"></Button>
+                        Command="{Binding RegisterCommand}"></Button>
 
 
             </StackLayout>

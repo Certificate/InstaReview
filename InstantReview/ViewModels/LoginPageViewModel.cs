@@ -18,16 +18,61 @@ namespace InstantReview.ViewModels
     public class LoginPageViewModel : BaseViewModel ,ILoginPageViewModel
     {
         public event EventHandler<EventArgs> LoginSuccessful;
+        private readonly IDialogService dialogService;
         private static readonly ILog Log = LogManager.GetLogger<LoginPageViewModel>();
         private static readonly HttpClient client = new HttpClient();
         private readonly ILoginHandler loginHandler;
 
-        public LoginPageViewModel(ILoginHandler loginHandler)
+        public LoginPageViewModel(ILoginHandler loginHandler, IDialogService dialogService)
         {
             this.loginHandler = loginHandler;
+            this.dialogService = dialogService;
         }
 
         public ICommand LoginCommand => new Command(StartLoginProcess);
+
+        public ICommand RegisterCommand => new Command(RegisterUser);
+
+        private async void RegisterUser()
+        {
+            var success = false;
+            try
+            {
+                var response = await loginHandler.Register(Username, password);
+                if (response.StatusCode != HttpStatusCode.OK)
+                {
+                    throw new Exception("Response was not OK. Aborting.");
+                }
+
+                var token = JsonConvert.DeserializeObject<Response>(await response.Content.ReadAsStringAsync());
+
+                var isActive = loginHandler.CheckTokenValidity(token.token);
+
+                if (isActive)
+                {
+                    loginHandler.SaveUsagePrivileges(token.token);
+                    success = true;
+                }
+            }
+            catch (Exception e)
+            {
+                Log.Error("Error while logging in!", e);
+            }
+            finally
+            {
+                Password = string.Empty;
+                OnPropertyChanged(nameof(Password));
+            }
+
+            if (success)
+            {
+                Log.Debug("Logged in successfully!");
+                Username = string.Empty;
+                OnPropertyChanged(nameof(Username));
+                dialogService.showRegisteredDialog();
+                LoginSuccessful?.Invoke(this, EventArgs.Empty);
+            }
+        }
 
         private async void StartLoginProcess()
         {
@@ -47,6 +92,7 @@ namespace InstantReview.ViewModels
                 if (isActive)
                 {
                     loginHandler.SaveUsagePrivileges(token.token);
+                    dialogService.ShowLoginToast();
                     success = true;
                 }
             }

@@ -17,6 +17,12 @@ namespace InstantReview.Login
         private readonly ISettingsStorage storage;
         private static readonly ILog Log = LogManager.GetLogger<LoginPageViewModel>();
 
+        private const string baseAddress = "http://165.227.140.152/";
+        private const string registerPortal = "auth/signup";
+        private const string loginPortal = "auth/login";
+
+
+
         public LoginHandler(ISettingsStorage storage)
         {
             this.storage = storage;
@@ -43,6 +49,20 @@ namespace InstantReview.Login
             storage.RemoveValue("user");
         }
 
+        public async Task<HttpResponseMessage> Register(string email, string password)
+        {
+            var infos = new LoginInfo { password = password, email = email };
+
+            HttpResponseMessage response;
+            using (var client = new HttpClient())
+            {
+                var content = new StringContent(JsonConvert.SerializeObject(infos), Encoding.UTF8, "application/json");
+                response = await client.PostAsync(baseAddress + registerPortal, content, CancellationToken.None);
+            }
+
+            return response;
+        }
+
         public async Task<HttpResponseMessage> Login(string email, string password)
         {
             var infos = new LoginInfo {password = password, email = email};
@@ -51,7 +71,7 @@ namespace InstantReview.Login
             using (var client = new HttpClient())
             {
                 var content = new StringContent(JsonConvert.SerializeObject(infos), Encoding.UTF8, "application/json");
-                response = await client.PostAsync("http://165.227.140.152/auth/login", content, CancellationToken.None);
+                response = await client.PostAsync(baseAddress + loginPortal, content, CancellationToken.None);
             }
 
             return response;
