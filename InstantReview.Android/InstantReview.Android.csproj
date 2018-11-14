@@ -69,6 +69,7 @@
     <Compile Include="Logging\LogCatLogger.cs" />
     <Compile Include="Logging\LogCatLoggerFactoryAdapter.cs" />
     <Compile Include="MainActivity.cs" />
+    <Compile Include="PicturePicker.cs" />
     <Compile Include="Receivers\ShareIntentReceiver.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

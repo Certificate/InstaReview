@@ -95,7 +95,7 @@ namespace InstantReview
 
         private Page CreateMainPage()
         {
-            return new MainPage(Container.Resolve<MainPageViewModel>());
+            return new MainPage(Container.Resolve<MainPageViewModel>(), Container.Resolve<IPicturePicker>());
         }
 
         private NavigationPage CreateNavigationPage()

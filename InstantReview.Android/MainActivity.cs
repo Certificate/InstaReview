@@ -1,5 +1,6 @@
 ﻿using System;
-
+using System.IO;
+using System.Threading.Tasks;
 using Android.App;
 using Android.Content;
 using Android.Content.PM;
@@ -55,6 +56,26 @@ namespace InstantReview.Droid
             myReceiver.RequestPermision();
             myReceiver.OnReceive(this, Intent);
         }
+        
+        // Field, property, and method for Picture Picker
+        public static readonly int PickImageId = 1000;
+
+        public TaskCompletionSource<Stream> PickImageTaskCompletionSource { set; get; }
+
+        protected override void OnActivityResult(int requestCode, Result resultCode, Intent intent)
+        {
+            base.OnActivityResult(requestCode, resultCode, intent);
+
+            if (requestCode == PickImageId)
+            {
+                if ((resultCode == Result.Ok) && (intent != null))
+                {
+                    Android.Net.Uri uri = intent.Data;
+                    myReceiver.ImageFromUri(uri);
+                }
+            }
+        }
+
     }
 }
 

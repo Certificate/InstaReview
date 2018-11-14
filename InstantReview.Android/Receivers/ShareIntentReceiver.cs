@@ -11,6 +11,7 @@ using Android.Widget;
 using Common.Logging;
 using InstantReview.Receivers;
 using Xamarin.Forms;
+using Uri = Android.Net.Uri;
 
 
 namespace InstantReview.Droid.Receivers
@@ -30,6 +31,8 @@ namespace InstantReview.Droid.Receivers
             Log.Debug($"Received an event: {intent}");
             if (intent.Action.Equals(Intent.ActionSend))
             {
+                //TODO: Sharing got broken when implementing image picker.
+                
                 Log.Debug("Action directed to ACTION_SEND");
                 var uri = (Android.Net.Uri) intent.GetParcelableExtra(Intent.ExtraStream);
                 var uriTool = new UriTool();
@@ -71,6 +74,13 @@ namespace InstantReview.Droid.Receivers
                         new String[] { Manifest.Permission.ReadExternalStorage }, 1);
                 }
             }
+        }
+
+        public void ImageFromUri(Uri uri)
+        {
+            var uriTool = new UriTool();
+            ImagePath = uriTool.GetActualPathFromFile(uri);
+            ItemsReceivedEvent?.Invoke(this, EventArgs.Empty);
         }
     }
 }

@@ -9,6 +9,7 @@ namespace InstantReview.Receivers
         event EventHandler<EventArgs> ItemsReceivedEvent;
 
         Image UserImage { get; set; }
+        
         string ImagePath { get; set; }
     }
 }
