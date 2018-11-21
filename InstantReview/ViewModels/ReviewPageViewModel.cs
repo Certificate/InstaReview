@@ -13,19 +13,19 @@ namespace InstantReview.ViewModels
         private static readonly ILog Log = LogManager.GetLogger<ReviewPageViewModel>();
         public event EventHandler<EventArgs> ViewModelReadyEvent;
         private readonly IShareIntentReceiver intentReceiver;
-        private readonly ThankYouPageViewModel thankYouPageViewModel;
+        private readonly QuestionPageViewModel questionPageViewModel;
         private readonly IPageFactory pageFactory;
         private readonly INavigation navigation;
 
         //TODO: Find out max image dimensions
         public string ImagePath { get; set; }
 
-        public ReviewPageViewModel(IShareIntentReceiver intentReceiver, IPageFactory pageFactory, INavigation navigation, ThankYouPageViewModel thankYouPageViewModel)
+        public ReviewPageViewModel(IShareIntentReceiver intentReceiver, IPageFactory pageFactory, INavigation navigation, QuestionPageViewModel questionPageViewModel)
         {
             this.intentReceiver = intentReceiver;
             this.pageFactory = pageFactory;
             this.navigation = navigation;
-            this.thankYouPageViewModel = thankYouPageViewModel;
+            this.questionPageViewModel = questionPageViewModel;
             intentReceiver.ItemsReceivedEvent += IntentReceiverOnItemsReceivedEvent;
         }
 
@@ -41,12 +41,12 @@ namespace InstantReview.ViewModels
         
         public async void NavigateToThankYouPage(){
             Log.Debug("Navigating to Reviews!");
-            await navigation.PushAsyncSingle(CreateThankYouPage());
+            await navigation.PushAsyncSingle(CreateQuestionsPage());
         }
 
-        private Page CreateThankYouPage()
+        private Page CreateQuestionsPage()
         {
-            return pageFactory.CreatePage<ThankYouPage, ThankYouPageViewModel>(thankYouPageViewModel);
+            return pageFactory.CreatePage<QuestionPage, QuestionPageViewModel>(questionPageViewModel);
         }
     }
 }
