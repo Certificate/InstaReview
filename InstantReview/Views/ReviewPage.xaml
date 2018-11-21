@@ -3,7 +3,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="InstantReview.Views.ReviewPage"
-             Title="NEW REVIEW">
+             Title="IMAGE">
 
     <ContentPage.Content>
 
@@ -14,7 +14,6 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="10" />
                     <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
                     <RowDefinition Height="*" />
                     <RowDefinition Height="*" />
                     <RowDefinition Height="*" />
@@ -38,26 +37,12 @@
 
 
               <!--Question 1-->
-                <Label Text="Question 1" Grid.Row="2" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" />
-                <Switch IsToggled="false" Grid.Row="2" Grid.Column="3" HorizontalOptions="End" VerticalOptions="Center" />
+                <Label Text="Additional information:" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" HorizontalOptions="Start" VerticalOptions="Center" />
+                <Entry Text="{Binding AdditionalInfoText}" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" Placeholder="Type here..." PlaceholderColor="Gray"></Entry>
 
-
-                <!--Question 2-->
-                <Label Text="Question 2" Grid.Row="3" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" />
-                <Switch IsToggled="false" Grid.Row="3" Grid.Column="3" HorizontalOptions="End" VerticalOptions="Center" />
-
-
-                <!--Question 3-->
-                <Label Text="Question 3" Grid.Row="4" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" />
-                <Switch IsToggled="false" Grid.Row="4" Grid.Column="3" HorizontalOptions="End" VerticalOptions="Center" />
-
-
-                <!--Question 4-->
-                <Label Text="Question 4" Grid.Row="5" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" />
-                <Switch IsToggled="false" Grid.Row="5" Grid.Column="3" HorizontalOptions="End" VerticalOptions="Center" />
 
                 <!--Edit button-->
-                <Button Text="Edit" TextColor="FloralWhite" BackgroundColor="Salmon" BorderColor="FloralWhite" BorderWidth="2" Grid.Row="6"
+                <Button Text="Next" TextColor="FloralWhite" BackgroundColor="Salmon" BorderColor="FloralWhite" BorderWidth="2" Grid.Row="5"
                         Grid.Column="1" Grid.ColumnSpan="3" VerticalOptions="Center" Command="{Binding DoneCommand}"/>
             </Grid>
         </ScrollView>

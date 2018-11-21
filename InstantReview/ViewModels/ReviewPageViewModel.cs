@@ -20,6 +20,8 @@ namespace InstantReview.ViewModels
         //TODO: Find out max image dimensions
         public string ImagePath { get; set; }
 
+        public string AdditionalInfoText { get; set; }
+
         public ReviewPageViewModel(IShareIntentReceiver intentReceiver, IPageFactory pageFactory, INavigation navigation, QuestionPageViewModel questionPageViewModel)
         {
             this.intentReceiver = intentReceiver;

@@ -17,5 +17,10 @@ namespace InstantReview.Views
 			InitializeComponent ();
 		    BindingContext = viewModel;
 		}
-	}
+
+	    protected override bool OnBackButtonPressed()
+	    {
+	        return true;
+	    }
+    }
 }
