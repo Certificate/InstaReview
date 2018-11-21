@@ -13,9 +13,6 @@
     <Compile Remove="EmptyClass.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Update="QuestionPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
     <EmbeddedResource Update="Views\MasterPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>

@@ -32,7 +32,6 @@ namespace InstantReview
 
             navigationPage.PushAsync(CreateMainPage());
             masterDetailPage = CreateMasterDetailPage(navigationPage);
-            MainPage = masterDetailPage;
         }
 
         private MasterDetailPage CreateMasterDetailPage(Page detailPage)
