@@ -35,26 +35,26 @@
 
               <!--Question 1-->
                 <Label Text="Question 1" Grid.Row="2" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" />
-                <Switch IsToggled="false" Grid.Row="2" Grid.Column="3" HorizontalOptions="End" VerticalOptions="Center" />
+                <Switch IsToggled="{Binding Q1Toggled}" Grid.Row="2" Grid.Column="3" HorizontalOptions="End" VerticalOptions="Center"  />
 
 
                 <!--Question 2-->
                 <Label Text="Question 2" Grid.Row="3" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" />
-                <Switch IsToggled="false" Grid.Row="3" Grid.Column="3" HorizontalOptions="End" VerticalOptions="Center" />
+                <Switch IsToggled="{Binding Q2Toggled}" Grid.Row="3" Grid.Column="3" HorizontalOptions="End" VerticalOptions="Center" />
 
 
                 <!--Question 3-->
                 <Label Text="Question 3" Grid.Row="4" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" />
-                <Switch IsToggled="false" Grid.Row="4" Grid.Column="3" HorizontalOptions="End" VerticalOptions="Center" />
+                <Switch IsToggled="{Binding Q3Toggled}" Grid.Row="4" Grid.Column="3" HorizontalOptions="End" VerticalOptions="Center" />
 
 
                 <!--Question 4-->
                 <Label Text="Question 4" Grid.Row="5" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" />
-                <Switch IsToggled="false" Grid.Row="5" Grid.Column="3" HorizontalOptions="End" VerticalOptions="Center" />
+                <Switch IsToggled="{Binding Q4Toggled}" Grid.Row="5" Grid.Column="3" HorizontalOptions="End" VerticalOptions="Center" />
 
                 <!--Edit button-->
                 <Button Text="Edit" TextColor="FloralWhite" BackgroundColor="Salmon" BorderColor="FloralWhite" BorderWidth="2" Grid.Row="6"
-                        Grid.Column="1" Grid.ColumnSpan="3" VerticalOptions="Center" />
+                        Grid.Column="1" Grid.ColumnSpan="3" VerticalOptions="Center" Command="{Binding CheckResultCommand}"/>
             </Grid>
    
 	    </ScrollView>
