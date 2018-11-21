@@ -19,18 +19,14 @@ namespace InstantReview.Droid.Dialogs
         public void showAlert(string text)
         {
             AlertDialog.Builder alert = new AlertDialog.Builder(context);
-            alert.SetTitle(text);
-            alert.SetMessage("General Kenobi!");
-            alert.SetPositiveButton("Hello There!", (senderAlert, args) => {
-                Toast.MakeText(context, "Fight!!", Short).Show();
+            alert.SetTitle("Hi!");
+            alert.SetMessage(text);
+            alert.SetPositiveButton("Ok", (senderAlert, args) => {
             });
-
-            alert.SetNegativeButton("<do nothing>", (senderAlert, args) => {
-                Toast.MakeText(context, "You escaped!", Short).Show();
+            alert.SetNegativeButton("nah", (senderAlert, args) => {
             });
 
             Dialog dialog = alert.Create();
-            Console.WriteLine("YEAAHH BOII");
             dialog.Show();
         }
 
