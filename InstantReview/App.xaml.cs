@@ -44,7 +44,6 @@ namespace InstantReview
                 : CreateMainPage());
             
             masterDetailPage = CreateMasterDetailPage(navigationPage);
-            MainPage = masterDetailPage;
         }
 
         private void OnLoginStateChanged(object sender, EventArgs e)
