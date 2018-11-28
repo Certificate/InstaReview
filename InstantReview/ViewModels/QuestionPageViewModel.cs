@@ -63,12 +63,12 @@ namespace InstantReview.ViewModels
 
         }
 
-        public void NavigateToThankYouPage()
+        public async void NavigateToThankYouPage()
         {
             AddQuestionsToDataCollector();
             
             Log.Debug("Navigating to Reviews!");
-            navigation.PushAsyncSingle(CreateThankYouPage());
+            await navigation.PushAsyncSingle(CreateThankYouPage());
         }
 
         private Page CreateThankYouPage()

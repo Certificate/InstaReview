@@ -7,10 +7,9 @@ namespace InstantReview
 
         public ReviewData Data;
 
-        public ReviewData InitializeDataCollector()
+        public void InitializeDataCollector()
         {
-            var data = new ReviewData();
-            return data;
+            Data = new ReviewData();
         }
 
         public string GenerateReviewText()
