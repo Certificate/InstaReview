@@ -2,19 +2,26 @@
 
 namespace InstantReview
 {
-    public class ReviewDataCollector : IReviewDataCollector
+    public class ReviewDataCollector
     {
 
         public ReviewData Data;
 
         public ReviewData InitializeDataCollector()
         {
-            ReviewData data = new ReviewData();
+            var data = new ReviewData();
             return data;
         }
 
-
-
+        public string GenerateReviewText()
+        {
+            return $"IP: {Data.ImagePath}, " +
+                       $"AddInfo: {Data.AdditionalInfo}, " +
+                       $"Q1:{Data.Question1}, " +
+                       $"Q2:{Data.Question2}, " +
+                       $"Q3:{Data.Question3}, " +
+                       $"Q4:{Data.Question4}";
+        }
 
         public class ReviewData
         {

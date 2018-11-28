@@ -16,18 +16,20 @@ namespace InstantReview.ViewModels
         private readonly QuestionPageViewModel questionPageViewModel;
         private readonly IPageFactory pageFactory;
         private readonly INavigation navigation;
+        private readonly ReviewDataCollector dataCollector;
 
         //TODO: Find out max image dimensions
         public string ImagePath { get; set; }
 
         public string AdditionalInfoText { get; set; }
 
-        public ReviewPageViewModel(IShareIntentReceiver intentReceiver, IPageFactory pageFactory, INavigation navigation, QuestionPageViewModel questionPageViewModel)
+        public ReviewPageViewModel(IShareIntentReceiver intentReceiver, IPageFactory pageFactory, INavigation navigation, QuestionPageViewModel questionPageViewModel, ReviewDataCollector dataCollector)
         {
             this.intentReceiver = intentReceiver;
             this.pageFactory = pageFactory;
             this.navigation = navigation;
             this.questionPageViewModel = questionPageViewModel;
+            this.dataCollector = dataCollector;
             intentReceiver.ItemsReceivedEvent += IntentReceiverOnItemsReceivedEvent;
         }
 
@@ -39,9 +41,19 @@ namespace InstantReview.ViewModels
             ViewModelReadyEvent?.Invoke(this, EventArgs.Empty);
         }
         
-        public ICommand DoneCommand => new Command(NavigateToThankYouPage);
+        public ICommand DoneCommand => new Command(NavigateToQuestionsPage);
         
-        public async void NavigateToThankYouPage(){
+        public async void NavigateToQuestionsPage()
+        {
+            Log.Debug("Initializing DataCollector");
+            dataCollector.InitializeDataCollector();
+            
+            Log.Debug("Adding additional info text to data collector");
+            dataCollector.Data.AdditionalInfo = AdditionalInfoText;
+            
+            Log.Debug("Adding ImagePath");
+            dataCollector.Data.ImagePath = this.ImagePath;
+            
             Log.Debug("Navigating to Reviews!");
             await navigation.PushAsyncSingle(CreateQuestionsPage());
         }
