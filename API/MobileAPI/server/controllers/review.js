@@ -16,7 +16,7 @@ module.exports = {
             let error = 'Could not find application data with given appId';
             res.status(400)
                 .json({error});
-            return Promise.reject(error);
+            return Promise.reject(new Error(error));
         }
 
         //Build a new review
@@ -41,7 +41,7 @@ module.exports = {
             let error = 'No review id given!';
             res.status(400)
                 .json({error});
-            return Promise.reject(error);
+            return Promise.reject(new Error(error));
         }
 
         const review = await Review.findOne({where: {id, userId: req.user.id}, include: ['images']});
@@ -49,7 +49,7 @@ module.exports = {
             let error = 'Could not find a review with given id and credentials';
             res.status(404)
                 .json({error})
-            return Promise.reject(error);
+            return Promise.reject(new Error(error));
         }
 
         res.status(200).json(review.toJSON());
@@ -82,7 +82,7 @@ module.exports = {
             let error = 'No image received.'
             res.status(400)
                 .json({error});
-            return Promise.reject(error);
+            return Promise.reject(new Error(error));
         }
 
         if(!reviewId || (reviewId && !await Review.findOne({where: {id: reviewId}}))) {
@@ -92,7 +92,7 @@ module.exports = {
             let error = 'No review id was given or couldn\'t find a review with given id.';
             res.status(404)
                 .json({error});
-            return Promise.reject(error);
+            return Promise.reject(new Error(error));
         }
 
         const newImage = Image.build({
@@ -112,7 +112,7 @@ module.exports = {
             let error = 'Filename missing!';
             res.status(400)
                 .json({error});
-            return Promise.reject(error);
+            return Promise.reject(new Error(error));
         }
 
         //Retrieve the image from the db
@@ -121,7 +121,7 @@ module.exports = {
             let error = 'Image doesn\'t exist';
             res.status(404)
                 .json({error});
-            return Promise.reject(error);
+            return Promise.reject(new Error(error));
         }
 
         //Retrieve the corresponding review from db
@@ -130,7 +130,7 @@ module.exports = {
             let error = 'Couldn\'t find a review containing the image';
             res.status(404)
                 .json({error});
-            return Promise.reject(error);
+            return Promise.reject(new Error(error));
         }
 
         //Check that the user is the one that also created/owns the review
@@ -138,7 +138,7 @@ module.exports = {
             let error = 'No permissions to access the file';
             res.status(403)
                 .json({error});
-            return Promise.reject(error);
+            return Promise.reject(new Error(error));
         }
 
         const saveDir = process.env.IMAGE_SAVE_DIR || './review_images/';
@@ -148,7 +148,7 @@ module.exports = {
                 res.status(404).json({
                     error: "Failed to retrieve the image file"
                 });
-                return Promise.reject(err);
+                return Promise.reject(new Error(err));
             } else {
                 res.status(200);
                 return Promise.resolve('next');

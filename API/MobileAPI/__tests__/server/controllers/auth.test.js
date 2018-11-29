@@ -12,6 +12,7 @@ const { User } = require('../../../server/database/models');
 const controller = rewire('../../../server/controllers/auth.js');
 
 chai.use(sinonChai);
+chai.use(require('chai-as-promised'));
 
 let sandbox = null;
 
@@ -74,10 +75,10 @@ describe('Auth controller', () => {
             sandbox.spy(res, 'status');
             sandbox.stub(User, 'findOne').returns(Promise.resolve({ id: faker.random.number() }));
 
-            return controller.signUp(req, res).then(() => {
+            return expect(controller.signUp(req, res).then(() => {
                 expect(res.status).to.have.been.calledWith(409);
                 expect(res.json).to.have.been.calledWith({ error: 'User already exists.' });
-            });
+            })).to.be.rejectedWith(Error, "User already exists.");
         });
 
         it('should return 200 if user is not in db and was saved', () => {

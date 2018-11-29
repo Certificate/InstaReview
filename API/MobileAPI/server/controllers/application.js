@@ -15,7 +15,7 @@ module.exports = {
                 .json({
                     error
                 });
-            return Promise.reject(error);
+            return Promise.reject(new Error(error));
         }
 
         const newApplication = Application.build({

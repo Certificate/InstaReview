@@ -22,7 +22,7 @@ module.exports = {
                 .json({
                     error
                 });
-            return Promise.reject(error);
+            return Promise.reject(new Error(error));
         }
 
         //Create a new user

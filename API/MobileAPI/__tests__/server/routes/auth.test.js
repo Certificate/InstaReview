@@ -16,7 +16,6 @@ let token;
 describe('Auth route', () => {
     const signup = '/auth/signup';
     const login = '/auth/login';
-    const secret = '/auth/secret';
     const user = { email: faker.internet.email(), password: faker.internet.password() };
     const preSave = { email: 'joe.average@gmail.com', password: faker.internet.password() };
 
