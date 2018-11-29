@@ -133,6 +133,55 @@
   },
   {
     "type": "get",
+    "url": "/application/find/:searchParameter",
+    "title": "Find application data by parameter",
+    "name": "GetApplicationByName",
+    "group": "Application",
+    "header": {
+      "fields": {
+        "Authentication": [
+          {
+            "group": "Authentication",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Authorization token</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "searchParameter",
+            "description": "<p>ID/Name/Operating system of application(s)</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Application[]",
+            "optional": false,
+            "field": "applications",
+            "description": "<p>List of applications matching given parameter</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "server/routes/application.js",
+    "groupTitle": "Application"
+  },
+  {
+    "type": "get",
     "url": "/application/list",
     "title": "Lists data of all saved applications",
     "name": "GetApplicationsAll",
@@ -165,7 +214,7 @@
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "HTTP/1.1 200 OK\n[\n    {\n        \"id\": 1,\n        \"name\": \"Application Name\",\n        \"operatingSystem\": \"Android\",\n        \"updatedAt\": \"1970-01-01T00:00:00.00Z\",\n        \"createdAt\": \"1970-01-01T00:00:00.00Z\"\n    }\n]",
+          "content": "HTTP/1.1 200 OK\n[\n    {\n        \"id\": 1,\n        \"name\": \"Application Name\",\n        \"operatingSystem\": \"Android\",\n    }\n]",
           "type": "json"
         }
       ]

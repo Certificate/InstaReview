@@ -94,7 +94,7 @@ router.use('/add', passportAuth, validateBody(schemas.applicationSchema), Applic
 router.use('/list', passportAuth, ApplicationController.listAll);
 
 /**
- * @api {get} /application/find/:searchParameter Returns a list of applications matching the given parameter
+ * @api {get} /application/find/:searchParameter Find application data by parameter
  * @apiName GetApplicationByName
  * @apiGroup Application
  * 
