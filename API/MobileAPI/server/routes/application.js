@@ -86,13 +86,23 @@ router.use('/add', passportAuth, validateBody(schemas.applicationSchema), Applic
  *          "id": 1,
  *          "name": "Application Name",
  *          "operatingSystem": "Android",
- *          "updatedAt": "1970-01-01T00:00:00.00Z",
- *          "createdAt": "1970-01-01T00:00:00.00Z"
  *      }
  *  ]
  * 
  * @apiUse UserAuthenticationFailed
  */
 router.use('/list', passportAuth, ApplicationController.listAll);
+
+/**
+ * @api {get} /application/find/:searchParameter Returns a list of applications matching the given parameter
+ * @apiName GetApplicationByName
+ * @apiGroup Application
+ * 
+ * @apiHeader (Authentication) {String} Authorization Authorization token
+ * @apiParam {String} searchParameter ID/Name/Operating system of application(s)
+ * 
+ * @apiSuccess {Application[]} applications List of applications matching given parameter
+ */
+router.use('/find/:searchParam', passportAuth, ApplicationController.findApps);
 
 module.exports = router;

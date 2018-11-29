@@ -1,4 +1,4 @@
-const { Application } = require('../database/models');
+const { Application, Sequelize } = require('../database/models');
 
 module.exports = {
     add: async (req, res, next) => {
@@ -37,6 +37,37 @@ module.exports = {
 
         res.status(200).json(applications);
         
+        return Promise.resolve('next');
+    },
+
+    findApps: async(req, res, next) => {
+        const operators = Sequelize.Op;
+        const searchParam = req.params.searchParam;
+        
+        let applications = [];
+        if(searchParam) {
+            //Param given
+            applications = await Application.scope('public').findAll({
+                where: {
+                    [operators.or]: [
+                        { id: searchParam },
+                        { name: { [operators.like]: '%' + searchParam + '%' } },
+                        { operatingSystem: { [operators.like]: '%' + searchParam + '%' } }
+                    ]
+                }
+            });
+        } else {
+            //No param, find all
+            applications = await Application.scope('public').findAll();
+        }
+
+        //Convert list to json
+        applications = applications.map(application => {
+            return application.toJSON();
+        });
+
+        res.status(200).json(applications);
+
         return Promise.resolve('next');
     }
 }
