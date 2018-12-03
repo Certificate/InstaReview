@@ -21,11 +21,11 @@ namespace InstantReview.ViewModels
         private readonly IDialogService dialogService;
         private static readonly ILog Log = LogManager.GetLogger<LoginPageViewModel>();
         private static readonly HttpClient client = new HttpClient();
-        private readonly ILoginHandler loginHandler;
+        private readonly IConnectionHandler _connectionHandler;
 
-        public LoginPageViewModel(ILoginHandler loginHandler, IDialogService dialogService)
+        public LoginPageViewModel(IConnectionHandler connectionHandler, IDialogService dialogService)
         {
-            this.loginHandler = loginHandler;
+            this._connectionHandler = connectionHandler;
             this.dialogService = dialogService;
         }
 
@@ -38,7 +38,7 @@ namespace InstantReview.ViewModels
             var success = false;
             try
             {
-                var response = await loginHandler.Register(Username, password);
+                var response = await _connectionHandler.Register(Username, password);
                 if (response.StatusCode != HttpStatusCode.OK)
                 {
                     throw new Exception("Response was not OK. Aborting.");
@@ -46,11 +46,11 @@ namespace InstantReview.ViewModels
 
                 var token = JsonConvert.DeserializeObject<Response>(await response.Content.ReadAsStringAsync());
 
-                var isActive = loginHandler.CheckTokenValidity(token.token);
+                var isActive = _connectionHandler.CheckTokenValidity(token.token);
 
                 if (isActive)
                 {
-                    loginHandler.SaveUsagePrivileges(token.token);
+                    _connectionHandler.SaveUsagePrivileges(token.token);
                     success = true;
                 }
             }
@@ -79,7 +79,7 @@ namespace InstantReview.ViewModels
             var success = false;
             try
             {
-                var response = await loginHandler.Login(Username, password);
+                var response = await _connectionHandler.Login(Username, password);
                 if (response.StatusCode != HttpStatusCode.OK)
                 {
                     throw new Exception("Response was not OK. Aborting.");
@@ -87,11 +87,11 @@ namespace InstantReview.ViewModels
 
                 var token = JsonConvert.DeserializeObject<Response>(await response.Content.ReadAsStringAsync());
 
-                var isActive = loginHandler.CheckTokenValidity(token.token);
+                var isActive = _connectionHandler.CheckTokenValidity(token.token);
 
                 if (isActive)
                 {
-                    loginHandler.SaveUsagePrivileges(token.token);
+                    _connectionHandler.SaveUsagePrivileges(token.token);
                     dialogService.ShowLoginToast();
                     success = true;
                 }

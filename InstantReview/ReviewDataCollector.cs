@@ -22,6 +22,13 @@ namespace InstantReview
                        $"Q4:{Data.Question4}";
         }
 
+        public string ToSerializedFormat()
+        {
+            string serialized = Newtonsoft.Json.JsonConvert.SerializeObject(Data);
+            return serialized;
+        }
+    }
+
         public class ReviewData
         {
             public string ImagePath { get; set; }

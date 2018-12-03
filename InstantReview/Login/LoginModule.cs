@@ -6,7 +6,7 @@ namespace InstantReview.Login
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<LoginHandler>().As<ILoginHandler>().SingleInstance();
+            builder.RegisterType<ConnectionHandler>().As<IConnectionHandler>().SingleInstance();
         }
     }
 }

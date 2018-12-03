@@ -12,18 +12,18 @@ namespace InstantReview.ViewModels
 
         public event EventHandler<EventArgs> LogoutSuccessful;
 
-        private readonly ILoginHandler login;
+        private readonly IConnectionHandler _connection;
 
-        public MasterPageViewModel(ILoginHandler login)
+        public MasterPageViewModel(IConnectionHandler connection)
         {
-            this.login = login;
+            this._connection = connection;
         }
 
         public ICommand LogOutCommand => new Command(LogOut);
 
         private void LogOut()
         {
-            login.DeletePrivileges();
+            _connection.DeletePrivileges();
             Log.Debug("Log Out!");
             LogoutSuccessful?.Invoke(this, EventArgs.Empty);
         }
