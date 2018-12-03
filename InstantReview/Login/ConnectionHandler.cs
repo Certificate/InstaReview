@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading;
@@ -12,20 +13,23 @@ using Newtonsoft.Json;
 
 namespace InstantReview.Login
 {
-    public class LoginHandler : ILoginHandler
+    public class ConnectionHandler : IConnectionHandler
     {
         private readonly ISettingsStorage storage;
+        private readonly ReviewDataCollector dataCollector;
         private static readonly ILog Log = LogManager.GetLogger<LoginPageViewModel>();
 
         private const string baseAddress = "http://165.227.140.152/";
         private const string registerPortal = "auth/signup";
         private const string loginPortal = "auth/login";
+        private const string uploadPortal = "review/create";
 
 
 
-        public LoginHandler(ISettingsStorage storage)
+        public ConnectionHandler(ISettingsStorage storage, ReviewDataCollector dataCollector)
         {
             this.storage = storage;
+            this.dataCollector = dataCollector;
         }
 
         public void SaveUsagePrivileges(string token)
@@ -103,6 +107,27 @@ namespace InstantReview.Login
         {
             public string email;
             public string password;
+        }
+
+        public async Task<bool> UploadReview()
+        {
+            var success = false;
+            var data = dataCollector.ToSerializedFormat();
+
+            using (var client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(storage.GetValue("user", string.Empty));
+                var content = new StringContent(data, Encoding.UTF8, "application/json");
+                Log.Debug(content);
+                var response = await client.PostAsync(baseAddress + uploadPortal, content, CancellationToken.None);
+                var responseJson = await response.Content.ReadAsStringAsync();
+                //TODO: Check response & upload image
+            }
+
+
+            //TODO: Update success
+            return success;
+
         }
     }
 }

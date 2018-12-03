@@ -1,9 +1,12 @@
-﻿using Common.Logging.Factory;
+﻿using Common.Logging;
+using Common.Logging.Factory;
+using InstantReview.ViewModels;
 
 namespace InstantReview
 {
     public class ReviewDataCollector
     {
+        private static readonly ILog Log = LogManager.GetLogger<ReviewDataCollector>();
 
         public ReviewData Data;
 
@@ -24,21 +27,34 @@ namespace InstantReview
 
         public string ToSerializedFormat()
         {
-            string serialized = Newtonsoft.Json.JsonConvert.SerializeObject(Data);
+            ReviewJson json = new ReviewJson();
+            json.textReview = GenerateReviewText();
+            json.appId = 1;
+            string serialized = Newtonsoft.Json.JsonConvert.SerializeObject(json);
+            Log.Debug(serialized);
             return serialized;
         }
     }
 
-        public class ReviewData
-        {
-            public string ImagePath { get; set; }
-            public string AdditionalInfo { get; set; }
-            public string Question1 { get; set; }
-            public string Question2 { get; set; }
-            public string Question3 { get; set; }
-            public string Question4 { get; set; }
-        }
+    public class ReviewData
+    {
+        public string ImagePath { get; set; }
+        public string AdditionalInfo { get; set; }
+        public string Question1 { get; set; }
+        public string Question2 { get; set; }
+        public string Question3 { get; set; }
+        public string Question4 { get; set; }
     }
 
-    
+
+    public class ReviewJson
+    {
+        public int appId { get; set; }
+        public string temporalContext = "Intensive";
+        public string spatialContext = "Visiting";
+        public string socialContext = "Constraining";
+        public string textReview { get; set; }
+    }
 }
+
+   
