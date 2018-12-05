@@ -12,6 +12,7 @@ using System.IdentityModel;
 using System.IdentityModel.Tokens.Jwt;
 using System.IO.IsolatedStorage;
 using System.Net;
+using InstantReview.Views;
 
 namespace InstantReview.ViewModels
 {
@@ -22,16 +23,32 @@ namespace InstantReview.ViewModels
         private static readonly ILog Log = LogManager.GetLogger<LoginPageViewModel>();
         private static readonly HttpClient client = new HttpClient();
         private readonly IConnectionHandler _connectionHandler;
+        private readonly INavigation navigation;
+        private readonly IPageFactory pageFactory;
+        private readonly RegisterPageViewModel registerPageViewModel;
 
-        public LoginPageViewModel(IConnectionHandler connectionHandler, IDialogService dialogService)
+        public LoginPageViewModel(IConnectionHandler connectionHandler, IDialogService dialogService, INavigation navigation, IPageFactory pageFactory, RegisterPageViewModel registerPageViewModel)
         {
             this._connectionHandler = connectionHandler;
             this.dialogService = dialogService;
+            this.navigation = navigation;
+            this.pageFactory = pageFactory;
+            this.registerPageViewModel = registerPageViewModel;
         }
 
         public ICommand LoginCommand => new Command(StartLoginProcess);
 
-        public ICommand RegisterCommand => new Command(RegisterUser);
+        public ICommand RegisterCommand => new Command(NavigateToRegisterPage);
+
+        private async void NavigateToRegisterPage()
+        {
+            await navigation.PushAsyncSingle(CreateRegisterPage());
+        }
+
+        private Page CreateRegisterPage()
+        {
+            return pageFactory.CreatePage<RegisterPage, RegisterPageViewModel>(registerPageViewModel);
+        }
 
         private async void RegisterUser()
         {

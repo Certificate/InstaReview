@@ -1,4 +1,7 @@
-$HEADER$namespace $NAMESPACE$
+namespace InstantReview.ViewModels
 {
-  public class $CLASS$ {$END$}
+    public class RegisterPageViewModel
+    {
+        
+    }
 }

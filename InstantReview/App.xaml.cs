@@ -54,7 +54,7 @@ namespace InstantReview
 
         private void UpdateNavigation(object sender, EventArgs eventArgs)
         {
-            // Recreate main page to update translations
+            // Recreate main page to set it as root element after login
             Device.BeginInvokeOnMainThread(async () =>
             {
                 foreach (var page in Navigation.NavigationStack)
@@ -103,7 +103,7 @@ namespace InstantReview
             var page = new NavigationPage()
             {
                 BarBackgroundColor = Color.Salmon,
-                BarTextColor = Color.FloralWhite,
+                BarTextColor = Color.White,
                 
             };
 

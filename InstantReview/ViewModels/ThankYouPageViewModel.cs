@@ -20,12 +20,17 @@ namespace InstantReview.ViewModels
         }
 
 
-        public ICommand HomePageCommand => new Command(CheckResults);
+        public ICommand HomePageCommand => new Command(NavigateToHome);
 
-        private async void CheckResults()
+        private async void NavigateToHome()
         {
+            // TODO: For debug purposes only
             dialogService.showAlert(dataCollector.GenerateReviewText());
+            
+            // Upload review. No need to await in this case.
             connectionHandler.UploadReview();
+            
+            // Pop navigation stack back to home page
             await navigation.PopToRootAsync();
         }
     }
