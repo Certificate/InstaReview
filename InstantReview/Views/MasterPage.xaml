@@ -7,6 +7,15 @@
 
     <ContentPage.Content>
         <StackLayout>
+            
+            <Button Text="Account Details"
+                    Style="{StaticResource AnchorButtonStyle}"
+                    BackgroundColor="DimGray"
+                    HorizontalOptions="FillAndExpand"
+                    Command="{Binding AccountDetailsCommand}"
+                    IsEnabled="True">
+            </Button>
+            
             <Label Text="This is the MasterDetailPage"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand"
@@ -15,7 +24,8 @@
             <Button 
                    Margin="20,20"
                    Text="LOG OUT"
-                   TextColor="Salmon"
+                   TextColor="White"
+                   BackgroundColor="Salmon"
                    Command="{Binding LogOutCommand}"
                    HorizontalOptions="FillAndExpand">
             </Button>

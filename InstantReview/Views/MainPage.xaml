@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
              xmlns:local="clr-namespace:InstantReview" 
              x:Class="InstantReview.MainPage"
-             Title="MAIN PAGE">
+             Title="MAIN PAGE"
+             BackgroundColor="White">
     
     <ContentPage.ToolbarItems> 
         <ToolbarItem  Text="ADD" Icon="baseline_add_white_36.png" Clicked="NewReview_Clicked"/>
