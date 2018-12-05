@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace InstantReview.Login
 {
-    public interface ILoginHandler
+    public interface IConnectionHandler
     {
         void SaveUsagePrivileges(string token);
 
@@ -16,5 +16,7 @@ namespace InstantReview.Login
         bool CheckTokenValidity(string token);
 
         Task<HttpResponseMessage> Register(string email, string password);
+
+        Task<bool> UploadReview();
     }
 }

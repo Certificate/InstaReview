@@ -25,6 +25,7 @@
 
 				<Label Text="Thank You!" FontSize="Large"/>
 				<Label Text="You can now return to the home page" FontSize="Large"/>
+				<Button Text="RETURN TO MAIN PAGE" Command="{Binding HomePageCommand}"></Button>
 
 			</StackLayout>
 

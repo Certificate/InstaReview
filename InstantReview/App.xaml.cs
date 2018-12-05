@@ -23,9 +23,9 @@ namespace InstantReview
 
         private readonly MasterDetailPage masterDetailPage;
         private readonly NavigationPage navigationPage;
-        private readonly ILoginHandler login;
+        private readonly IConnectionHandler _connection;
 
-        private bool UsagePrivilege => login.CheckUsagePrivileges();
+        private bool UsagePrivilege => _connection.CheckUsagePrivileges();
 
         public App(ContainerBuilder containerBuilder)
         {
@@ -36,7 +36,7 @@ namespace InstantReview
 
             Container = CreateContainer(containerBuilder);
 
-            login = Container.Resolve<ILoginHandler>();
+            _connection = Container.Resolve<IConnectionHandler>();
             Container.Resolve<ILoginPageViewModel>().LoginSuccessful += OnLoginStateChanged;
 
             navigationPage.PushAsync(!UsagePrivilege
