@@ -10,6 +10,7 @@ namespace InstantReview
         {
             base.Load(builder);
             builder.RegisterType<MainPageViewModel>().AsSelf().SingleInstance();
+            builder.RegisterType<RegisterPageViewModel>().AsSelf().SingleInstance();
             builder.RegisterType<QuestionPageViewModel>().AsSelf().SingleInstance();
             builder.RegisterType<ThankYouPageViewModel>().AsSelf().SingleInstance();
             builder.RegisterType<LoginPageViewModel>().As<ILoginPageViewModel>().SingleInstance();
