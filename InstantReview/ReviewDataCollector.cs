@@ -28,7 +28,7 @@ namespace InstantReview
         public string ToSerializedFormat()
         {
             ReviewJson json = new ReviewJson();
-            json.textReview = GenerateReviewText();
+            json.textReview = "TestDataForServer";
             json.appId = 1;
             string serialized = Newtonsoft.Json.JsonConvert.SerializeObject(json);
             Log.Debug(serialized);

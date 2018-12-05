@@ -1,5 +1,7 @@
 ﻿using System;
 using System.IdentityModel.Tokens.Jwt;
+using System.IO;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Runtime.Serialization;
@@ -9,6 +11,7 @@ using System.Threading.Tasks;
 using Common.Logging;
 using InstantReview.Droid;
 using InstantReview.ViewModels;
+using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 
 namespace InstantReview.Login
@@ -20,9 +23,10 @@ namespace InstantReview.Login
         private static readonly ILog Log = LogManager.GetLogger<LoginPageViewModel>();
 
         private const string baseAddress = "http://165.227.140.152/";
-        private const string registerPortal = "auth/signup";
-        private const string loginPortal = "auth/login";
-        private const string uploadPortal = "review/create";
+        private const string registerExtension = "auth/signup";
+        private const string loginExtension = "auth/login";
+        private const string uploadReviewExtension = "review/create";
+        private const string uploadImageExtension = "review/image/upload";
 
 
 
@@ -61,7 +65,7 @@ namespace InstantReview.Login
             using (var client = new HttpClient())
             {
                 var content = new StringContent(JsonConvert.SerializeObject(infos), Encoding.UTF8, "application/json");
-                response = await client.PostAsync(baseAddress + registerPortal, content, CancellationToken.None);
+                response = await client.PostAsync(baseAddress + registerExtension, content, CancellationToken.None);
             }
 
             return response;
@@ -75,7 +79,7 @@ namespace InstantReview.Login
             using (var client = new HttpClient())
             {
                 var content = new StringContent(JsonConvert.SerializeObject(infos), Encoding.UTF8, "application/json");
-                response = await client.PostAsync(baseAddress + loginPortal, content, CancellationToken.None);
+                response = await client.PostAsync(baseAddress + loginExtension, content, CancellationToken.None);
             }
 
             return response;
@@ -111,22 +115,56 @@ namespace InstantReview.Login
 
         public async Task<bool> UploadReview()
         {
+            Log.Debug("Uploading review");
             var success = false;
             var data = dataCollector.ToSerializedFormat();
 
             using (var client = new HttpClient())
             {
+                
+                // Set auth header
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(storage.GetValue("user", string.Empty));
                 var content = new StringContent(data, Encoding.UTF8, "application/json");
-                Log.Debug(content);
-                var response = await client.PostAsync(baseAddress + uploadPortal, content, CancellationToken.None);
+                var response = await client.PostAsync(baseAddress + uploadReviewExtension, content, CancellationToken.None);
                 var responseJson = await response.Content.ReadAsStringAsync();
-                //TODO: Check response & upload image
+                var deserialized = Newtonsoft.Json.JsonConvert.DeserializeObject<NewReviewResponse>(responseJson);
+                success = await SendFileToServer(dataCollector.Data.ImagePath, deserialized.id);
             }
 
-
-            //TODO: Update success
+            Log.Debug($"Review upload status: {success}");
             return success;
+
+        }
+
+        
+
+        private async Task<bool> SendFileToServer(string filePath, string id)
+        {
+            var success = false;
+            var fileBytes = File.ReadAllBytes(filePath);
+            using (var client = new HttpClient())
+            {
+                // Set authorization
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(storage.GetValue("user", string.Empty));
+                
+                var content = new MultipartFormDataContent();
+                content.Add(new ByteArrayContent(fileBytes), "screenshot", "testname.jpg");
+                content.Add(new StringContent(id), "reviewId");
+
+                var response = await client.PostAsync(baseAddress + uploadImageExtension, content, CancellationToken.None);
+                if (response.IsSuccessStatusCode)
+                {
+                    success = true;
+                }
+            }
+
+            return success;
+        }
+
+        // Classes to deserialize response from server
+        public class NewReviewResponse
+        {
+            public string id { get; set; }
 
         }
     }

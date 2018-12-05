@@ -5,8 +5,6 @@ namespace InstantReview.Droid
 {
     public class UriTool
     {
-
-        
         public string GetActualPathFromFile(Uri uri)
         {
             string docId;
