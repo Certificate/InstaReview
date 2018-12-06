@@ -63,7 +63,8 @@ if(process.env.USE_GOOGLE_AUTH) {
                 {
                     googleId: google_id, 
                     email: parsedToken.payload.email,
-                    authMethod: User.authMethods.GOOGLE
+                    authMethod: User.authMethods.GOOGLE,
+                    name: parsedToken.payload.name || null,
                 }})
                 .spread((user, created) => {
                     return done(null, user);
@@ -80,11 +81,14 @@ if(process.env.USE_FACEBOOK_AUTH) {
         clientSecret: process.env.FACEBOOK_APP_SECRET
     }, (accessToken, refreshToken, profile, done) => {
         try {
+            console.log(profile);
             User.findOrCreate({where: 
                 {
                     facebookId: profile.id, 
                     email: profile.emails[0].value,
-                    authMethod: User.authMethods.FACEBOOK
+                    authMethod: User.authMethods.FACEBOOK,
+                    name: profile.displayName || null,
+                    gender: profile.gender || null
                 }})
                 .spread((user, created) => {
                     return done(null, user);

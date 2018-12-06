@@ -26,6 +26,18 @@ module.exports = (sequelize, DataTypes) => {
         facebookId: {
             type: DataTypes.STRING,
             allowNull: true
+        },
+        name: {
+            type: DataTypes.STRING,
+            allowNull: true
+        },
+        gender: {
+            type: DataTypes.ENUM('Male', 'Female'),
+            allowNull: true
+        },
+        birthday: {
+            type: DataTypes.DATEONLY,
+            allowNull: true
         }
     },
     {
@@ -34,7 +46,12 @@ module.exports = (sequelize, DataTypes) => {
                 unique: true,
                 fields: ["email"]
             }
-        ]
+        ],
+        scopes: {
+            public: {
+                attributes: { exclude: ['password']}
+            }
+        }
     });
 
     //Use hook to encrypt passwords

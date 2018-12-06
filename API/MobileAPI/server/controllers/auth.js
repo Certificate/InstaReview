@@ -12,7 +12,7 @@ signToken = user => {
 
 module.exports = {
     signUp: async(req, res, next) => {
-        const { email, password } = req.values.body;
+        const { email, password, name, gender, birthday } = req.values.body;
         
         //Check for existing user accounts
         if( await User.findOne({where: {email}}) ) {
@@ -29,7 +29,10 @@ module.exports = {
         const newUser = User.build({
             email,
             password,
-            authMethod: User.authMethods.LOCAL
+            authMethod: User.authMethods.LOCAL,
+            name,
+            gender,
+            birthday
         });
         await newUser.save();
         
