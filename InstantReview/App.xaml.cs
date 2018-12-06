@@ -45,6 +45,11 @@ namespace InstantReview
             
             masterDetailPage = CreateMasterDetailPage(navigationPage);
             MainPage = masterDetailPage;
+
+            if (!UsagePrivilege)
+            {
+                masterDetailPage.IsGestureEnabled = false;
+            }
         }
 
         private void OnLoginStateChanged(object sender, EventArgs e)
@@ -76,6 +81,11 @@ namespace InstantReview
                 if (!UsagePrivilege)
                 {
                     masterDetailPage.IsPresented = false;
+                    masterDetailPage.IsGestureEnabled = false;
+                }
+                else
+                {
+                    masterDetailPage.IsGestureEnabled = true;
                 }
             });
         }
