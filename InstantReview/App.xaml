@@ -16,6 +16,13 @@
                 <Setter Property="BackgroundColor" Value = "White"></Setter>
                 <Setter Property="HeightRequest" Value = "40"></Setter>
             </Style>
+
+            <!-- Label styles-->
+            <Style x:Key="HeadingLabel" TargetType="Label">
+                <Setter Property="FontSize" Value="20" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="TextColor" Value="White" />
+            </Style>
             
             
         </ResourceDictionary>

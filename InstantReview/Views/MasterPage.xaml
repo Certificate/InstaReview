@@ -6,9 +6,26 @@
              BackgroundColor="DimGray">
 
     <ContentPage.Content>
-        <StackLayout>
-            
-            <Button Text="Account Details"
+        <Grid>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2.5*"></RowDefinition>
+                <RowDefinition Height="3.5*"></RowDefinition>
+                <RowDefinition Height="4*"></RowDefinition>
+                <RowDefinition Height="33*"></RowDefinition>
+                <RowDefinition Height="7*"></RowDefinition>
+            </Grid.RowDefinitions>
+
+
+            <Label
+                Grid.Row="1"
+                Text="Navigation"
+                Style="{StaticResource HeadingLabel}"
+                HorizontalOptions="Center">
+            </Label>
+
+            <Button Grid.Row="2" 
+                    Text="Account Details"
                     Style="{StaticResource AnchorButtonStyle}"
                     BackgroundColor="DimGray"
                     HorizontalOptions="FillAndExpand"
@@ -16,19 +33,15 @@
                     IsEnabled="True">
             </Button>
             
-            <Label Text="This is the MasterDetailPage"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand"
-                   TextColor="White"/>
-
-            <Button 
+            <Button Grid.Row="4"
                    Margin="20,20"
                    Text="LOG OUT"
                    TextColor="White"
+                    HeightRequest="40"
                    BackgroundColor="Salmon"
                    Command="{Binding LogOutCommand}"
                    HorizontalOptions="FillAndExpand">
             </Button>
-        </StackLayout>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>
