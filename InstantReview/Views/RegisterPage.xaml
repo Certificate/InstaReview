@@ -19,9 +19,9 @@
 
              <Entry Keyboard="Default" Placeholder="Name"  HorizontalOptions="FillAndExpand"/>
 
-             <Entry Keyboard="Email" Placeholder="Email" Text="{Binding Email}"/>
+             <Entry x:Name="email" Keyboard="Email" Placeholder="Email" Text="{Binding Email}" PropertyChanged="EmailTextChangedEvent"/>
             
-            <Grid Margin="2">
+            <Grid Margin="3">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="5*" />
                     <ColumnDefinition Width="5*" />
@@ -49,25 +49,25 @@
                 
             </Grid>
 
+            <Entry x:Name="password" IsPassword="True" Placeholder="Password" Text="{Binding Password}" PropertyChanged="PasswordTextChanged"/>
 
+            <Entry x:Name="checkPassword" IsPassword="True" Placeholder="Repeat Password" Text="{Binding CheckPassword}" PropertyChanged="PasswordTextChanged"/>
 
-                <Entry IsPassword="True" Placeholder="Password" Text="{Binding Password}"/>
+            <Label x:Name="passwordErrorText" Text="Passwords must match!" TextColor="Red" FontSize="16" FontAttributes="Bold" IsVisible="False" HorizontalOptions="Center"></Label>
 
-                <Entry IsPassword="True" Placeholder="Repeat Password" Text="{Binding CheckPassword}"/>
-
-             <!--Places switch and label to same line using dark magic-->
-             <StackLayout Orientation="Horizontal">
-                 <Switch IsToggled="false" HorizontalOptions="Start"/>
-                 <Label Text="I agree with the terms and conditions" FontSize="17" ></Label>
-             </StackLayout>
-             
-            <Label></Label>
             
-            <Button Text="Create account"
+             <!--Places switch and label to same line using dark magic-->
+             <!-- <StackLayout Orientation="Horizontal"> -->
+             <!--     <Switch IsToggled="false" HorizontalOptions="Start"/> -->
+             <!--     <Label Text="I agree with the terms and conditions" FontSize="17" ></Label> -->
+             <!-- </StackLayout> -->
+             
+            <Button x:Name="registerButton"
+                    Text="Create account"
                     Style="{StaticResource AnchorButtonStyle}"
                     HorizontalOptions="Center"
                     Command="{Binding RegisterCommand}"
-                    IsEnabled="True"
+                    IsEnabled="False"
                     BorderWidth="1"
                     BorderColor="Salmon">
             </Button>

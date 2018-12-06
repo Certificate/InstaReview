@@ -58,6 +58,7 @@ namespace InstantReview.ViewModels
             catch (ArgumentException e)
             {
                 Log.Error("Password mismatch!", e);
+                dialogService.showAlert("Passwords do not match!");
             }
             catch (Exception e)
             {
@@ -86,10 +87,10 @@ namespace InstantReview.ViewModels
             public string token;
         }
 
-        public string Email { get; set; }
+        public string Email { get; set; } = string.Empty;
 
-        public string Password { get; set; }
+        public string Password { get; set; } = string.Empty;
 
-        public string CheckPassword { get; set; }
+        public string CheckPassword { get; set; } = string.Empty;
     }
 }
