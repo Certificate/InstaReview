@@ -264,13 +264,34 @@
             "optional": false,
             "field": "password",
             "description": "<p>Plain-text password, will be encrypted before saving</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "name",
+            "description": "<p>Name of the user (optional)</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "gender",
+            "description": "<p>Gender of the user, valid values are [&quot;Male&quot;, &quot;Female&quot;] (optional)</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "birthday",
+            "description": "<p>Date of birth of the user (optional)</p>"
           }
         ]
       },
       "examples": [
         {
           "title": "Request-Example:",
-          "content": "{\n    \"email\": \"example@example.com\",\n    \"password\": \"password\"\n}",
+          "content": "{\n    \"email\": \"example@example.com\",\n    \"password\": \"password\",\n    \"name\": \"Tom Tester\",\n    \"gender\": \"Male\",\n    \"birthday\": \"12/24/2018\"\n}",
           "type": "json"
         }
       ]
@@ -658,6 +679,20 @@
             "group": "Success 200",
             "type": "Number",
             "optional": false,
+            "field": "id",
+            "description": "<p>Id of the review in the database</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "userId",
+            "description": "<p>Id of the user in the database</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
             "field": "appId",
             "description": "<p>Database ID of the application this review is about</p>"
           },
@@ -915,6 +950,20 @@
             "group": "Success 200",
             "type": "Number",
             "optional": false,
+            "field": "id",
+            "description": "<p>Id of the review in the database</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "userId",
+            "description": "<p>Id of the user in the database</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
             "field": "appId",
             "description": "<p>Database ID of the application this review is about</p>"
           },
@@ -1003,6 +1052,20 @@
     "success": {
       "fields": {
         "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>Id of the review in the database</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "userId",
+            "description": "<p>Id of the user in the database</p>"
+          },
           {
             "group": "Success 200",
             "type": "Number",

@@ -47,6 +47,8 @@ const uploader = multer({
  /**
   * @apiDefine ReviewExampleObject
   * 
+  * @apiSuccess {Number} id Id of the review in the database
+  * @apiSuccess {Number} userId Id of the user in the database
   * @apiSuccess {Number} appId Database ID of the application this review is about
   * @apiSuccess {String} temporalContext Temporal context of the review. Valid values are ["Intensive", "Allocative"].
   * @apiSuccess {String} spatialContext Spatial context of the review. Valid values are ["Visiting", "Traveling", "Wandering"].

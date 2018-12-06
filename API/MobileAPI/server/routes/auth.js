@@ -54,10 +54,16 @@ const passportAuthenticate = {
   * 
   * @apiParam {String} email Email to register with
   * @apiParam {String} password Plain-text password, will be encrypted before saving
+  * @apiParam {String} name Name of the user (optional)
+  * @apiParam {String} gender Gender of the user, valid values are ["Male", "Female"] (optional)
+  * @apiParam {String} birthday Date of birth of the user (optional)
   * @apiParamExample {json} Request-Example:
   *     {
   *         "email": "example@example.com",
-  *         "password": "password"
+  *         "password": "password",
+  *         "name": "Tom Tester",
+  *         "gender": "Male",
+  *         "birthday": "12/24/2018"
   *     }
   * 
   * @apiUse AuthenticationSuccess
