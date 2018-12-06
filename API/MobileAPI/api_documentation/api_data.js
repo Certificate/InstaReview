@@ -868,6 +868,230 @@ define({ "api": [
     "groupTitle": "Review"
   },
   {
+    "type": "post",
+    "url": "/review/edit",
+    "title": "Edit a review",
+    "name": "EditReview",
+    "group": "Review",
+    "header": {
+      "fields": {
+        "Authentication": [
+          {
+            "group": "Authentication",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Authorization token</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>Id of the review to be edited</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "appId",
+            "description": "<p>Database ID of the application this review is about</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "temporalContext",
+            "description": "<p>Temporal context of the review. Valid values are [&quot;Intensive&quot;, &quot;Allocative&quot;].</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "spatialContext",
+            "description": "<p>Spatial context of the review. Valid values are [&quot;Visiting&quot;, &quot;Traveling&quot;, &quot;Wandering&quot;].</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "socialContext",
+            "description": "<p>Social context of the review. Valid values are ['Constraining', 'Encouraging'].</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "textReview",
+            "description": "<p>The text review itself.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n    \"id\": 1,\n    \"appId\": 1,\n    \"temporalContext\": \"Intensive\",\n    \"spatialContext\": \"Visiting\",\n    \"socialContext\": \"Constraining\",\n    \"textReview\": \"This is a review.\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "NoReviewID",
+            "description": "<p>No review ID was given (parameter missing).</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "ApplicationNotFound",
+            "description": "<p>Failed to fetch data for the application the review is supposedly written about.</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "ReviewNotFound",
+            "description": "<p>Failed to find a review with the id and user credentials</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "UserAuthenticationFailed",
+            "description": "<p>Failed to authenticate user with the authentication token (might be missing).</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "ValidationError",
+            "description": "<p>Failed to validate body</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "NoReviewID",
+          "content": "HTTP/1.1 400 Bad Request\n{\n    \"error\": \"No id for the review was given for it to be edited\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "ApplicationNotFound",
+          "content": "HTTP/1.1 400 Bad Request\n{\n    \"error\": \"Could not find application data with given appId\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "ReviewNotFound",
+          "content": "HTTP/1.1 404 Not Found\n{\n    \"error\": \"Could not find a review with given id and credentials\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "UserAuthenticationFailed",
+          "content": "HTTP/1.1 401 Unauthorized\nUnauthorized",
+          "type": "json"
+        },
+        {
+          "title": "ValidationError",
+          "content": "HTTP/1.1 400 Bad Request\n{\n    \"name\": \"ValidationError\",\n    \"details\": [\n        {\n            ...\n        }\n    ]\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "server/routes/review.js",
+    "groupTitle": "Review",
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>Id of the review in the database</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "userId",
+            "description": "<p>Id of the user in the database</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "appId",
+            "description": "<p>Database ID of the application this review is about</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "temporalContext",
+            "description": "<p>Temporal context of the review. Valid values are [&quot;Intensive&quot;, &quot;Allocative&quot;].</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "spatialContext",
+            "description": "<p>Spatial context of the review. Valid values are [&quot;Visiting&quot;, &quot;Traveling&quot;, &quot;Wandering&quot;].</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "socialContext",
+            "description": "<p>Social context of the review. Valid values are ['Constraining', 'Encouraging'].</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "textReview",
+            "description": "<p>The text review itself.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "updatedAt",
+            "description": "<p>Timestamp of last modification</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "createdAt",
+            "description": "<p>Timestamp of creation</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Image[]",
+            "optional": false,
+            "field": "images",
+            "description": "<p>List of Image-objects containing information of the screenshots for this review. This is only included when fetching a single review (see &quot;Request Review Information&quot;).</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n{\n    \"id\": 1,\n    \"userId\": 1,\n    \"appId\": 1,\n    \"temporalContext\": \"Allocative\",\n    \"spatialContext\": \"Wandering\",\n    \"socialContext\": \"Encouraging\",\n    \"textReview\": \"I found an issue with...\",\n    \"updatedAt\": \"1970-01-01T00:00:00.00Z\",\n    \"createdAt\": \"1970-01-01T00:00:00.00Z\",\n    \"images\": []\n}",
+          "type": "json"
+        }
+      ]
+    }
+  },
+  {
     "type": "get",
     "url": "/review/get/:id",
     "title": "Request Review information",

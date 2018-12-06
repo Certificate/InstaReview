@@ -1,6 +1,6 @@
 {
     "name": "InstaReview API",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "description": "Documentation for the API of the InstaReview mobile application. Most requests in this use JSON-objects in the request body.",
     "order": [
         "Authentication",

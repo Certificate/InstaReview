@@ -1,4 +1,4 @@
-const { Review, Application, Image } = require('../database/models');
+const { Review, Application, Image, sequelize } = require('../database/models');
 const fs = require('fs');
 
 module.exports = {
@@ -33,6 +33,58 @@ module.exports = {
         res.status(200).json(newReview.toJSON());
 
         return Promise.resolve('next');
+    },
+
+    edit: async(req, res, next) => {
+        const {
+            id,
+            appId,
+            temporalContext,
+            spatialContext,
+            socialContext,
+            textReview
+        } = req.values.body;
+
+        //Check that id was given
+        if (!id) {
+            let error = 'No id for the review was given for it to be edited';
+            res.status(400)
+                .json({error});
+            return Promise.reject(new Error(error));
+        }
+
+        //Start a transaction
+        sequelize.transaction(async transaction => {
+            //Fetch the review for editing
+            let review = await Review.findOne({where: {id, userId: req.user.id}, transaction});
+
+            if(!review) {
+                let error = 'Could not find a review with given id and credentials';
+                res.status(400)
+                    .json({error});
+                return Promise.reject(new Error(error));
+            }
+
+            //Check that there's data for the application with given appId
+            if( !await Application.findOne({where: {id: appId} }) ) {
+                let error = 'Could not find application data with given appId';
+                res.status(400)
+                    .json({error});
+                return Promise.reject(new Error(error));
+            }
+
+            //Update values
+            review = Object.assign(review, { appId, temporalContext, spatialContext, socialContext, textReview })
+            await review.save(transaction);
+
+            res.status(200).json(review);
+
+            return Promise.resolve();
+        }).then(() => {
+            return Promise.resolve('next');
+        }).catch((error) => {
+            return Promise.reject(error);
+        });
     },
 
     fetch: async(req, res, next) => {

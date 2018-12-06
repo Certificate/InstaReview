@@ -108,6 +108,56 @@ const uploader = multer({
 router.use('/create', passportAuth, validateBody(schemas.reviewSchema), ReviewController.create);
 
 /**
+ * @api {post} /review/edit Edit a review
+ * @apiName EditReview
+ * @apiGroup Review
+ * 
+ * @apiHeader (Authentication) {String} Authorization Authorization token
+ * @apiParam {Number} id Id of the review to be edited
+ * @apiParam {Number} appId Database ID of the application this review is about
+ * @apiParam {String} temporalContext Temporal context of the review. Valid values are ["Intensive", "Allocative"].
+ * @apiParam {String} spatialContext Spatial context of the review. Valid values are ["Visiting", "Traveling", "Wandering"].
+ * @apiParam {String} socialContext Social context of the review. Valid values are ['Constraining', 'Encouraging'].
+ * @apiParam {String} textReview The text review itself.
+ * @apiParamExample {json} Request-Example:
+ *  {
+ *      "id": 1,
+ *      "appId": 1,
+ *      "temporalContext": "Intensive",
+ *      "spatialContext": "Visiting",
+ *      "socialContext": "Constraining",
+ *      "textReview": "This is a review."
+ *  }
+ * 
+ * @apiUse ReviewExampleObject
+ * 
+ * @apiUse UserAuthenticationFailed
+ * @apiUse ValidationError
+ * 
+ * @apiError NoReviewID No review ID was given (parameter missing).
+ * @apiErrorExample {json} NoReviewID
+ *  HTTP/1.1 400 Bad Request
+ *  {
+ *      "error": "No id for the review was given for it to be edited"
+ *  }
+ * 
+ * @apiError ApplicationNotFound Failed to fetch data for the application the review is supposedly written about.
+ * @apiErrorExample {json} ApplicationNotFound
+ *  HTTP/1.1 400 Bad Request
+ *  {
+ *      "error": "Could not find application data with given appId"
+ *  }
+ * 
+ * @apiError ReviewNotFound Failed to find a review with the id and user credentials
+ * @apiErrorExample {json} ReviewNotFound
+ *  HTTP/1.1 404 Not Found
+ *  {
+ *      "error": "Could not find a review with given id and credentials"
+ *  }
+ */
+router.use('/edit', passportAuth, validateBody(schemas.reviewSchema), ReviewController.edit);
+
+/**
  * @api {get} /review/get/:id Request Review information
  * @apiName GetReview
  * @apiGroup Review
@@ -238,6 +288,6 @@ router.use('/image/upload', passportAuth, uploader.single('screenshot'), ReviewC
  *      "error": "Failed to retrieve the image file"
  *  }
  */
-router.use('/image/download/:filename', passportAuth, ReviewController.imageDownload)
+router.use('/image/download/:filename', passportAuth, ReviewController.imageDownload);
 
 module.exports = router;

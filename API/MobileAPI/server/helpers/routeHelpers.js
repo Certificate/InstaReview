@@ -24,6 +24,7 @@ module.exports = {
             birthday: Joi.date()
         }),
         reviewSchema: Joi.object().keys({
+            id: Joi.number().integer(),
             appId: Joi.number().integer().required(),
             temporalContext: Joi.string().required().valid(['Intensive', 'Allocative']),
             spatialContext: Joi.string().required().valid(['Visiting', 'Traveling', 'Wandering']),
