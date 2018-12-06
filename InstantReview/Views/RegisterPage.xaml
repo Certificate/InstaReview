@@ -19,7 +19,7 @@
 
              <Entry Keyboard="Default" Placeholder="Name"  HorizontalOptions="FillAndExpand"/>
 
-             <Entry Keyboard="Email" Placeholder="Email"/>
+             <Entry Keyboard="Email" Placeholder="Email" Text="{Binding Email}"/>
             
             <Grid Margin="2">
                 <Grid.ColumnDefinitions>
@@ -49,11 +49,11 @@
                 
             </Grid>
 
-             
 
-             <Entry IsPassword="True" Placeholder="Password"/>
 
-             <Entry IsPassword="True" Placeholder="Repeat Password"/>
+                <Entry IsPassword="True" Placeholder="Password" Text="{Binding Password}"/>
+
+                <Entry IsPassword="True" Placeholder="Repeat Password" Text="{Binding CheckPassword}"/>
 
              <!--Places switch and label to same line using dark magic-->
              <StackLayout Orientation="Horizontal">
