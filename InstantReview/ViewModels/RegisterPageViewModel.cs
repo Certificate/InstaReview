@@ -39,7 +39,7 @@ namespace InstantReview.ViewModels
                     throw new ArgumentException("Passwords do not match");
                 }
 
-                var response = await connectionHandler.Register(Email, Password);
+                var response = await connectionHandler.Register(Email, Password, Name, Birthday.ToString("MM/dd/yyyy"), Gender);
                 if (response.StatusCode != HttpStatusCode.OK)
                 {
                     throw new Exception("Response was not OK. Aborting.");
@@ -92,5 +92,11 @@ namespace InstantReview.ViewModels
         public string Password { get; set; } = string.Empty;
 
         public string CheckPassword { get; set; } = string.Empty;
+
+        public string Name { get; set; }
+        
+        public string Gender { get; set; }
+        
+        public DateTime Birthday { get; set; }
     }
 }

@@ -57,9 +57,9 @@ namespace InstantReview.Login
             storage.RemoveValue("user");
         }
 
-        public async Task<HttpResponseMessage> Register(string email, string password)
+        public async Task<HttpResponseMessage> Register(string email, string password, string name = "", string birthday = "", string gender = "")
         {
-            var infos = new LoginInfo { password = password, email = email };
+            var infos = new LoginInfo { password = password, email = email, birthday = birthday, gender = gender, name = name};
 
             HttpResponseMessage response;
             using (var client = new HttpClient())
@@ -111,6 +111,9 @@ namespace InstantReview.Login
         {
             public string email;
             public string password;
+            public string name;
+            public string birthday;
+            public string gender;
         }
 
         public async Task<bool> UploadReview()

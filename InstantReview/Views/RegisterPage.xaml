@@ -17,7 +17,7 @@
              <!--Empty space under Big label text-->
              <BoxView VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" />
 
-             <Entry Keyboard="Default" Placeholder="Name"  HorizontalOptions="FillAndExpand"/>
+             <Entry Keyboard="Default" Placeholder="Name"  HorizontalOptions="FillAndExpand" Text="{Binding Name}"/>
 
              <Entry x:Name="email" Keyboard="Email" Placeholder="Email" Text="{Binding Email}" PropertyChanged="EmailTextChangedEvent"/>
             
@@ -34,7 +34,7 @@
                 
                 <Label Grid.Column="0" Grid.Row="0" Text="Gender" FontSize="17" ></Label>
                 <!--Gender picker-->
-                <Picker Grid.Column="0" Grid.Row="1" SelectedIndex="0" HorizontalOptions="FillAndExpand">
+                <Picker Grid.Column="0" Grid.Row="1" SelectedIndex="0" HorizontalOptions="FillAndExpand" SelectedItem="{Binding Gender}">
                     <Picker.Items>
                         <x:String>Male</x:String>
                         <x:String>Female</x:String>
@@ -43,7 +43,7 @@
 
                 <Label Grid.Column="1" Grid.Row="0" Text="Birthdate" FontSize="17" ></Label>
                 <!--Birthdate picker - Datetime==systems current date - date can be chosen from 1.1.1900 to 31.12.2100-->
-                <DatePicker Grid.Column="1" Grid.Row="1" VerticalOptions="CenterAndExpand" MinimumDate="01/01/1900" MaximumDate="{x:Static sys:DateTime.Now}" Date="1.1.1990">
+                <DatePicker Grid.Column="1" Grid.Row="1" VerticalOptions="CenterAndExpand" MinimumDate="01/01/1900" MaximumDate="{x:Static sys:DateTime.Now}" Date="{Binding Birthday}">
                     <DatePicker.Format>dd-MM-yyyy</DatePicker.Format>
                 </DatePicker>
                 

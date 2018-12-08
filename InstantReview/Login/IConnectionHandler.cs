@@ -15,7 +15,7 @@ namespace InstantReview.Login
 
         bool CheckTokenValidity(string token);
 
-        Task<HttpResponseMessage> Register(string email, string password);
+        Task<HttpResponseMessage> Register(string email, string password, string name, string birthday, string gender);
 
         Task<bool> UploadReview();
     }
