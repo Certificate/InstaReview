@@ -1508,5 +1508,261 @@ define({ "api": [
     "version": "0.0.0",
     "filename": "server/routes/review.js",
     "groupTitle": "Review"
+  },
+  {
+    "type": "post",
+    "url": "/user/edit",
+    "title": "Edit user information",
+    "name": "EditUserInfo",
+    "group": "User",
+    "header": {
+      "fields": {
+        "Authentication": [
+          {
+            "group": "Authentication",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Authorization token</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "email",
+            "description": "<p>Email to be changed to (optional)</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "password",
+            "description": "<p>New password (optional)</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "name",
+            "description": "<p>Name to be changed to (optional)</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "gender",
+            "description": "<p>Gender to be changed to, valid values are ['Male', 'Female'] (optional)</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Date",
+            "optional": false,
+            "field": "birthday",
+            "description": "<p>Birthday to be changed to (optional)</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n    \"email\": \"newEmail@email.com\",\n    \"name\": \"New Name\",\n    \"password\": \"thisisadifferentpassword\",\n    \"gender\": \"Male\",\n    \"birthday\": \"12/24/2018\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>Database id of the user</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "email",
+            "description": "<p>Email address of the user</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "name",
+            "description": "<p>Name of the user</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "gender",
+            "description": "<p>Gender of the user</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Date",
+            "optional": false,
+            "field": "birthday",
+            "description": "<p>Birthday of the user</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Date",
+            "optional": false,
+            "field": "createdAt",
+            "description": "<p>Time of the user's creation</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Date",
+            "optional": false,
+            "field": "updatedAt",
+            "description": "<p>Time of the user's last change</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n{\n    \"id\": 1,\n    \"email\": \"email@gmail.com\",\n    \"name\": \"Tom Tester\",\n    \"gender\": \"Male\",\n    \"birthday\": \"1/1/1990\",\n    \"createdAt\": \"2018-12-09T14:07:57.000Z\",\n    \"updatedAt\": \"2018-12-09T14:07:57.000Z\" \n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "server/routes/user.js",
+    "groupTitle": "User",
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "UserAuthenticationFailed",
+            "description": "<p>Failed to authenticate user with the authentication token (might be missing).</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "UserAuthenticationFailed",
+          "content": "HTTP/1.1 401 Unauthorized\nUnauthorized",
+          "type": "json"
+        }
+      ]
+    }
+  },
+  {
+    "type": "get",
+    "url": "/user/info",
+    "title": "Fetch user information",
+    "name": "GetUserInfo",
+    "group": "User",
+    "header": {
+      "fields": {
+        "Authentication": [
+          {
+            "group": "Authentication",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Authorization token</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>Database id of the user</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "email",
+            "description": "<p>Email address of the user</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "name",
+            "description": "<p>Name of the user</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "gender",
+            "description": "<p>Gender of the user</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Date",
+            "optional": false,
+            "field": "birthday",
+            "description": "<p>Birthday of the user</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Date",
+            "optional": false,
+            "field": "createdAt",
+            "description": "<p>Time of the user's creation</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Date",
+            "optional": false,
+            "field": "updatedAt",
+            "description": "<p>Time of the user's last change</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n{\n    \"id\": 1,\n    \"email\": \"email@gmail.com\",\n    \"name\": \"Tom Tester\",\n    \"gender\": \"Male\",\n    \"birthday\": \"1/1/1990\",\n    \"createdAt\": \"2018-12-09T14:07:57.000Z\",\n    \"updatedAt\": \"2018-12-09T14:07:57.000Z\" \n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "server/routes/user.js",
+    "groupTitle": "User",
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "UserAuthenticationFailed",
+            "description": "<p>Failed to authenticate user with the authentication token (might be missing).</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "UserAuthenticationFailed",
+          "content": "HTTP/1.1 401 Unauthorized\nUnauthorized",
+          "type": "json"
+        }
+      ]
+    }
   }
 ] });

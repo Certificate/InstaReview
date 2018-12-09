@@ -51,6 +51,19 @@ router.use('/info', passportAuth, UserController.getInfo);
  * @apiGroup User
  * 
  * @apiHeader (Authentication) {String} Authorization Authorization token
+ * @apiParam {String} email Email to be changed to (optional)
+ * @apiParam {String} password New password (optional)
+ * @apiParam {String} name Name to be changed to (optional)
+ * @apiParam {String} gender Gender to be changed to, valid values are ['Male', 'Female'] (optional)
+ * @apiParam {Date} birthday Birthday to be changed to (optional)
+ * @apiParamExample {json} Request-Example:
+ *  {
+ *      "email": "newEmail@email.com",
+ *      "name": "New Name",
+ *      "password": "thisisadifferentpassword",
+ *      "gender": "Male",
+ *      "birthday": "12/24/2018"
+ *  }
  * 
  * @apiSuccess {Number} id Database id of the user
  * @apiSuccess {String} email Email address of the user
