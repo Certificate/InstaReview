@@ -38,6 +38,13 @@ module.exports = {
         applicationSchema: Joi.object().keys( {
             name: Joi.string().required(),
             operatingSystem: Joi.string().required().valid(['Android', 'iOS'])
+        }),
+        userSchema: Joi.object().keys({
+            email: Joi.string().email(),
+            password: Joi.string(),
+            name: Joi.string(),
+            gender: Joi.string().valid(['Male', 'Female']),
+            birthday: Joi.date()
         })
     }
 }

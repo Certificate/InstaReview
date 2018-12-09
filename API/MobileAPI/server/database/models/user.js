@@ -49,7 +49,7 @@ module.exports = (sequelize, DataTypes) => {
         ],
         scopes: {
             public: {
-                attributes: { exclude: ['password']}
+                attributes: { exclude: ['password', 'authMethod', 'googleId', 'facebookId']}
             }
         }
     });
@@ -57,7 +57,7 @@ module.exports = (sequelize, DataTypes) => {
     //Use hook to encrypt passwords
     User.addHook('beforeSave', async (user, options) => {
         try {
-            if(user.authMethod !== 'local') {
+            if(user.authMethod !== 'local' || (!user.changed('password') && !user.isNewRecord)) {
                 return Promise.resolve();
             }
 
