@@ -23,6 +23,10 @@ module.exports = {
             gender: Joi.string().valid(['Male', 'Female']),
             birthday: Joi.date()
         }),
+        loginSchema: Joi.object().keys({
+            email: Joi.string().email().required(),
+            password: Joi.string().required()
+        }),
         reviewSchema: Joi.object().keys({
             id: Joi.number().integer(),
             appId: Joi.number().integer().required(),

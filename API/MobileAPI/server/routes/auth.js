@@ -101,7 +101,7 @@ router.use('/signup', validateBody(schemas.authSchema), AuthController.signUp);
  * 
  * @apiUse ValidationError
  */
-router.use('/login', validateBody(schemas.authSchema), passportAuthenticate.local, AuthController.logIn);
+router.use('/login', validateBody(schemas.loginSchema), passportAuthenticate.local, AuthController.logIn);
 
 /**
  * @api {post} /auth/google Login/Register with a Google account
