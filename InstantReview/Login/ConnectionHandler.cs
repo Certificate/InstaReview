@@ -59,7 +59,7 @@ namespace InstantReview.Login
 
         public async Task<HttpResponseMessage> Register(string email, string password, string name = "", string birthday = "", string gender = "")
         {
-            var infos = new LoginInfo { password = password, email = email, birthday = birthday, gender = gender, name = name};
+            var infos = new RegisterInfo { password = password, email = email, birthday = birthday, gender = gender, name = name};
 
             HttpResponseMessage response;
             using (var client = new HttpClient())
@@ -108,6 +108,12 @@ namespace InstantReview.Login
         }
 
         protected class LoginInfo
+        {
+            public string email;
+            public string password;
+        }
+        
+        protected class RegisterInfo
         {
             public string email;
             public string password;

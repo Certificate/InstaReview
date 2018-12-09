@@ -40,9 +40,10 @@ namespace InstantReview.ViewModels
                 }
 
                 var response = await connectionHandler.Register(Email, Password, Name, Birthday.ToString("MM/dd/yyyy"), Gender);
+                var responseBody = await response.Content.ReadAsStringAsync();
                 if (response.StatusCode != HttpStatusCode.OK)
                 {
-                    throw new Exception("Response was not OK. Aborting.");
+                    throw new Exception("Response was not OK. Aborting. Reason: "+ responseBody);
                 }
 
                 var token = JsonConvert.DeserializeObject<Response>(await response.Content.ReadAsStringAsync());
