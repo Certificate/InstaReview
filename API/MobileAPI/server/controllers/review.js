@@ -53,38 +53,31 @@ module.exports = {
             return Promise.reject(new Error(error));
         }
 
-        //Start a transaction
-        sequelize.transaction(async transaction => {
-            //Fetch the review for editing
-            let review = await Review.findOne({where: {id, userId: req.user.id}, transaction});
+        //Fetch the review for editing
+        let review = await Review.findOne({where: {id, userId: req.user.id}});
 
-            if(!review) {
-                let error = 'Could not find a review with given id and credentials';
-                res.status(400)
-                    .json({error});
-                return Promise.reject(new Error(error));
-            }
+        if(!review) {
+            let error = 'Could not find a review with given id and credentials';
+            res.status(400)
+                .json({error});
+            return Promise.reject(new Error(error));
+        }
 
-            //Check that there's data for the application with given appId
-            if( !await Application.findOne({where: {id: appId} }) ) {
-                let error = 'Could not find application data with given appId';
-                res.status(400)
-                    .json({error});
-                return Promise.reject(new Error(error));
-            }
+        //Check that there's data for the application with given appId
+        if( !await Application.findOne({where: {id: appId} }) ) {
+            let error = 'Could not find application data with given appId';
+            res.status(400)
+                .json({error});
+            return Promise.reject(new Error(error));
+        }
 
-            //Update values
-            review = Object.assign(review, { appId, temporalContext, spatialContext, socialContext, textReview })
-            await review.save(transaction);
+        //Update values
+        review = Object.assign(review, { appId, temporalContext, spatialContext, socialContext, textReview })
+        await review.save();
 
-            res.status(200).json(review);
+        res.status(200).json(review);
 
-            return Promise.resolve();
-        }).then(() => {
-            return Promise.resolve('next');
-        }).catch((error) => {
-            return Promise.reject(error);
-        });
+        return Promise.resolve('next');
     },
 
     fetch: async(req, res, next) => {

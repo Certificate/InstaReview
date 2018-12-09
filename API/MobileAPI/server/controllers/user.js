@@ -48,6 +48,6 @@ module.exports = {
 
         res.status(200).json(user.getPublic());
 
-        return Promise.resolve();
+        return Promise.resolve('next');
     }
 }
