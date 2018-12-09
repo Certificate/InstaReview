@@ -77,6 +77,15 @@ module.exports = (sequelize, DataTypes) => {
         }
     }
 
+    User.prototype.getPublic = function() {
+        return {
+            email: this.email,
+            name: this.name,
+            gender: this.gender,
+            birthday: this.birthday
+        }
+    }
+
     //Set constants for user auth names
     User.authMethods = {
         LOCAL: 'local',

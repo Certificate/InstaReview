@@ -21,5 +21,13 @@ module.exports = (sequelize, DataTypes) => {
         }
     });
 
+    Application.prototype.getPublic = function() {
+        return {
+            id: this.id,
+            name: this.name,
+            operatingSystem: this.operatingSystem
+        }
+    };
+
     return Application;
 }
