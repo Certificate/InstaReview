@@ -18,5 +18,7 @@ namespace InstantReview.Login
         Task<HttpResponseMessage> Register(string email, string password);
 
         Task<bool> UploadReview();
+
+        Task<string> DownloadReviewList();
     }
 }
