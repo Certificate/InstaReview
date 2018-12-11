@@ -27,9 +27,12 @@ namespace InstantReview.ViewModels
             // TODO: For debug purposes only
             dialogService.showAlert(dataCollector.GenerateReviewText());
             
-            // Upload review. No need to await in this case.
-            connectionHandler.UploadReview();
-            
+            // Upload review.
+            await connectionHandler.UploadReview();
+
+            // When upload is complete, refresh reviews on main page
+            await connectionHandler.DownloadReviewList();
+
             // Pop navigation stack back to home page
             await navigation.PopToRootAsync();
         }

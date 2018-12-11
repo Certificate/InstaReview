@@ -1,4 +1,6 @@
-﻿using System.Net.Http;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace InstantReview.Login
@@ -19,6 +21,6 @@ namespace InstantReview.Login
 
         Task<bool> UploadReview();
 
-        Task<string> DownloadReviewList();
+        Task<List<Review>> DownloadReviewList();
     }
 }

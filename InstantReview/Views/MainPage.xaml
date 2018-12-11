@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
-             xmlns:local="clr-namespace:InstantReview" 
+             xmlns:local="clr-namespace:InstantReview"
+             xmlns:views="clr-namespace:InstantReview.Views;assembly=InstantReview"
              x:Class="InstantReview.MainPage"
              Title="MAIN PAGE"
              BackgroundColor="White">
@@ -12,49 +13,19 @@
 
 
   <!--Setting content to scrollable view  -->
-  <ScrollView VerticalOptions="Fill" >
-    <StackLayout Padding="15"  VerticalOptions="FillAndExpand">
-      <Label Text="MY REVIEWS" HorizontalOptions="Center" ></Label>
-      <!-- Single item with image and short comment -->
-      <StackLayout Orientation="Horizontal" BackgroundColor="#FEFFFF">
-        <Image Source=""  HeightRequest="150" WidthRequest="75" BackgroundColor="Salmon"/>
-        <Label
-               Text="I use this app regularly to help translate from other languages to English, or 
-                           from English to other languages. Over the years it has become indispensable to me, especially..."
-                           ></Label>
-      </StackLayout>
-      <!-- Uncomment code under this comment to see how scrollView works with multiple items -->
-      
-                <StackLayout Orientation="Horizontal" BackgroundColor="#FEFFFF">
-                    <Image Source=""  HeightRequest="150" WidthRequest="75" BackgroundColor="Salmon"/>
-                    <Label
-                           Text="I use this app regularly to help translate from other languages to English, or 
-                           from English to other languages. Over the years it has become indispensable to me, especially..."
-                           ></Label>
-                </StackLayout>
-                <StackLayout Orientation="Horizontal" BackgroundColor="#FEFFFF">
-                    <Image Source=""  HeightRequest="150" WidthRequest="75" BackgroundColor="Salmon"/>
-                    <Label
-                           Text="I use this app regularly to help translate from other languages to English, or 
-                           from English to other languages. Over the years it has become indispensable to me, especially..."
-                           ></Label>
-                </StackLayout>
-                <StackLayout Orientation="Horizontal" BackgroundColor="#FEFFFF">
-                    <Image Source=""  HeightRequest="150" WidthRequest="75" BackgroundColor="Salmon"/>
-                    <Label
-                           Text="I use this app regularly to help translate from other languages to English, or 
-                           from English to other languages. Over the years it has become indispensable to me, especially..."
-                           ></Label>
-                </StackLayout>
-                <StackLayout Orientation="Horizontal" BackgroundColor="#FEFFFF">
-                    <Image Source=""  HeightRequest="150" WidthRequest="75" BackgroundColor="Salmon"/>
-                    <Label
-                           Text="I use this app regularly to help translate from other languages to English, or 
-                           from English to other languages. Over the years it has become indispensable to me, especially..."
-                           ></Label>
-                </StackLayout>
-                
-
-    </StackLayout>
-  </ScrollView>
+    <ScrollView VerticalOptions="Fill" >
+        <ListView  x:Name="ReviewList"
+                  ItemsSource="{Binding ReviewsList}" SeparatorVisibility="Default"
+                  HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" HasUnevenRows="True">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <ViewCell.View>
+                            <views:ReviewView/>
+                        </ViewCell.View>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </ScrollView>
 </ContentPage>

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Common.Logging;
 using InstantReview.Login;
@@ -19,16 +21,14 @@ namespace InstantReview.ViewModels
         private readonly IConnectionHandler connectionHandler;
         private static readonly ILog Log = LogManager.GetLogger<MainPageViewModel>();
 
-        private List<string> ReviewsList;
-
-
+        public ObservableCollection<Review> ReviewsList { get; set; }
 
         public MainPageViewModel(
             IDialogService dialogService, 
             INavigation navigation, 
             IPageFactory pageFactory, 
             IReviewPageViewModel reviewPageViewModel, 
-            ConnectionHandler connectionHandler)
+            IConnectionHandler connectionHandler)
         {
             this.dialogService = dialogService;
             this.navigation = navigation;
@@ -36,7 +36,12 @@ namespace InstantReview.ViewModels
             this.reviewPageViewModel = reviewPageViewModel;
             this.connectionHandler = connectionHandler;
             reviewPageViewModel.ViewModelReadyEvent += IntentReceiver_ItemsReceivedEvent;
-            GetReviewsByUser();
+            ReviewsList = new ObservableCollection<Review>();
+
+            foreach (var review in GetReviewsByUser().Result)
+            {
+                ReviewsList.Add(review);
+            }
         }
 
         public ICommand NewReviewCommand => new Command(NavigateToReviewPage);
@@ -47,9 +52,10 @@ namespace InstantReview.ViewModels
         }
 
 
-        private async void GetReviewsByUser()
+        private async Task<List<Review>> GetReviewsByUser()
         {
-            var jaa = await connectionHandler.DownloadReviewList();
+            var list = await connectionHandler.DownloadReviewList();
+            return list;
         }
 
 

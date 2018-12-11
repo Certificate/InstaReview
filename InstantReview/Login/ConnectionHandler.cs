@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IdentityModel.Tokens.Jwt;
 using System.IO;
 using System.Net;
@@ -159,18 +161,20 @@ namespace InstantReview.Login
             return success;
         }
 
-        public async Task<string> DownloadReviewList()
+        public async Task<List<Review>> DownloadReviewList()
         {
             HttpResponseMessage response;
+            List<Review> reviews;
             using (var client = new HttpClient())
             {
                 AddAuthorizationHeader(client);
                 response = await client.PostAsync(baseAddress + reviewListExtensions, null, CancellationToken.None);
                 var responseJson = await response.Content.ReadAsStringAsync();
-                Log.Debug("Yeah");
+
+                reviews = JsonConvert.DeserializeObject<List<Review>>(responseJson);
             }
 
-            return "TODO";
+            return reviews;
 
         }
 
@@ -185,4 +189,5 @@ namespace InstantReview.Login
             public string id { get; set; }
         }
     }
+
 }

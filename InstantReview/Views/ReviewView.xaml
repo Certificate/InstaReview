@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<StackLayout xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="InstantReview.Views.ReviewView"
+             x:Name="ViewRoot"
+             Orientation="Horizontal"
+             Spacing="10"
+             HorizontalOptions="FillAndExpand">
+    <StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand" VerticalOptions="Start" Spacing="0" HeightRequest="90" BackgroundColor="Aqua">
+        <Label Text="YEAH BOY"></Label>
+    </StackLayout>
+</StackLayout>
