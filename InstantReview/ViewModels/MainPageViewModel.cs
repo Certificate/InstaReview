@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using Common.Logging;
 using InstantReview.Login;
@@ -28,7 +27,8 @@ namespace InstantReview.ViewModels
             INavigation navigation, 
             IPageFactory pageFactory, 
             IReviewPageViewModel reviewPageViewModel, 
-            IConnectionHandler connectionHandler)
+            IConnectionHandler connectionHandler,
+            ThankYouPageViewModel thankYouPageViewModel)
         {
             this.dialogService = dialogService;
             this.navigation = navigation;
@@ -37,11 +37,13 @@ namespace InstantReview.ViewModels
             this.connectionHandler = connectionHandler;
             reviewPageViewModel.ViewModelReadyEvent += IntentReceiver_ItemsReceivedEvent;
             ReviewsList = new ObservableCollection<Review>();
+            GetReviewsByUser();
+            thankYouPageViewModel.ReviewDoneEvent += ThankYouPageViewModelOnReviewDoneEvent;
+        }
 
-            foreach (var review in GetReviewsByUser().Result)
-            {
-                ReviewsList.Add(review);
-            }
+        private void ThankYouPageViewModelOnReviewDoneEvent(object sender, EventArgs e)
+        {
+            GetReviewsByUser();
         }
 
         public ICommand NewReviewCommand => new Command(NavigateToReviewPage);
@@ -52,10 +54,14 @@ namespace InstantReview.ViewModels
         }
 
 
-        private async Task<List<Review>> GetReviewsByUser()
+        public async void GetReviewsByUser()
         {
             var list = await connectionHandler.DownloadReviewList();
-            return list;
+            foreach (var review in list)
+            {
+                ReviewsList.Add(review);
+            }
+            Log.Debug("Done adding items to list!");
         }
 
 

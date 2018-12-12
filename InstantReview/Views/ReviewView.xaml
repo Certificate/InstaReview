@@ -6,7 +6,23 @@
              Orientation="Horizontal"
              Spacing="10"
              HorizontalOptions="FillAndExpand">
-    <StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand" VerticalOptions="Start" Spacing="0" HeightRequest="90" BackgroundColor="Aqua">
-        <Label Text="YEAH BOY"></Label>
+    <Grid  BackgroundColor="Aqua" Margin="15, 15">
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*" />
+            <ColumnDefinition Width="7*" />
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Image Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Source=""  HeightRequest="150" WidthRequest="84" BackgroundColor="Salmon"/>
+
+        <Label Grid.Column="1"  Grid.Row="0" Text="This is a review placeholder text. Hello Pekka and Xiaozhou!."></Label>
+
+        <Label Grid.Column="1"  Grid.Row="1" Text="{Binding id, StringFormat='Review ID: {0}'}"></Label>
+        <Label />
+    </Grid>
     </StackLayout>
-</StackLayout>

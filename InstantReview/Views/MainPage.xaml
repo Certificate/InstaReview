@@ -15,7 +15,7 @@
   <!--Setting content to scrollable view  -->
     <ScrollView VerticalOptions="Fill" >
         <ListView  x:Name="ReviewList"
-                  ItemsSource="{Binding ReviewsList}" SeparatorVisibility="Default"
+                  ItemsSource="{Binding ReviewsList}" SeparatorVisibility="None"
                   HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" HasUnevenRows="True">
             <ListView.ItemTemplate>
                 <DataTemplate>
