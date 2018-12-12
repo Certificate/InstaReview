@@ -71,17 +71,20 @@ namespace InstantReview.ViewModels
         {
             var list = await connectionHandler.DownloadReviewList();
             Log.Debug($"CollectionSize BEFORE: {ReviewsList.Count}");
+            var counter = 0;
             foreach (var review in list)
             {
                 if (ReviewsList.All(p => p.id != review.id))
                 {
                     ReviewsList.Add(review);
+                    counter++;
                 }
 
                 
             }
             Log.Debug("Done adding items to list!");
             Log.Debug($"CollectionSize AFTER: {ReviewsList.Count}");
+            Log.Debug($"Added items: {counter}");
         }
 
 
