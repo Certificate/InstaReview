@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using System.Windows.Input;
 using Common.Logging;
 using InstantReview.Login;
 using InstantReview.Receivers;
 using InstantReview.Views;
 using Xamarin.Forms;
+using Xamarin.Forms.Internals;
 
 namespace InstantReview.ViewModels
 {
@@ -28,20 +30,31 @@ namespace InstantReview.ViewModels
             IPageFactory pageFactory, 
             IReviewPageViewModel reviewPageViewModel, 
             IConnectionHandler connectionHandler,
-            ThankYouPageViewModel thankYouPageViewModel)
+            ThankYouPageViewModel thankYouPageViewModel,
+            MasterPageViewModel masterPageViewModel,
+            ILoginPageViewModel loginPageViewModel)
         {
             this.dialogService = dialogService;
             this.navigation = navigation;
             this.pageFactory = pageFactory;
             this.reviewPageViewModel = reviewPageViewModel;
             this.connectionHandler = connectionHandler;
-            reviewPageViewModel.ViewModelReadyEvent += IntentReceiver_ItemsReceivedEvent;
+            
             ReviewsList = new ObservableCollection<Review>();
             GetReviewsByUser();
-            thankYouPageViewModel.ReviewDoneEvent += ThankYouPageViewModelOnReviewDoneEvent;
+
+            reviewPageViewModel.ViewModelReadyEvent += IntentReceiver_ItemsReceivedEvent;
+            thankYouPageViewModel.ReviewDoneEvent += OnReviewDoneEvent;
+            loginPageViewModel.LoginSuccessful += OnLoginStateChanged;
         }
 
-        private void ThankYouPageViewModelOnReviewDoneEvent(object sender, EventArgs e)
+        private void OnLoginStateChanged(object sender, EventArgs e)
+        {
+            ReviewsList.Clear();
+            GetReviewsByUser();
+        }
+
+        private void OnReviewDoneEvent(object sender, EventArgs e)
         {
             GetReviewsByUser();
         }
@@ -57,14 +70,19 @@ namespace InstantReview.ViewModels
         public async void GetReviewsByUser()
         {
             var list = await connectionHandler.DownloadReviewList();
+            Log.Debug($"CollectionSize BEFORE: {ReviewsList.Count}");
             foreach (var review in list)
             {
-                ReviewsList.Add(review);
+                if (ReviewsList.All(p => p.id != review.id))
+                {
+                    ReviewsList.Add(review);
+                }
+
+                
             }
             Log.Debug("Done adding items to list!");
+            Log.Debug($"CollectionSize AFTER: {ReviewsList.Count}");
         }
-
-
 
 
         // Navigation

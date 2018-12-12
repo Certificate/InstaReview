@@ -13,15 +13,13 @@ namespace InstantReview.ViewModels
         private readonly IConnectionHandler connectionHandler;
         private readonly IDialogService dialogService;
         private readonly INavigation navigation;
-        private readonly MainPageViewModel mainPage;
 
-        public ThankYouPageViewModel(ReviewDataCollector dataCollector, IDialogService dialogService, INavigation navigation, IConnectionHandler connectionHandler, MainPageViewModel mainPage)
+        public ThankYouPageViewModel(ReviewDataCollector dataCollector, IDialogService dialogService, INavigation navigation, IConnectionHandler connectionHandler)
         {
             this.dataCollector = dataCollector;
             this.dialogService = dialogService;
             this.navigation = navigation;
             this.connectionHandler = connectionHandler;
-            this.mainPage = mainPage;
         }
 
 
