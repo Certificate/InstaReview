@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IdentityModel.Tokens.Jwt;
 using System.IO;
 using System.Net;
@@ -27,6 +29,7 @@ namespace InstantReview.Login
         private const string loginExtension = "auth/login";
         private const string uploadReviewExtension = "review/create";
         private const string uploadImageExtension = "review/image/upload";
+        private const string reviewListExtensions = "review/list";
 
 
 
@@ -130,9 +133,8 @@ namespace InstantReview.Login
 
             using (var client = new HttpClient())
             {
-                
-                // Set auth header
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(storage.GetValue("user", string.Empty));
+
+                AddAuthorizationHeader(client);
                 var content = new StringContent(data, Encoding.UTF8, "application/json");
                 var response = await client.PostAsync(baseAddress + uploadReviewExtension, content, CancellationToken.None);
                 var responseJson = await response.Content.ReadAsStringAsync();
@@ -142,7 +144,6 @@ namespace InstantReview.Login
 
             Log.Debug($"Review upload status: {success}");
             return success;
-
         }
 
         
@@ -153,9 +154,8 @@ namespace InstantReview.Login
             var fileBytes = File.ReadAllBytes(filePath);
             using (var client = new HttpClient())
             {
-                // Set authorization
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(storage.GetValue("user", string.Empty));
-                
+                AddAuthorizationHeader(client);
+
                 var content = new MultipartFormDataContent();
                 content.Add(new ByteArrayContent(fileBytes), "screenshot", "testname.jpg");
                 content.Add(new StringContent(id), "reviewId");
@@ -170,11 +170,33 @@ namespace InstantReview.Login
             return success;
         }
 
+        public async Task<List<Review>> DownloadReviewList()
+        {
+            HttpResponseMessage response;
+            List<Review> reviews;
+            using (var client = new HttpClient())
+            {
+                AddAuthorizationHeader(client);
+                response = await client.PostAsync(baseAddress + reviewListExtensions, null, CancellationToken.None);
+                var responseJson = await response.Content.ReadAsStringAsync();
+
+                reviews = JsonConvert.DeserializeObject<List<Review>>(responseJson);
+            }
+
+            return reviews;
+
+        }
+
+        private void AddAuthorizationHeader(HttpClient client)
+        {
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(storage.GetValue("user", string.Empty));
+        }
+
         // Classes to deserialize response from server
         public class NewReviewResponse
         {
             public string id { get; set; }
-
         }
     }
+
 }

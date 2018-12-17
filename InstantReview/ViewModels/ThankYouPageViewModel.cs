@@ -1,3 +1,4 @@
+using System;
 using System.Windows.Input;
 using InstantReview.Login;
 using Xamarin.Forms;
@@ -6,6 +7,8 @@ namespace InstantReview.ViewModels
 {
     public class ThankYouPageViewModel
     {
+        public event EventHandler<EventArgs> ReviewDoneEvent;
+
         private readonly ReviewDataCollector dataCollector;
         private readonly IConnectionHandler connectionHandler;
         private readonly IDialogService dialogService;
@@ -27,9 +30,12 @@ namespace InstantReview.ViewModels
             // TODO: For debug purposes only
             dialogService.showAlert(dataCollector.GenerateReviewText());
             
-            // Upload review. No need to await in this case.
-            connectionHandler.UploadReview();
-            
+            // Upload review.
+            await connectionHandler.UploadReview();
+
+            // When upload is complete, refresh reviews on main page
+            ReviewDoneEvent?.Invoke(this, EventArgs.Empty);
+
             // Pop navigation stack back to home page
             await navigation.PopToRootAsync();
         }
