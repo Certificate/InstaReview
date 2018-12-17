@@ -1,6 +1,7 @@
 const express = require('express');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
+const fs = require('fs');
 
 require('dotenv').config();
 
@@ -33,7 +34,26 @@ dbSync = async () => {
                 console.log('Models loaded and synced.');
             });
     //}
-}
+    await syncCategories();
+    console.log('Categories synced from JSON.');
+};
+
+syncCategories = async () => {
+    const categories = require(process.env.CATEGORIES_FILE || './categories.json');
+    const dbCategories = await models.ReviewCategory.findAll();
+
+    categories.forEach(async category => {
+        let match = dbCategories.find(item => {
+            return item.categoryName === category;
+        });
+
+        if(!match) {
+            await models.ReviewCategory.create({
+                categoryName: category
+            });
+        }
+    });
+};
 
 //Middlewares
 if(process.env.NODE_ENV !== 'test') {
