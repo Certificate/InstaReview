@@ -230,5 +230,43 @@ module.exports = {
                 return Promise.resolve('next');
             }
         });
+    },
+
+    fetchThumbnail: async(req, res, next) => {
+        const id = req.params.id;
+        if(!id) {
+            let error = 'No review id given!';
+            res.status(400)
+                .json({error});
+            return Promise.reject(new Error(error));
+        }
+
+        let review = await Review.findOne({ where: {id, userId: req.user.id}, include: ['thumbnail'] });
+        if(!review) {
+            let error = 'Could not find a review with given id and credentials';
+            res.status(404)
+                .json({error});
+            return Promise.reject(new Error(error));
+        }
+
+        if(!review.thumbnail) {
+            let error = 'A thumbnail has not been created yet for this review';
+            res.status(404)
+                .json({error});
+            return Promise.reject(new Error(error));
+        }
+
+        res.download(thumbnailDir + review.thumbnail.fileName, function(err) {
+            if(err) {
+                console.log('Failed to download thumbnail:', err);
+                res.status(404).json({
+                    error: "Failed to locate the thumbnail"
+                });
+                return Promise.reject(new Error(err));
+            } else {
+                res.status(200);
+                return Promise.resolve('next');
+            }
+        });
     }
 };

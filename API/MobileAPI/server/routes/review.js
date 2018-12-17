@@ -242,11 +242,12 @@ router.use('/list', passportAuth, ReviewController.fetchAll);
 router.use('/image/upload', passportAuth, uploader.single('screenshot'), ReviewController.imageUpload);
 
 /**
- * @api {get} /review/download/:filename Download an image by filename
+ * @api {get} /review/image/download/:filename Download an image by filename
  * @apiName DownloadReviewImage
  * @apiGroup Review
  * 
  * @apiHeader (Authentication) {String} Authorization Authorization token
+ * @apiParam {String} filename Filename of the image
  * 
  * @apiSuccess {image/format} image The image file
  * 
@@ -254,7 +255,7 @@ router.use('/image/upload', passportAuth, uploader.single('screenshot'), ReviewC
  * 
  * @apiError MissingFilename Filename parameter is empty
  * @apiErrorExample {json} MissingFilename
- *  HTTP/1.1 404 Not Found
+ *  HTTP/1.1 400 Bad Request
  *  {
  *      "error": "Filename missing!"
  *  }
@@ -289,5 +290,47 @@ router.use('/image/upload', passportAuth, uploader.single('screenshot'), ReviewC
  *  }
  */
 router.use('/image/download/:filename', passportAuth, ReviewController.imageDownload);
+
+/**
+ * @api {get} /review/thumbnail/:id Download the review thumbnail
+ * @apiName DownloadThumbnail
+ * @apiGroup Review
+ * 
+ * @apiHeader (Authentication) {String} Authorization Authorization token
+ * @apiParam {String} id Id of the review
+ * 
+ * @apiSuccess {image/png} thumbnail The thumbnail image
+ * 
+ * @apiUse UserAuthenticationFailed
+ * 
+ * @apiError NoReviewID No review ID was given (parameter missing).
+ * @apiErrorExample {json} NoReviewID
+ *  HTTP/1.1 400 Bad Request
+ *  {
+ *      "error": "No review id given!"
+ *  }
+ * 
+ * @apiError ReviewNotFound Failed to find a review with the id and user credentials
+ * @apiErrorExample {json} ReviewNotFound
+ *  HTTP/1.1 404 Not Found
+ *  {
+ *      "error": "Could not find a review with given id and credentials"
+ *  }
+ * 
+ * @apiError ThumbnailNotCreated Thumbnail hasn't been created yet
+ * @apiErrorExample {json} ThumbnailNotCreated
+ *  HTTP/1.1 404 Not Found
+ *  {
+ *      "error": "A thumbnail has not been created yet for this review"
+ *  }
+ * 
+ * @apiError ThumbnailNotFound Failed to download the file from disk
+ * @apiErrorExample {json} ThumbnailNotFound
+ *  HTTP/1.1 404 Not Found
+ *  {
+ *      "error": "Failed to locate the thumbnail"
+ *  }
+ */
+router.use('/thumbnail/:id', passportAuth, ReviewController.fetchThumbnail);
 
 module.exports = router;

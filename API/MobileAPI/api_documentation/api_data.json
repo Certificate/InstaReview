@@ -758,7 +758,7 @@
   },
   {
     "type": "get",
-    "url": "/review/download/:filename",
+    "url": "/review/image/download/:filename",
     "title": "Download an image by filename",
     "name": "DownloadReviewImage",
     "group": "Review",
@@ -771,6 +771,19 @@
             "optional": false,
             "field": "Authorization",
             "description": "<p>Authorization token</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "filename",
+            "description": "<p>Filename of the image</p>"
           }
         ]
       }
@@ -832,7 +845,7 @@
       "examples": [
         {
           "title": "MissingFilename",
-          "content": "HTTP/1.1 404 Not Found\n{\n    \"error\": \"Filename missing!\"\n}",
+          "content": "HTTP/1.1 400 Bad Request\n{\n    \"error\": \"Filename missing!\"\n}",
           "type": "json"
         },
         {
@@ -863,6 +876,118 @@
       ]
     },
     "description": "<p>Basically should never happen due to database constrictions.</p>",
+    "version": "0.0.0",
+    "filename": "server/routes/review.js",
+    "groupTitle": "Review"
+  },
+  {
+    "type": "get",
+    "url": "/review/thumbnail/:id",
+    "title": "Download the review thumbnail",
+    "name": "DownloadThumbnail",
+    "group": "Review",
+    "header": {
+      "fields": {
+        "Authentication": [
+          {
+            "group": "Authentication",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Authorization token</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "id",
+            "description": "<p>Id of the review</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "image/png",
+            "optional": false,
+            "field": "thumbnail",
+            "description": "<p>The thumbnail image</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "NoReviewID",
+            "description": "<p>No review ID was given (parameter missing).</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "ReviewNotFound",
+            "description": "<p>Failed to find a review with the id and user credentials</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "ThumbnailNotCreated",
+            "description": "<p>Thumbnail hasn't been created yet</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "ThumbnailNotFound",
+            "description": "<p>Failed to download the file from disk</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "UserAuthenticationFailed",
+            "description": "<p>Failed to authenticate user with the authentication token (might be missing).</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "NoReviewID",
+          "content": "HTTP/1.1 400 Bad Request\n{\n    \"error\": \"No review id given!\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "ReviewNotFound",
+          "content": "HTTP/1.1 404 Not Found\n{\n    \"error\": \"Could not find a review with given id and credentials\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "ThumbnailNotCreated",
+          "content": "HTTP/1.1 404 Not Found\n{\n    \"error\": \"A thumbnail has not been created yet for this review\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "ThumbnailNotFound",
+          "content": "HTTP/1.1 404 Not Found\n{\n    \"error\": \"Failed to locate the thumbnail\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "UserAuthenticationFailed",
+          "content": "HTTP/1.1 401 Unauthorized\nUnauthorized",
+          "type": "json"
+        }
+      ]
+    },
     "version": "0.0.0",
     "filename": "server/routes/review.js",
     "groupTitle": "Review"
