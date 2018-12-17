@@ -30,6 +30,7 @@ module.exports = {
         reviewSchema: Joi.object().keys({
             id: Joi.number().integer(),
             appId: Joi.number().integer().required(),
+            categoryName: Joi.string().required(),
             temporalContext: Joi.string().required().valid(['Intensive', 'Allocative']),
             spatialContext: Joi.string().required().valid(['Visiting', 'Traveling', 'Wandering']),
             socialContext: Joi.string().required().valid(['Constraining', 'Encouraging']),

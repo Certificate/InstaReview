@@ -594,6 +594,13 @@
             "group": "Parameter",
             "type": "String",
             "optional": false,
+            "field": "categoryName",
+            "description": "<p>Name of the category of the review (See the list of categories, found in ie. the api-documentation folder, server uses ones defined in categories.json)</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
             "field": "temporalContext",
             "description": "<p>Temporal context of the review. Valid values are [&quot;Intensive&quot;, &quot;Allocative&quot;].</p>"
           },
@@ -744,13 +751,34 @@
             "optional": false,
             "field": "images",
             "description": "<p>List of Image-objects containing information of the screenshots for this review. This is only included when fetching a single review (see &quot;Request Review Information&quot;).</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Application",
+            "optional": false,
+            "field": "application",
+            "description": "<p>The application object corresponding the appId. Object structure can be seen in the documentation for the Application routes.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Category",
+            "optional": false,
+            "field": "category",
+            "description": "<p>Category of the review corresponding the categoryId. The most relevant value within this object is the attribute categoryName.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Thumbnail",
+            "optional": false,
+            "field": "thumbnail",
+            "description": "<p>Thumbnail object containing the fileName-attribute required for downloading thumbnails. This is only included when fetching reviews.</p>"
           }
         ]
       },
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "HTTP/1.1 200 OK\n{\n    \"id\": 1,\n    \"userId\": 1,\n    \"appId\": 1,\n    \"temporalContext\": \"Allocative\",\n    \"spatialContext\": \"Wandering\",\n    \"socialContext\": \"Encouraging\",\n    \"textReview\": \"I found an issue with...\",\n    \"updatedAt\": \"1970-01-01T00:00:00.00Z\",\n    \"createdAt\": \"1970-01-01T00:00:00.00Z\",\n    \"images\": []\n}",
+          "content": "HTTP/1.1 200 OK\n{\n    \"id\": 1,\n    \"userId\": 1,\n    \"appId\": 1,\n    \"categoryId\": 1,\n    \"thumbnailId\": 1,\n    \"temporalContext\": \"Allocative\",\n    \"spatialContext\": \"Wandering\",\n    \"socialContext\": \"Encouraging\",\n    \"textReview\": \"I found an issue with...\",\n    \"updatedAt\": \"1970-01-01T00:00:00.00Z\",\n    \"createdAt\": \"1970-01-01T00:00:00.00Z\",\n    \"images\": [],\n    \"application\": {\n       \"id\": 1,\n       \"name\": \"Test Application\",\n       \"operatingSystem\": \"Android\"\n    },\n    \"category\": {\n       \"id\": 1,\n       \"categoryName\": \"Lagging\"\n    },\n    \"thumbnail\": {\n       \"id\": 1,\n       \"fileName\": \"thumbnail-1.png\"\n    }\n}",
           "type": "json"
         }
       ]
@@ -1032,6 +1060,13 @@
             "group": "Parameter",
             "type": "String",
             "optional": false,
+            "field": "categoryName",
+            "description": "<p>Name of the category of the review (See the list of categories, found in ie. the api-documentation folder, server uses ones defined in categories.json)</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
             "field": "temporalContext",
             "description": "<p>Temporal context of the review. Valid values are [&quot;Intensive&quot;, &quot;Allocative&quot;].</p>"
           },
@@ -1204,13 +1239,34 @@
             "optional": false,
             "field": "images",
             "description": "<p>List of Image-objects containing information of the screenshots for this review. This is only included when fetching a single review (see &quot;Request Review Information&quot;).</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Application",
+            "optional": false,
+            "field": "application",
+            "description": "<p>The application object corresponding the appId. Object structure can be seen in the documentation for the Application routes.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Category",
+            "optional": false,
+            "field": "category",
+            "description": "<p>Category of the review corresponding the categoryId. The most relevant value within this object is the attribute categoryName.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Thumbnail",
+            "optional": false,
+            "field": "thumbnail",
+            "description": "<p>Thumbnail object containing the fileName-attribute required for downloading thumbnails. This is only included when fetching reviews.</p>"
           }
         ]
       },
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "HTTP/1.1 200 OK\n{\n    \"id\": 1,\n    \"userId\": 1,\n    \"appId\": 1,\n    \"temporalContext\": \"Allocative\",\n    \"spatialContext\": \"Wandering\",\n    \"socialContext\": \"Encouraging\",\n    \"textReview\": \"I found an issue with...\",\n    \"updatedAt\": \"1970-01-01T00:00:00.00Z\",\n    \"createdAt\": \"1970-01-01T00:00:00.00Z\",\n    \"images\": []\n}",
+          "content": "HTTP/1.1 200 OK\n{\n    \"id\": 1,\n    \"userId\": 1,\n    \"appId\": 1,\n    \"categoryId\": 1,\n    \"thumbnailId\": 1,\n    \"temporalContext\": \"Allocative\",\n    \"spatialContext\": \"Wandering\",\n    \"socialContext\": \"Encouraging\",\n    \"textReview\": \"I found an issue with...\",\n    \"updatedAt\": \"1970-01-01T00:00:00.00Z\",\n    \"createdAt\": \"1970-01-01T00:00:00.00Z\",\n    \"images\": [],\n    \"application\": {\n       \"id\": 1,\n       \"name\": \"Test Application\",\n       \"operatingSystem\": \"Android\"\n    },\n    \"category\": {\n       \"id\": 1,\n       \"categoryName\": \"Lagging\"\n    },\n    \"thumbnail\": {\n       \"id\": 1,\n       \"fileName\": \"thumbnail-1.png\"\n    }\n}",
           "type": "json"
         }
       ]
@@ -1364,13 +1420,34 @@
             "optional": false,
             "field": "images",
             "description": "<p>List of Image-objects containing information of the screenshots for this review. This is only included when fetching a single review (see &quot;Request Review Information&quot;).</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Application",
+            "optional": false,
+            "field": "application",
+            "description": "<p>The application object corresponding the appId. Object structure can be seen in the documentation for the Application routes.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Category",
+            "optional": false,
+            "field": "category",
+            "description": "<p>Category of the review corresponding the categoryId. The most relevant value within this object is the attribute categoryName.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Thumbnail",
+            "optional": false,
+            "field": "thumbnail",
+            "description": "<p>Thumbnail object containing the fileName-attribute required for downloading thumbnails. This is only included when fetching reviews.</p>"
           }
         ]
       },
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "HTTP/1.1 200 OK\n{\n    \"id\": 1,\n    \"userId\": 1,\n    \"appId\": 1,\n    \"temporalContext\": \"Allocative\",\n    \"spatialContext\": \"Wandering\",\n    \"socialContext\": \"Encouraging\",\n    \"textReview\": \"I found an issue with...\",\n    \"updatedAt\": \"1970-01-01T00:00:00.00Z\",\n    \"createdAt\": \"1970-01-01T00:00:00.00Z\",\n    \"images\": []\n}",
+          "content": "HTTP/1.1 200 OK\n{\n    \"id\": 1,\n    \"userId\": 1,\n    \"appId\": 1,\n    \"categoryId\": 1,\n    \"thumbnailId\": 1,\n    \"temporalContext\": \"Allocative\",\n    \"spatialContext\": \"Wandering\",\n    \"socialContext\": \"Encouraging\",\n    \"textReview\": \"I found an issue with...\",\n    \"updatedAt\": \"1970-01-01T00:00:00.00Z\",\n    \"createdAt\": \"1970-01-01T00:00:00.00Z\",\n    \"images\": [],\n    \"application\": {\n       \"id\": 1,\n       \"name\": \"Test Application\",\n       \"operatingSystem\": \"Android\"\n    },\n    \"category\": {\n       \"id\": 1,\n       \"categoryName\": \"Lagging\"\n    },\n    \"thumbnail\": {\n       \"id\": 1,\n       \"fileName\": \"thumbnail-1.png\"\n    }\n}",
           "type": "json"
         }
       ]
@@ -1470,13 +1547,34 @@
             "optional": false,
             "field": "images",
             "description": "<p>List of Image-objects containing information of the screenshots for this review. This is only included when fetching a single review (see &quot;Request Review Information&quot;).</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Application",
+            "optional": false,
+            "field": "application",
+            "description": "<p>The application object corresponding the appId. Object structure can be seen in the documentation for the Application routes.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Category",
+            "optional": false,
+            "field": "category",
+            "description": "<p>Category of the review corresponding the categoryId. The most relevant value within this object is the attribute categoryName.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Thumbnail",
+            "optional": false,
+            "field": "thumbnail",
+            "description": "<p>Thumbnail object containing the fileName-attribute required for downloading thumbnails. This is only included when fetching reviews.</p>"
           }
         ]
       },
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "HTTP/1.1 200 OK\n{\n    \"id\": 1,\n    \"userId\": 1,\n    \"appId\": 1,\n    \"temporalContext\": \"Allocative\",\n    \"spatialContext\": \"Wandering\",\n    \"socialContext\": \"Encouraging\",\n    \"textReview\": \"I found an issue with...\",\n    \"updatedAt\": \"1970-01-01T00:00:00.00Z\",\n    \"createdAt\": \"1970-01-01T00:00:00.00Z\",\n    \"images\": []\n}",
+          "content": "HTTP/1.1 200 OK\n{\n    \"id\": 1,\n    \"userId\": 1,\n    \"appId\": 1,\n    \"categoryId\": 1,\n    \"thumbnailId\": 1,\n    \"temporalContext\": \"Allocative\",\n    \"spatialContext\": \"Wandering\",\n    \"socialContext\": \"Encouraging\",\n    \"textReview\": \"I found an issue with...\",\n    \"updatedAt\": \"1970-01-01T00:00:00.00Z\",\n    \"createdAt\": \"1970-01-01T00:00:00.00Z\",\n    \"images\": [],\n    \"application\": {\n       \"id\": 1,\n       \"name\": \"Test Application\",\n       \"operatingSystem\": \"Android\"\n    },\n    \"category\": {\n       \"id\": 1,\n       \"categoryName\": \"Lagging\"\n    },\n    \"thumbnail\": {\n       \"id\": 1,\n       \"fileName\": \"thumbnail-1.png\"\n    }\n}",
           "type": "json"
         }
       ]

@@ -57,19 +57,37 @@ const uploader = multer({
   * @apiSuccess {String} updatedAt Timestamp of last modification
   * @apiSuccess {String} createdAt Timestamp of creation
   * @apiSuccess {Image[]} images List of Image-objects containing information of the screenshots for this review. This is only included when fetching a single review (see "Request Review Information").
+  * @apiSuccess {Application} application The application object corresponding the appId. Object structure can be seen in the documentation for the Application routes.
+  * @apiSuccess {Category} category Category of the review corresponding the categoryId. The most relevant value within this object is the attribute categoryName.
+  * @apiSuccess {Thumbnail} thumbnail Thumbnail object containing the fileName-attribute required for downloading thumbnails. This is only included when fetching reviews.
   * @apiSuccessExample {json} Success-Response:
   *  HTTP/1.1 200 OK
   *  {
   *      "id": 1,
   *      "userId": 1,
   *      "appId": 1,
+  *      "categoryId": 1,
+  *      "thumbnailId": 1,
   *      "temporalContext": "Allocative",
   *      "spatialContext": "Wandering",
   *      "socialContext": "Encouraging",
   *      "textReview": "I found an issue with...",
   *      "updatedAt": "1970-01-01T00:00:00.00Z",
   *      "createdAt": "1970-01-01T00:00:00.00Z",
-  *      "images": []
+  *      "images": [],
+  *      "application": {
+  *         "id": 1,
+  *         "name": "Test Application",
+  *         "operatingSystem": "Android"
+  *      },
+  *      "category": {
+  *         "id": 1,
+  *         "categoryName": "Lagging"
+  *      },
+  *      "thumbnail": {
+  *         "id": 1,
+  *         "fileName": "thumbnail-1.png"
+  *      }
   *  }
   */
 
@@ -80,6 +98,7 @@ const uploader = multer({
  * 
  * @apiHeader (Authentication) {String} Authorization Authorization token
  * @apiParam {Number} appId Database ID of the application this review is about
+ * @apiParam {String} categoryName Name of the category of the review (See the list of categories, found in ie. the api-documentation folder, server uses ones defined in categories.json)
  * @apiParam {String} temporalContext Temporal context of the review. Valid values are ["Intensive", "Allocative"].
  * @apiParam {String} spatialContext Spatial context of the review. Valid values are ["Visiting", "Traveling", "Wandering"].
  * @apiParam {String} socialContext Social context of the review. Valid values are ['Constraining', 'Encouraging'].
@@ -115,6 +134,7 @@ router.use('/create', passportAuth, validateBody(schemas.reviewSchema), ReviewCo
  * @apiHeader (Authentication) {String} Authorization Authorization token
  * @apiParam {Number} id Id of the review to be edited
  * @apiParam {Number} appId Database ID of the application this review is about
+ * @apiParam {String} categoryName Name of the category of the review (See the list of categories, found in ie. the api-documentation folder, server uses ones defined in categories.json)
  * @apiParam {String} temporalContext Temporal context of the review. Valid values are ["Intensive", "Allocative"].
  * @apiParam {String} spatialContext Spatial context of the review. Valid values are ["Visiting", "Traveling", "Wandering"].
  * @apiParam {String} socialContext Social context of the review. Valid values are ['Constraining', 'Encouraging'].

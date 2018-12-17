@@ -1,4 +1,4 @@
-const { Review, Application, Image, Thumbnail, sequelize } = require('../database/models');
+const { Review, ReviewCategory, Application, Image, Thumbnail, sequelize } = require('../database/models');
 const fs = require('fs');
 const sharp = require('sharp');
 const saveDir = process.env.IMAGE_SAVE_DIR || './review_images/';
@@ -38,6 +38,7 @@ module.exports = {
     create: async(req, res, next) => {
         const {
             appId,
+            categoryName,
             temporalContext,
             spatialContext,
             socialContext,
@@ -52,16 +53,27 @@ module.exports = {
             return Promise.reject(new Error(error));
         }
 
+        //Fetch category
+        let category = await ReviewCategory.findOne({where: {categoryName}});
+        if(!category) {
+            let error = 'Could not find a corresponding category for the review';
+            res.status(400)
+                .json({error});
+            return Promise.reject(new Error(error));
+        }
+
         //Build a new review
-        const newReview = Review.build({
+        let newReview = Review.build({
             userId: req.user.id,
             appId,
+            categoryId: category.id,
             temporalContext,
             spatialContext,
             socialContext,
             textReview
         });
         await newReview.save();
+        newReview = await newReview.reload({include: ['category', 'application']});
 
         res.status(200).json(newReview.toJSON());
 
@@ -71,6 +83,7 @@ module.exports = {
     edit: async(req, res, next) => {
         const {
             id,
+            categoryName,
             appId,
             temporalContext,
             spatialContext,
@@ -97,16 +110,25 @@ module.exports = {
         }
 
         //Check that there's data for the application with given appId
-        if( !await Application.findOne({where: {id: appId} }) ) {
+        if( !await Application.findOne({where: {id: appId}}) ) {
             let error = 'Could not find application data with given appId';
             res.status(400)
                 .json({error});
             return Promise.reject(new Error(error));
         }
 
+        let category = await ReviewCategory.findOne({where: {categoryName}});
+        if(!category) {
+            let error = 'Could not find a corresponding category for the review';
+            res.status(400)
+                .json({error});
+            return Promise.reject(new Error(error));
+        }
+
         //Update values
-        review = Object.assign(review, { appId, temporalContext, spatialContext, socialContext, textReview })
+        review = Object.assign(review, { appId, categoryId: category.id, temporalContext, spatialContext, socialContext, textReview })
         await review.save();
+        review = await review.reload({include: ['category', 'application']});
 
         res.status(200).json(review);
 
@@ -122,7 +144,7 @@ module.exports = {
             return Promise.reject(new Error(error));
         }
 
-        const review = await Review.findOne({where: {id, userId: req.user.id}, include: ['application', 'images', 'thumbnail']});
+        const review = await Review.findOne({where: {id, userId: req.user.id}, include: ['application', 'category', 'images', 'thumbnail']});
         if(!review) {
             let error = 'Could not find a review with given id and credentials';
             res.status(404)
@@ -136,7 +158,7 @@ module.exports = {
     },
 
     fetchAll: async(req, res, next) => {
-        let reviews = await Review.findAll({where: {userId: req.user.id}, include: ['application', 'thumbnail']});
+        let reviews = await Review.findAll({where: {userId: req.user.id}, include: ['application', 'category', 'thumbnail']});
         if(!reviews) {
             res.status(200)
                 .json([]);

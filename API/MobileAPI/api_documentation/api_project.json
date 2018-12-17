@@ -1,6 +1,6 @@
 {
   "name": "InstaReview API",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Documentation for the API of the InstaReview mobile application. Most requests in this use JSON-objects in the request body.",
   "order": [
     "Authentication",
@@ -13,7 +13,7 @@
   "apidoc": "0.3.0",
   "generator": {
     "name": "apidoc",
-    "time": "2018-12-17T17:37:46.978Z",
+    "time": "2018-12-17T19:56:53.364Z",
     "url": "http://apidocjs.com",
     "version": "0.17.6"
   }

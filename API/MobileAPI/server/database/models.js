@@ -16,9 +16,9 @@ models = {
 }
 
 //Set up association relations
+models.Review.belongsTo(models.Application, {as: 'application', foreignKey: 'appId', targetKey: 'id'});
+models.Review.belongsTo(models.ReviewCategory, {as: 'category', foreignKey: 'categoryId', targetKey: 'id', onDelete: 'SET NULL'});
 models.Review.hasMany(models.Image, {as: 'images', foreignKey: 'reviewId', sourceKey: 'id'});
-models.Review.belongsTo(models.Thumbnail, {as: 'thumbnail', foreignKey: 'id', sourceKey: 'thumbnailId'});
-models.Review.belongsTo(models.Application, {as: 'application', foreignKey: 'id', sourceKey: 'appId'});
-models.Review.belongsTo(models.ReviewCategory, {as: 'category', foreignKey: 'id', sourceKey: 'categoryId'});
+models.Review.belongsTo(models.Thumbnail, {as: 'thumbnail', foreignKey: 'thumbnailId', targetKey: 'id', onDelete: 'SET NULL'});
 
 module.exports = models;
