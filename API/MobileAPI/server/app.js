@@ -22,17 +22,17 @@ dbSync = async () => {
         });
 
     //In development, force tables to the db
-    if(process.env.NODE_ENV == 'dev' || process.env.NODE_ENV == 'test') {
+    /*if(process.env.NODE_ENV == 'dev' || process.env.NODE_ENV == 'test') {
         await models.sequelize.sync({force: true})
             .then(() => {
                 console.log('Models loaded and forcefully synced.');
             });
-    } else {
+    } else {*/
         await models.sequelize.sync()
             .then(() => {
                 console.log('Models loaded and synced.');
             });
-    }
+    //}
 }
 
 //Middlewares
