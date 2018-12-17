@@ -1,5 +1,38 @@
-const { Review, Application, Image, sequelize } = require('../database/models');
+const { Review, Application, Image, Thumbnail, sequelize } = require('../database/models');
 const fs = require('fs');
+const sharp = require('sharp');
+const saveDir = process.env.IMAGE_SAVE_DIR || './review_images/';
+const thumbnailDir = process.env.THUMBNAIL_SAVE_DIR || './thumbnails/';
+const thumbnailSize = parseInt(process.env.THUMBNAIL_SIZE) || 150;
+
+const generateThumbnail = async (image, review) => {
+    let fileName = 'thumbnail-' + review.id + '.png';
+    try {
+        let thumbnailImage = await sharp(saveDir + image.fileName)
+            .resize(thumbnailSize, thumbnailSize)
+            .png()
+            .toFile(thumbnailDir + fileName);
+        
+        await sequelize.transaction(async transaction => {
+            let thumbnail = Thumbnail.build({
+                fileName
+            });
+            await thumbnail.save({transaction});
+
+            review.thumbnailId = thumbnail.id;
+            await review.save({transaction});
+
+            return Promise.resolve();
+        });
+
+
+    } catch(error) {
+        //Remove the image in case of an error
+        await fs.unlink(thumbnailDir + fileName, error => {
+        });
+        throw new Error('Failed to create a thumbnail: ' + error);
+    }
+}
 
 module.exports = {
     create: async(req, res, next) => {
@@ -89,7 +122,7 @@ module.exports = {
             return Promise.reject(new Error(error));
         }
 
-        const review = await Review.findOne({where: {id, userId: req.user.id}, include: ['images']});
+        const review = await Review.findOne({where: {id, userId: req.user.id}, include: ['application', 'images', 'thumbnail']});
         if(!review) {
             let error = 'Could not find a review with given id and credentials';
             res.status(404)
@@ -103,7 +136,7 @@ module.exports = {
     },
 
     fetchAll: async(req, res, next) => {
-        let reviews = await Review.findAll({where: {userId: req.user.id}});
+        let reviews = await Review.findAll({where: {userId: req.user.id}, include: ['application', 'thumbnail']});
         if(!reviews) {
             res.status(200)
                 .json([]);
@@ -130,9 +163,11 @@ module.exports = {
             return Promise.reject(new Error(error));
         }
 
-        if(!reviewId || (reviewId && !await Review.findOne({where: {id: reviewId}}))) {
+        let review = await Review.findOne({where: {id: reviewId, userId: req.user.id}});
+        if(!review) {
             //Remove the image, since we don't want to save it if we can't link it to a review
-            await fs.unlink(image.destination + image.filename);
+            await fs.unlink(image.destination + image.filename, error => {
+            });
 
             let error = 'No review id was given or couldn\'t find a review with given id.';
             res.status(404)
@@ -147,6 +182,11 @@ module.exports = {
         await newImage.save();
 
         res.status(200).json(newImage.toJSON());
+
+        //Generate thumbnail if it doesn't exist
+        if(!review.thumbnailId) {
+            await generateThumbnail(newImage, review);
+        }
 
         return Promise.resolve('next');
     },
@@ -170,7 +210,7 @@ module.exports = {
         }
 
         //Retrieve the corresponding review from db
-        const review = await Review.findOne({where : {id: image.reviewId}});
+        const review = await Review.findOne({where : {id: image.reviewId, userId: req.user.id}});
         if(!review) {
             let error = 'Couldn\'t find a review containing the image';
             res.status(404)
@@ -178,15 +218,6 @@ module.exports = {
             return Promise.reject(new Error(error));
         }
 
-        //Check that the user is the one that also created/owns the review
-        if(review.userId !== req.user.id) {
-            let error = 'No permissions to access the file';
-            res.status(403)
-                .json({error});
-            return Promise.reject(new Error(error));
-        }
-
-        const saveDir = process.env.IMAGE_SAVE_DIR || './review_images/';
         res.download(saveDir + image.fileName, function(err) {
             if(err) {
                 console.log('Failed to download image:', err);

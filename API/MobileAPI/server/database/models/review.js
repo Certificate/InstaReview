@@ -36,6 +36,14 @@ module.exports = (sequelize, DataTypes) => {
         textReview: {
             type: DataTypes.TEXT,
             allowNull: false
+        },
+        thumbnailId: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            references: {
+                model: 'thumbnails',
+                key: 'id'
+            }
         }
     });
 
