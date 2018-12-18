@@ -9,7 +9,7 @@ const generateThumbnail = async (image, review) => {
     let fileName = 'thumbnail-' + review.id + '.png';
     try {
         let thumbnailImage = await sharp(saveDir + image.fileName)
-            .resize(thumbnailSize, thumbnailSize)
+            .resize(thumbnailSize, thumbnailSize, { fit: "inside" })
             .png()
             .toFile(thumbnailDir + fileName);
         
