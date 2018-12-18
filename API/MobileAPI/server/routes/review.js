@@ -353,4 +353,20 @@ router.use('/image/download/:filename', passportAuth, ReviewController.imageDown
  */
 router.use('/thumbnail/:id', passportAuth, ReviewController.fetchThumbnail);
 
+/**
+ * @api {get} /review/categories Fetch a list of available categories
+ * @apiName FetchCategories
+ * @apiGroup Review
+ * 
+ * @apiSuccess {String[]} categories List of categories
+ * @apiSuccessExample {json} Success-Response:
+ *  HTTP/1.1 200 OK
+ *  [
+ *      "Lagging",
+ *      "Functional Error",
+ *      ...
+ *  ]
+ */
+router.use('/categories', ReviewController.fetchCategories);
+
 module.exports = router;

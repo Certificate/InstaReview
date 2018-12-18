@@ -290,5 +290,17 @@ module.exports = {
                 return Promise.resolve('next');
             }
         });
+    },
+
+    fetchCategories: async(req, res, next) => {
+        let categories = await ReviewCategory.findAll();
+        
+        categories = categories.map(category => {
+            return category.categoryName;
+        });
+
+        res.status(200).json(categories);
+
+        return Promise.resolve('next');
     }
 };

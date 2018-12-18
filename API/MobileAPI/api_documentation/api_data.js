@@ -1274,6 +1274,36 @@ define({ "api": [
   },
   {
     "type": "get",
+    "url": "/review/categories",
+    "title": "Fetch a list of available categories",
+    "name": "FetchCategories",
+    "group": "Review",
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "String[]",
+            "optional": false,
+            "field": "categories",
+            "description": "<p>List of categories</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n[\n    \"Lagging\",\n    \"Functional Error\",\n    ...\n]",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "server/routes/review.js",
+    "groupTitle": "Review"
+  },
+  {
+    "type": "get",
     "url": "/review/get/:id",
     "title": "Request Review information",
     "name": "GetReview",
