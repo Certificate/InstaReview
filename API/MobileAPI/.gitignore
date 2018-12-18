@@ -1,4 +1,4 @@
-/node_modules
-/review_images
-/thumbnails
+node_modules/
+review_images/
+thumbnails/
 .env
