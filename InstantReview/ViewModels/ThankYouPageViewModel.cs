@@ -27,8 +27,6 @@ namespace InstantReview.ViewModels
 
         private async void NavigateToHome()
         {
-            // TODO: For debug purposes only
-            dialogService.showAlert(dataCollector.GenerateReviewText());
             
             // Upload review.
             await connectionHandler.UploadReview();

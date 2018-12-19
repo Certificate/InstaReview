@@ -16,19 +16,19 @@ namespace InstantReview.Droid.Dialogs
         private readonly Context context = MainActivity.Instance;
 
 
-        public void showAlert(string text)
+        public void showAlert(string title, string text, string buttonLabel)
         {
             AlertDialog.Builder alert = new AlertDialog.Builder(context);
-            alert.SetTitle("Hi!");
+            alert.SetTitle(title);
             alert.SetMessage(text);
-            alert.SetPositiveButton("Ok", (senderAlert, args) => {
+            alert.SetPositiveButton(buttonLabel, (senderAlert, args) => {
             });
-            alert.SetNegativeButton("nah", (senderAlert, args) => {
-            });
+
 
             Dialog dialog = alert.Create();
             dialog.Show();
         }
+
 
         public void showRegisteredDialog()
         {

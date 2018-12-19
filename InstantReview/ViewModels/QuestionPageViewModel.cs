@@ -26,22 +26,14 @@ namespace InstantReview.ViewModels
             this.thankYouPageViewModel = thankYouPageViewModel;
         }
 
-        public bool Q1Toggled { get; set; }
+        public bool TemporalContextValue { get; set; }
 
-        public bool Q2Toggled { get; set; }
+        public bool SpatialContextValue { get; set; }
 
-        public bool Q3Toggled { get; set; }
-
-        public bool Q4Toggled { get; set; }
+        public bool SocialContextValue { get; set; }
 
 
         public ICommand CheckResultCommand => new Command(NavigateToThankYouPage);
-
-        private void CheckResults()
-        {
-            string print = $"Q1: {Q1Toggled} Q2: {Q2Toggled} Q3: {Q3Toggled} Q4: {Q4Toggled}";
-            dialogService.showAlert(print);
-        }
 
         private bool AddQuestionsToDataCollector()
         {
@@ -49,10 +41,9 @@ namespace InstantReview.ViewModels
             Log.Debug("Adding questions to data collector");
             try
             {
-                dataCollector.Data.Question1 = Q1Toggled.ToString();
-                dataCollector.Data.Question2 = Q2Toggled.ToString();
-                dataCollector.Data.Question3 = Q3Toggled.ToString();
-                dataCollector.Data.Question4 = Q4Toggled.ToString();
+                dataCollector.Data.temporalContext = "Intensive";
+                dataCollector.Data.spatialContext = "Visiting";
+                dataCollector.Data.socialContext = "Constraining";
                 success = true;
             }
             catch (Exception e)
@@ -65,10 +56,19 @@ namespace InstantReview.ViewModels
 
         public async void NavigateToThankYouPage()
         {
-            AddQuestionsToDataCollector();
-            
-            Log.Debug("Navigating to Reviews!");
-            await navigation.PushAsyncSingle(CreateThankYouPage());
+            if (AddQuestionsToDataCollector())
+            {
+                Log.Debug("Navigating to Reviews!");
+                await navigation.PushAsyncSingle(CreateThankYouPage());
+            }
+            else
+            {
+                Log.Error("Could not continue forward.");
+                dialogService.showAlert("Error", "Error while gathering data. Resuming to home page.", "Dismiss");
+                await navigation.PopToRootAsync();
+
+            }
+
         }
 
         private Page CreateThankYouPage()

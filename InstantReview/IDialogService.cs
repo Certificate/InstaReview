@@ -3,7 +3,7 @@ namespace InstantReview
 {
     public interface IDialogService
     {
-        void showAlert(string text);
+        void showAlert(string title, string text, string buttonLabel);
 
         void showRegisteredDialog();
 

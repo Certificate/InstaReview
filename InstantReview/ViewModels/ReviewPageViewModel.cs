@@ -49,10 +49,10 @@ namespace InstantReview.ViewModels
             dataCollector.InitializeDataCollector();
             
             Log.Debug("Adding additional info text to data collector");
-            dataCollector.Data.AdditionalInfo = AdditionalInfoText;
+            dataCollector.Data.textReview = AdditionalInfoText;
             
             Log.Debug("Adding ImagePath");
-            dataCollector.Data.ImagePath = this.ImagePath;
+            dataCollector.Data.imagePath = ImagePath;
             
             Log.Debug("Navigating to Reviews!");
             await navigation.PushAsyncSingle(CreateQuestionsPage());

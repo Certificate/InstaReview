@@ -133,16 +133,24 @@ namespace InstantReview.Login
 
             using (var client = new HttpClient())
             {
-
                 AddAuthorizationHeader(client);
                 var content = new StringContent(data, Encoding.UTF8, "application/json");
-                var response = await client.PostAsync(baseAddress + uploadReviewExtension, content, CancellationToken.None);
-                var responseJson = await response.Content.ReadAsStringAsync();
-                var deserialized = Newtonsoft.Json.JsonConvert.DeserializeObject<NewReviewResponse>(responseJson);
-                success = await SendFileToServer(dataCollector.Data.ImagePath, deserialized.id);
+
+                try
+                {
+                    var response = await client.PostAsync(baseAddress + uploadReviewExtension, content, CancellationToken.None);
+                    var responseJson = await response.Content.ReadAsStringAsync();
+                    var deserialized = Newtonsoft.Json.JsonConvert.DeserializeObject<NewReviewResponse>(responseJson);
+                    success = await SendFileToServer(dataCollector.Data.imagePath, deserialized.id);
+                }
+                catch (Exception e)
+                {
+                    Log.Error("Error while uploading review. Reason: "+e);
+                }
             }
 
             Log.Debug($"Review upload status: {success}");
+            dataCollector.InitializeDataCollector();
             return success;
         }
 

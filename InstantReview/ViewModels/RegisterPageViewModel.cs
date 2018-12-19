@@ -59,7 +59,7 @@ namespace InstantReview.ViewModels
             catch (ArgumentException e)
             {
                 Log.Error("Password mismatch!", e);
-                dialogService.showAlert("Passwords do not match!");
+                dialogService.showAlert("Error" ,"Passwords do not match!", "OK");
             }
             catch (Exception e)
             {
