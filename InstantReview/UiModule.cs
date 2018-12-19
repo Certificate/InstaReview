@@ -17,6 +17,7 @@ namespace InstantReview
             builder.RegisterType<MasterPageViewModel>().AsSelf().SingleInstance();
             builder.RegisterType<PageFactory>().As<IPageFactory>().SingleInstance();
             builder.RegisterType<ReviewPageViewModel>().As<IReviewPageViewModel>().SingleInstance();
+            builder.RegisterType<AccountDetailsViewModel>().AsSelf().SingleInstance();
 
             // Not really part of UI but what the heck
             builder.RegisterType<ReviewDataCollector>().AsSelf().SingleInstance();

@@ -95,12 +95,18 @@ namespace InstantReview
             var masterPageVm = Container.Resolve<MasterPageViewModel>();
 
             masterPageVm.LogoutSuccessful += UpdateNavigation;
+            masterPageVm.NavigationEvent += MasterPageVmOnNavigationEvent;
 
             return new MasterDetailPage
             {
                 Master = new MasterPage(masterPageVm),
                 Detail = detailPage
             };
+        }
+
+        private void MasterPageVmOnNavigationEvent(object sender, EventArgs e)
+        {
+            masterDetailPage.IsPresented = false;
         }
 
         private Page CreateMainPage()

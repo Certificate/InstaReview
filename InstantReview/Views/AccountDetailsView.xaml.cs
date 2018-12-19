@@ -2,14 +2,16 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text.RegularExpressions;
+using InstantReview.ViewModels;
 using Xamarin.Forms;
 
 namespace InstantReview.Views
 {
     public partial class AccountDetailsView : ContentPage
     {
-        public AccountDetailsView()
+        public AccountDetailsView(AccountDetailsViewModel viewModel)
         {
+            BindingContext = viewModel;
             InitializeComponent();
         }
 
