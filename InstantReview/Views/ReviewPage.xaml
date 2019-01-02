@@ -19,6 +19,7 @@
                     <RowDefinition Height="*" />
                     <RowDefinition Height="*" />
                     <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
                     <RowDefinition Height="10" />
                 </Grid.RowDefinitions>
 
@@ -42,8 +43,35 @@
                 <Entry Text="{Binding AdditionalInfoText}" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" Placeholder="Type here..." PlaceholderColor="Gray"></Entry>
 
 
+                <Label Text="Select a category:" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" HorizontalOptions="Start" VerticalOptions="Center" />
+                <Picker Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="5" SelectedIndex="0" HorizontalOptions="FillAndExpand" SelectedItem="{Binding Category}">
+                    <Picker.Items>
+                        <x:String>Functional Error</x:String>
+                        <x:String>Lagging</x:String>
+                        <x:String>Unattractive Interface Design</x:String>
+                        <x:String>Uninteresting Content</x:String>
+                        <x:String>App Quits Unexpectedly</x:String>
+                        <x:String>App Freeze</x:String>
+                        <x:String>Lose Data</x:String>
+                        <x:String>Feature missing</x:String>
+                        <x:String>Feature should be removed</x:String>
+                        <x:String>Feature not working as expected</x:String>
+                        <x:String>Difficult to use</x:String>
+                        <x:String>Not working on particular system version</x:String>
+                        <x:String>Not working on particular device</x:String>
+                        <x:String>Poor Connection with Wifi</x:String>
+                        <x:String>Poor Connection with Mobile Network</x:String>
+                        <x:String>Hidden Cost</x:String>
+                        <x:String>Too Expensive</x:String>
+                        <x:String>Privacy and ethics issues</x:String>
+                        <x:String>Cost too much energy or memory</x:String>
+                        <x:String>Not Specific</x:String>
+                    </Picker.Items>
+                </Picker>
+
+
                 <!--Edit button-->
-                <Button Text="Next" TextColor="White" BackgroundColor="Salmon" BorderColor="White" BorderWidth="2" Grid.Row="5"
+                <Button Text="Next" TextColor="White" BackgroundColor="Salmon" BorderColor="White" BorderWidth="2" Grid.Row="6"
                         Grid.Column="1" Grid.ColumnSpan="3" VerticalOptions="Center" Command="{Binding DoneCommand}"/>
             </Grid>
         </ScrollView>

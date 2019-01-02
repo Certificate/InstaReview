@@ -17,7 +17,7 @@ namespace InstantReview
 
         public string ToSerializedFormat()
         {
-            ReviewJson json = new ReviewJson {appId = 1, categoryName = "Lagging", temporalContext = Data.temporalContext, socialContext = Data.socialContext, spatialContext = Data.spatialContext, textReview = Data.textReview};
+            ReviewJson json = new ReviewJson {appId = 1, categoryName = Data.categoryName, temporalContext = Data.temporalContext, socialContext = Data.socialContext, spatialContext = Data.spatialContext, textReview = Data.textReview};
             string serialized = Newtonsoft.Json.JsonConvert.SerializeObject(json);
             Log.Debug(serialized);
             return serialized;

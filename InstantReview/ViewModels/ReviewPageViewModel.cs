@@ -23,6 +23,8 @@ namespace InstantReview.ViewModels
 
         public string AdditionalInfoText { get; set; }
 
+        public string Category { get; set; }
+
         public ReviewPageViewModel(IShareIntentReceiver intentReceiver, IPageFactory pageFactory, INavigation navigation, QuestionPageViewModel questionPageViewModel, ReviewDataCollector dataCollector)
         {
             this.intentReceiver = intentReceiver;
@@ -53,6 +55,9 @@ namespace InstantReview.ViewModels
             
             Log.Debug("Adding ImagePath");
             dataCollector.Data.imagePath = ImagePath;
+
+            Log.Debug("Adding Category");
+            dataCollector.Data.categoryName = Category;
             
             Log.Debug("Navigating to Reviews!");
             await navigation.PushAsyncSingle(CreateQuestionsPage());
