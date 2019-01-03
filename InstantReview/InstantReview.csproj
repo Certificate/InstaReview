@@ -19,6 +19,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Update="Views\EditPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Views\ReviewView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>

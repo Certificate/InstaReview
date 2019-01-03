@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
              xmlns:local="clr-namespace:InstantReview"
              xmlns:views="clr-namespace:InstantReview.Views;assembly=InstantReview"
-             x:Class="InstantReview.MainPage"
+             x:Class="InstantReview.Views.MainPage"
              Title="MAIN PAGE"
              BackgroundColor="White">
     

@@ -15,10 +15,14 @@ namespace InstantReview.ViewModels
 {
     public class MainPageViewModel
     {
+
+
         private readonly IDialogService dialogService;
         private readonly INavigation navigation;
         private readonly IPageFactory pageFactory;
+
         private readonly IReviewPageViewModel reviewPageViewModel;
+        private readonly EditPageViewModel editPageViewModel;
         private readonly IConnectionHandler connectionHandler;
         private static readonly ILog Log = LogManager.GetLogger<MainPageViewModel>();
 
@@ -32,20 +36,34 @@ namespace InstantReview.ViewModels
             IConnectionHandler connectionHandler,
             ThankYouPageViewModel thankYouPageViewModel,
             MasterPageViewModel masterPageViewModel,
-            ILoginPageViewModel loginPageViewModel)
+            ILoginPageViewModel loginPageViewModel,
+            EditPageViewModel editPageViewModel
+            )
         {
             this.dialogService = dialogService;
             this.navigation = navigation;
             this.pageFactory = pageFactory;
             this.reviewPageViewModel = reviewPageViewModel;
             this.connectionHandler = connectionHandler;
-            
+            this.editPageViewModel = editPageViewModel;
+
             ReviewsList = new ObservableCollection<Review>();
             GetReviewsByUser();
 
             reviewPageViewModel.ViewModelReadyEvent += IntentReceiver_ItemsReceivedEvent;
             thankYouPageViewModel.ReviewDoneEvent += OnReviewDoneEvent;
             loginPageViewModel.LoginSuccessful += OnLoginStateChanged;
+            MainPage.ItemSelected += OnReviewItemSelected;
+        }
+
+        private void OnReviewItemSelected(object sender, EventArgs e)
+        {
+            var jotain = (SelectedItemChangedEventArgs)e;
+            var add = (Review)jotain.SelectedItem;
+            
+
+            Log.Debug(add.id);
+            Log.Debug("Done");
         }
 
         private void OnLoginStateChanged(object sender, EventArgs e)
@@ -97,6 +115,17 @@ namespace InstantReview.ViewModels
         private Page CreateReviewPage()
         {
             return pageFactory.CreatePage<ReviewPage, IReviewPageViewModel>(reviewPageViewModel);
+        }
+
+
+        public async void NavigateToEditPage()
+        {
+            await navigation.PushAsyncSingle(CreateEditPage());
+        }
+
+        private Page CreateEditPage()
+        {
+            return pageFactory.CreatePage<EditPage, EditPageViewModel>(editPageViewModel);
         }
     }
 }
