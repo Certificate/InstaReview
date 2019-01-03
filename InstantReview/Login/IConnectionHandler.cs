@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -18,6 +19,10 @@ namespace InstantReview.Login
         bool CheckTokenValidity(string token);
 
         Task<HttpResponseMessage> Register(string email, string password, string name, string birthday, string gender);
+
+        Task<EditableReview> DownloadReview(int id);
+
+        Task<Stream> DownloadImage(string filename);
 
         Task<bool> UploadReview();
 

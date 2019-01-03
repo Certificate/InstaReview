@@ -30,6 +30,8 @@ namespace InstantReview.Login
         private const string uploadReviewExtension = "review/create";
         private const string uploadImageExtension = "review/image/upload";
         private const string reviewListExtensions = "review/list";
+        private const string downloadReviewExtension = "review/get/";
+        private const string downloadImageExtension = "review/image/download/";
 
 
 
@@ -123,6 +125,48 @@ namespace InstantReview.Login
             public string name;
             public string birthday;
             public string gender;
+        }
+
+        public async Task<Stream> DownloadImage(string filename)
+        {
+            using (var client = new HttpClient())
+            {
+                AddAuthorizationHeader(client);
+
+                var response = await client.GetAsync(baseAddress + downloadImageExtension + filename);
+
+                var stream = await response.Content.ReadAsStreamAsync();
+
+                return stream;
+            }
+        }
+
+        public async Task<EditableReview> DownloadReview(int id)
+        {
+            Log.Debug("Downloading review by id "+id);
+            var success = false;
+            EditableReview editable = new EditableReview();
+            using (var client = new HttpClient())
+            {
+                AddAuthorizationHeader(client);
+
+                try
+                {
+                    var response = await client.GetAsync(baseAddress + downloadReviewExtension+id, CancellationToken.None);
+                    var responseJson = await response.Content.ReadAsStringAsync();
+                    editable = JsonConvert.DeserializeObject<EditableReview>(responseJson);
+                    success = true;
+
+                }
+                catch (Exception e)
+                {
+                    Log.Error("Error while downloading review. Reason: " + e);
+                }
+            }
+
+            Log.Debug($"Review download status: {success}");
+            return editable;
+
         }
 
         public async Task<bool> UploadReview()

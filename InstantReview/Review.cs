@@ -4,6 +4,30 @@ using System.Text;
 
 namespace InstantReview
 {
+    public enum Categories
+    {
+        FunctionalError,
+        Lagging,
+        UnattractiveInterfaceDesign,
+        UninterestingContent,
+        AppQuitsUnexpectedly,
+        AppFreeze,
+        LoseData,
+        FeatureMissing,
+        FeatureShouldBeRemoved,
+        FeatureNotWorkingAsExpected,
+        DifficultToUse,
+        NotWorkingOnParticularSystemVersion,
+        NotWorkingOnParticularDevice,
+        PoorConnectionWithWifi,
+        PoorConnectionWithMobileNetwork,
+        HiddenCost,
+        TooExpensive,
+        PrivacyAndEthicsIssues,
+        CostTooMuchEnergyOrMemory,
+        NotSpecific
+    }
+
     public class Review
     {
         public int id { get; set; }

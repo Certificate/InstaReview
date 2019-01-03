@@ -39,8 +39,15 @@
 
 
               <!--Question 1-->
-                <Label Text="Additional information:" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" HorizontalOptions="Start" VerticalOptions="Center" />
-                <Entry Text="{Binding AdditionalInfoText}" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" Placeholder="Type here..." PlaceholderColor="Gray"></Entry>
+                <Label Text="Additional information:" 
+                       Grid.Row="2" 
+                       Grid.Column="1" Grid.ColumnSpan="2" 
+                       HorizontalOptions="Start" VerticalOptions="Center" />
+                <Entry Text="{Binding AdditionalInfoText}" 
+                       Grid.Row="3" 
+                       Grid.Column="1" Grid.ColumnSpan="3" 
+                       Placeholder="Type here..." 
+                       PlaceholderColor="Gray"></Entry>
 
 
                 <Label Text="Select a category:" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" HorizontalOptions="Start" VerticalOptions="Center" />

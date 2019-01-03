@@ -13,7 +13,7 @@ using Xamarin.Forms.Internals;
 
 namespace InstantReview.ViewModels
 {
-    public class MainPageViewModel
+    public class MainPageViewModel : BaseViewModel
     {
 
 
@@ -120,9 +120,15 @@ namespace InstantReview.ViewModels
 
         public async void NavigateToEditPage(int id)
         {
+            var status = await editPageViewModel.DownloadReview(id);
+
             var page = (EditPage)CreateEditPage();
-            editPageViewModel.IdLabel = id.ToString();
-            await navigation.PushAsyncSingle(CreateEditPage());
+            await navigation.PushAsyncSingle(page);
+
+            
+
+            
+            
         }
 
         private Page CreateEditPage()
