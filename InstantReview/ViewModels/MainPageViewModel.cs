@@ -56,14 +56,14 @@ namespace InstantReview.ViewModels
             MainPage.ItemSelected += OnReviewItemSelected;
         }
 
-        private void OnReviewItemSelected(object sender, EventArgs e)
+        private async void OnReviewItemSelected(object sender, EventArgs e)
         {
             var jotain = (SelectedItemChangedEventArgs)e;
             var add = (Review)jotain.SelectedItem;
             
 
             Log.Debug(add.id);
-            Log.Debug("Done");
+            NavigateToEditPage();
         }
 
         private void OnLoginStateChanged(object sender, EventArgs e)
