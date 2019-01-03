@@ -12,6 +12,7 @@ namespace InstantReview.Views
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class EditPage : ContentPage
 	{
+
 		public EditPage (EditPageViewModel viewModel)
 		{
 			InitializeComponent();

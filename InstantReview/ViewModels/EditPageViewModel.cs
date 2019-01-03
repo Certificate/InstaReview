@@ -6,6 +6,6 @@ namespace InstantReview.ViewModels
 {
     public class EditPageViewModel
     {
-        public string AdditionalInfo { get; set; }
+        public string IdLabel { get; set; }
     }
 }

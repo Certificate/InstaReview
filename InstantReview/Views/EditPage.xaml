@@ -4,7 +4,7 @@
              x:Class="InstantReview.Views.EditPage">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="{Binding AdditionalInfo}"
+            <Label x:Name="IdLabel" Text="{Binding IdLabel}"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
         </StackLayout>

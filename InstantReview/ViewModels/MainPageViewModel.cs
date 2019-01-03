@@ -27,6 +27,9 @@ namespace InstantReview.ViewModels
         private static readonly ILog Log = LogManager.GetLogger<MainPageViewModel>();
 
         public ObservableCollection<Review> ReviewsList { get; set; }
+        
+        public int EditableReview { get; set; }
+
 
         public MainPageViewModel(
             IDialogService dialogService, 
@@ -58,12 +61,9 @@ namespace InstantReview.ViewModels
 
         private async void OnReviewItemSelected(object sender, EventArgs e)
         {
-            var jotain = (SelectedItemChangedEventArgs)e;
-            var add = (Review)jotain.SelectedItem;
+            var arg = (Review)((SelectedItemChangedEventArgs)e).SelectedItem;
             
-
-            Log.Debug(add.id);
-            NavigateToEditPage();
+            NavigateToEditPage(arg.id);
         }
 
         private void OnLoginStateChanged(object sender, EventArgs e)
@@ -118,8 +118,10 @@ namespace InstantReview.ViewModels
         }
 
 
-        public async void NavigateToEditPage()
+        public async void NavigateToEditPage(int id)
         {
+            var page = (EditPage)CreateEditPage();
+            editPageViewModel.IdLabel = id.ToString();
             await navigation.PushAsyncSingle(CreateEditPage());
         }
 
