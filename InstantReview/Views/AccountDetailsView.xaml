@@ -4,130 +4,60 @@
              x:Class="InstantReview.Views.AccountDetailsView">
     <ContentPage.Content>
         <ScrollView>
-            <StackLayout>
-                <!-- InfoLayout -->
+            <!-- InfoLayout -->
                 <StackLayout Margin="10" Spacing="5" x:Name="layout" IsVisible="True">
 
                     <!--Empty space over Big label text-->
                     <BoxView VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" />
 
-                    <Label Text="Account creation" HeightRequest="40" FontSize="30" VerticalOptions="Center" HorizontalTextAlignment="Center" ></Label>
+                    <Label Text="Change password" HeightRequest="40" FontSize="30" VerticalOptions="Center" HorizontalTextAlignment="Center" ></Label>
 
                     <!--Empty space under Big label text-->
                     <BoxView VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" />
+                    
+                    
 
-                    <Label HorizontalOptions="FillAndExpand" Text="{Binding Name}"/>
+                <Entry Placeholder="Current password"  Keyboard="Plain" Text="{Binding CurrentPassword}" />
 
-                    <Label Text="{Binding Email}"/>
+                <Entry Placeholder="New password" Keyboard="Plain" Text="{Binding NewPassword}"/>
 
-                    <Grid Margin="3">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="5*" />
-                            <ColumnDefinition Width="5*" />
-                        </Grid.ColumnDefinitions>
+                <Entry Placeholder="Repeat new password"  Keyboard="Plain"/>
 
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                        </Grid.RowDefinitions>
+                <Grid Margin="3">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="5*" />
+                        <ColumnDefinition Width="5*" />
+                    </Grid.ColumnDefinitions>
 
-                        <Label Grid.Column="0" Grid.Row="0" Text="Gender" FontSize="17" ></Label>
-                        <!--Gender picker-->
-                        <Label Text="{Binding Gender}"></Label>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                    </Grid.RowDefinitions>
 
-                        <Label Grid.Column="1" Grid.Row="0" Text="Birthdate" FontSize="17" ></Label>
-                        <!--Birthdate picker - Datetime==systems current date - date can be chosen from 1.1.1900 to 31.12.2100-->
-                        <Label Text = "{Binding Birthday}"></Label>
 
-                    </Grid>
-
-                    <Button Text="Edit"
+                    <Button Grid.Column="0" Grid.Row="0" Text="Cancel"
                     Style="{StaticResource AnchorButtonStyle}"
                     HorizontalOptions="Center"
-                    Command="{Binding EditAccountCommand}"
-                    IsEnabled="False"
+                    Command="{Binding ReturnToMainCommand}"
+                    IsEnabled="True"
                     BorderWidth="1"
                     BorderColor="Salmon">
                     </Button>
 
-                    <BoxView VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" />
-
-                </StackLayout>
-
-
-
-
-                <!-- EditLayout -->
-                <StackLayout Margin="10" Spacing="5" IsVisible="False">
-
-                    <!--Empty space over Big label text-->
-                    <BoxView VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" />
-
-                    <Label Text="Welcome {XYZ}" HeightRequest="40" FontSize="30" VerticalOptions="Center" HorizontalTextAlignment="Center" ></Label>
-
-                    <!--Empty space under Big label text-->
-                    <BoxView VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" />
-
-                    <Entry Keyboard="Default" Placeholder="Name"  HorizontalOptions="FillAndExpand" Text="{Binding Name}"/>
-
-                    <Entry x:Name="email" Keyboard="Email" Placeholder="Email" Text="{Binding Email}" PropertyChanged="EmailTextChangedEvent"/>
-
-                    <Grid Margin="3">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="5*" />
-                            <ColumnDefinition Width="5*" />
-                        </Grid.ColumnDefinitions>
-
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                        </Grid.RowDefinitions>
-
-                        <Label Grid.Column="0" Grid.Row="0" Text="Gender" FontSize="17" ></Label>
-                        <!--Gender picker-->
-                        <Picker Grid.Column="0" Grid.Row="1" SelectedIndex="0" HorizontalOptions="FillAndExpand" SelectedItem="{Binding Gender}">
-                            <Picker.Items>
-                                <x:String>Male</x:String>
-                                <x:String>Female</x:String>
-                            </Picker.Items>
-                        </Picker>
-
-                        <Label Grid.Column="1" Grid.Row="0" Text="Birthdate" FontSize="17" ></Label>
-                        <!--Birthdate picker - Datetime==systems current date - date can be chosen from 1.1.1900 to 31.12.2100-->
-                        <DatePicker Grid.Column="1" Grid.Row="1" VerticalOptions="CenterAndExpand" MinimumDate="01/01/1900" MaximumDate="{x:Static sys:DateTime.Now}" Date="{Binding Birthday}">
-                            <DatePicker.Format>dd-MM-yyyy</DatePicker.Format>
-                        </DatePicker>
-
-                    </Grid>
-
-                    <Entry x:Name="password" IsPassword="True" Placeholder="Password" Text="{Binding Password}" PropertyChanged="PasswordTextChanged"/>
-
-                    <Entry x:Name="checkPassword" IsPassword="True" Placeholder="Repeat Password" Text="{Binding CheckPassword}" PropertyChanged="PasswordTextChanged"/>
-
-                    <Label x:Name="passwordErrorText" Text="Passwords must match!" TextColor="Red" FontSize="16" FontAttributes="Bold" IsVisible="False" HorizontalOptions="Center"></Label>
-
-
-                    <!--Places switch and label to same line using dark magic-->
-                    <!-- <StackLayout Orientation="Horizontal"> -->
-                    <!--     <Switch IsToggled="false" HorizontalOptions="Start"/> -->
-                    <!--     <Label Text="I agree with the terms and conditions" FontSize="17" ></Label> -->
-                    <!-- </StackLayout> -->
-
-                    <Button x:Name="registerButton"
-                    Text="Create account"
+                    <Button Grid.Column="1" Grid.Row="0" Text="Change password"
                     Style="{StaticResource AnchorButtonStyle}"
                     HorizontalOptions="Center"
-                    Command="{Binding RegisterCommand}"
-                    IsEnabled="False"
+                    Command="{Binding ChangePasswordCommand}"
+                    IsEnabled="True"
                     BorderWidth="1"
                     BorderColor="Salmon">
                     </Button>
 
-                    <BoxView VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" />
+                </Grid>
+
+                <BoxView VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" />
 
                 </StackLayout>
-
-            </StackLayout>
         </ScrollView>
     </ContentPage.Content>
 </ContentPage>
