@@ -1,6 +1,8 @@
 const { Review, ReviewCategory, Application, Image, Thumbnail, sequelize } = require('../database/models');
 const fs = require('fs');
 const sharp = require('sharp');
+sharp.cache(false);
+
 const saveDir = process.env.IMAGE_SAVE_DIR || './review_images/';
 const thumbnailDir = process.env.THUMBNAIL_SAVE_DIR || './thumbnails/';
 const thumbnailSize = parseInt(process.env.THUMBNAIL_SIZE) || 150;
