@@ -31,7 +31,7 @@ namespace InstantReview.Views
 
         private void ReviewListOnItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            var type = (Review)e.SelectedItem;
+            var type = (ReviewMenuItem)e.SelectedItem;
             ItemSelected?.Invoke(this, e);
         }
 

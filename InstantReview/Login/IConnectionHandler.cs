@@ -30,5 +30,7 @@ namespace InstantReview.Login
         Task<List<Review>> DownloadReviewList();
 
         Task<bool> UploadEditedReview(EditPageViewModel.EditedReview edited);
+
+        Task<Stream> DownloadThumbnail(int id);
     }
 }

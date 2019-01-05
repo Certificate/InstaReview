@@ -34,6 +34,7 @@ namespace InstantReview.Login
         private const string downloadReviewExtension = "review/get/";
         private const string downloadImageExtension = "review/image/download/";
         private const string editReviewExtension = "review/edit";
+        private const string thumbnailExtension = "review/thumbnail/";
 
 
 
@@ -144,6 +145,20 @@ namespace InstantReview.Login
             }
         }
 
+        public async Task<Stream> DownloadThumbnail(int id)
+        {
+            using (var client = new HttpClient())
+            {
+                AddAuthorizationHeader(client);
+
+                var response = await client.GetAsync(baseAddress + thumbnailExtension + id);
+
+                var stream = await response.Content.ReadAsStreamAsync();
+
+                return stream;
+            }
+        }
+
         public async Task<EditableReview> DownloadReview(int id)
         {
             Log.Debug("Downloading review by id "+id);
@@ -233,7 +248,6 @@ namespace InstantReview.Login
             }
 
             Log.Debug($"Edited review upload status: {success}");
-            dialogService.showAlert("Mission successful!", "Edited review uploaded successfully.", "Ok");
             return success;
         }
 

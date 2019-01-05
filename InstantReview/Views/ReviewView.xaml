@@ -20,7 +20,7 @@
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <Image Grid.Column="0" Grid.Row="0" Grid.RowSpan="4" Source="" HeightRequest="150" WidthRequest="84" BackgroundColor="Salmon"/>
+        <Image Grid.Column="0" Grid.Row="0" Grid.RowSpan="4" Source="{Binding ImageSource}" HeightRequest="150" WidthRequest="84" BackgroundColor="Salmon"/>
 
         <Label Grid.Column="1"  Grid.Row="0" Text="{Binding createdAt, StringFormat='Date Created: {0}'}"></Label>
 

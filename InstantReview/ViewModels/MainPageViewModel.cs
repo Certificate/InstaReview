@@ -26,7 +26,7 @@ namespace InstantReview.ViewModels
         private readonly IConnectionHandler connectionHandler;
         private static readonly ILog Log = LogManager.GetLogger<MainPageViewModel>();
 
-        public ObservableCollection<Review> ReviewsList { get; set; }
+        public ObservableCollection<ReviewMenuItem> ReviewsList { get; set; }
         
         public int EditableReview { get; set; }
 
@@ -50,7 +50,7 @@ namespace InstantReview.ViewModels
             this.connectionHandler = connectionHandler;
             this.editPageViewModel = editPageViewModel;
 
-            ReviewsList = new ObservableCollection<Review>();
+            ReviewsList = new ObservableCollection<ReviewMenuItem>();
             GetReviewsByUser();
 
             reviewPageViewModel.ViewModelReadyEvent += IntentReceiver_ItemsReceivedEvent;
@@ -61,7 +61,7 @@ namespace InstantReview.ViewModels
 
         private async void OnReviewItemSelected(object sender, EventArgs e)
         {
-            var arg = (Review)((SelectedItemChangedEventArgs)e).SelectedItem;
+            var arg = (ReviewMenuItem)((SelectedItemChangedEventArgs)e).SelectedItem;
             
             NavigateToEditPage(arg.id);
         }
@@ -88,21 +88,21 @@ namespace InstantReview.ViewModels
         public async void GetReviewsByUser()
         {
             var list = await connectionHandler.DownloadReviewList();
-            Log.Debug($"CollectionSize BEFORE: {ReviewsList.Count}");
-            var counter = 0;
+            ReviewsList.Clear();
+
             foreach (var review in list)
             {
-                if (ReviewsList.All(p => p.id != review.id))
-                {
-                    ReviewsList.Add(review);
-                    counter++;
-                }
+                var stream = await connectionHandler.DownloadThumbnail(review.id);
 
-                
+                using (var memoryStream = new MemoryStream())
+                {
+                    stream.CopyTo(memoryStream);
+                    var bytes = memoryStream.ToArray();
+                    var imgSrc = ImageSource.FromStream(() => new MemoryStream(bytes));
+                    var menuItem = new ReviewMenuItem(review.id, review.userId, review.appId, review.category, review.temporalContext, review.spatialContext, review.socialContext, review.textReview, review.createdAt, review.updatedAt, review.imagePath, imgSrc);
+                    ReviewsList.Add(menuItem);
+                }
             }
-            Log.Debug("Done adding items to list!");
-            Log.Debug($"CollectionSize AFTER: {ReviewsList.Count}");
-            Log.Debug($"Added items: {counter}");
         }
 
 
