@@ -22,12 +22,12 @@
 
         <Image Grid.Column="0" Grid.Row="0" Grid.RowSpan="4" Source="" HeightRequest="150" WidthRequest="84" BackgroundColor="Salmon"/>
 
-        <Label Grid.Column="1"  Grid.Row="0" Text="This is a review placeholder text. Hello Pekka and Xiaozhou!."></Label>
+        <Label Grid.Column="1"  Grid.Row="0" Text="{Binding createdAt, StringFormat='Date Created: {0}'}"></Label>
 
         <Label Grid.Column="1"  Grid.Row="1" Text="{Binding id, StringFormat='Review ID: {0}'}"></Label>
 
         <Label Grid.Column="1"  Grid.Row="2" Text="{Binding userId, StringFormat='User ID: {0}'}"></Label>
 
-        <Label Grid.Column="1"  Grid.Row="3" Text="{Binding textReview, StringFormat='Additional info: {0}'}"></Label>
+        <Label Grid.Column="1"  Grid.Row="3" Text="{Binding category.categoryName, StringFormat='Category: {0}'}"></Label>
     </Grid>
     </StackLayout>

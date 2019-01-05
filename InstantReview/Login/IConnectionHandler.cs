@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
+using InstantReview.ViewModels;
 
 namespace InstantReview.Login
 {
@@ -27,5 +28,7 @@ namespace InstantReview.Login
         Task<bool> UploadReview();
 
         Task<List<Review>> DownloadReviewList();
+
+        Task<bool> UploadEditedReview(EditPageViewModel.EditedReview edited);
     }
 }

@@ -57,7 +57,7 @@ namespace InstantReview.ViewModels
             dataCollector.Data.imagePath = ImagePath;
 
             Log.Debug("Adding Category");
-            dataCollector.Data.categoryName = Category;
+            dataCollector.Data.category.categoryName = Category;
             
             Log.Debug("Navigating to Reviews!");
             await navigation.PushAsyncSingle(CreateQuestionsPage());

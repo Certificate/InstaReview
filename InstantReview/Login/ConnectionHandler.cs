@@ -21,6 +21,7 @@ namespace InstantReview.Login
     public class ConnectionHandler : IConnectionHandler
     {
         private readonly ISettingsStorage storage;
+        private readonly IDialogService dialogService;
         private readonly ReviewDataCollector dataCollector;
         private static readonly ILog Log = LogManager.GetLogger<LoginPageViewModel>();
 
@@ -29,16 +30,18 @@ namespace InstantReview.Login
         private const string loginExtension = "auth/login";
         private const string uploadReviewExtension = "review/create";
         private const string uploadImageExtension = "review/image/upload";
-        private const string reviewListExtensions = "review/list";
+        private const string reviewListExtension = "review/list";
         private const string downloadReviewExtension = "review/get/";
         private const string downloadImageExtension = "review/image/download/";
+        private const string editReviewExtension = "review/edit";
 
 
 
-        public ConnectionHandler(ISettingsStorage storage, ReviewDataCollector dataCollector)
+        public ConnectionHandler(ISettingsStorage storage, ReviewDataCollector dataCollector, IDialogService dialogService)
         {
             this.storage = storage;
             this.dataCollector = dataCollector;
+            this.dialogService = dialogService;
         }
 
         public void SaveUsagePrivileges(string token)
@@ -198,7 +201,43 @@ namespace InstantReview.Login
             return success;
         }
 
-        
+        public async Task<bool> UploadEditedReview(EditPageViewModel.EditedReview edited)
+        {
+            Log.Debug("Uploading edited review");
+            var success = false;
+            edited.appId = 1;
+            var data = JsonConvert.SerializeObject(edited);
+
+            using (var client = new HttpClient())
+            {
+                AddAuthorizationHeader(client);
+                var content = new StringContent(data, Encoding.UTF8, "application/json");
+
+                try
+                {
+                    var response = await client.PostAsync(baseAddress + editReviewExtension, content, CancellationToken.None);
+                    var responseJson = await response.Content.ReadAsStringAsync();
+
+                    if (response.StatusCode != HttpStatusCode.OK)
+                    {
+                        throw new Exception("Response was not OK. Aborting. Reason: " + responseJson);
+                    }
+
+                    success = true;
+
+                }
+                catch (Exception e)
+                {
+                    Log.Error("Error while uploading edited review. Reason: " + e);
+                }
+            }
+
+            Log.Debug($"Edited review upload status: {success}");
+            dialogService.showAlert("Mission successful!", "Edited review uploaded successfully.", "Ok");
+            return success;
+        }
+
+
 
         private async Task<bool> SendFileToServer(string filePath, string id)
         {
@@ -229,7 +268,7 @@ namespace InstantReview.Login
             using (var client = new HttpClient())
             {
                 AddAuthorizationHeader(client);
-                response = await client.PostAsync(baseAddress + reviewListExtensions, null, CancellationToken.None);
+                response = await client.PostAsync(baseAddress + reviewListExtension, null, CancellationToken.None);
                 var responseJson = await response.Content.ReadAsStringAsync();
 
                 reviews = JsonConvert.DeserializeObject<List<Review>>(responseJson);
@@ -238,6 +277,8 @@ namespace InstantReview.Login
             return reviews;
 
         }
+
+        
 
         private void AddAuthorizationHeader(HttpClient client)
         {

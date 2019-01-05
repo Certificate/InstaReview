@@ -25,6 +25,11 @@ namespace InstantReview.ViewModels
 
         public ICommand HomePageCommand => new Command(NavigateToHome);
 
+        public void InvokeEvent()
+        {
+            ReviewDoneEvent?.Invoke(this, EventArgs.Empty);
+        }
+
         private async void NavigateToHome()
         {
             

@@ -13,6 +13,12 @@ namespace InstantReview.Login
         public DateTime updatedAt { get; set; }
     }
 
+    public class Category
+    {
+        public int id { get; set; }
+        public string categoryName { get; set; }
+    }
+
     public class Image
     {
         public int id { get; set; }
@@ -34,9 +40,8 @@ namespace InstantReview.Login
         public object thumbnailId { get; set; }
         public DateTime createdAt { get; set; }
         public DateTime updatedAt { get; set; }
-        public object categoryId { get; set; }
         public ApplicationIdentifier application { get; set; }
-        public object category { get; set; }
+        public Category category { get; set; }
         public List<Image> images { get; set; }
         public object thumbnail { get; set; }
     }

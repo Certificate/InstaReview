@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="InstantReview.Views.EditPage">
+             x:Class="InstantReview.Views.EditPage"
+             Title="Edit Review">
     <ContentPage.Content>
         <ScrollView>
 
@@ -92,7 +93,7 @@
                        Grid.Column="1" Grid.ColumnSpan="2" />
 
                 <Button Text="Confirm Edit" TextColor="White" BackgroundColor="Salmon" BorderColor="White" BorderWidth="2" Grid.Row="9"
-                        Grid.Column="1" Grid.ColumnSpan="3" VerticalOptions="Center" Command="{Binding DoneCommand}"/>
+                        Grid.Column="1" Grid.ColumnSpan="3" VerticalOptions="Center" Command="{Binding EditReviewCommand}"/>
 
             </Grid>
         </ScrollView>
