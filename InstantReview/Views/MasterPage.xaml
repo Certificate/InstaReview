@@ -25,7 +25,7 @@
             </Label>
 
             <Button Grid.Row="2" 
-                    Text="Account Details"
+                    Text="Change password"
                     Style="{StaticResource AnchorButtonStyle}"
                     BackgroundColor="DimGray"
                     HorizontalOptions="FillAndExpand"
