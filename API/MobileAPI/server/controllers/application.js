@@ -42,7 +42,7 @@ module.exports = {
 
     findApps: async(req, res, next) => {
         const operators = Sequelize.Op;
-        const searchParam = req.params.searchParam;
+        const searchParam = (req.params) ? req.params.searchParam : null;
         
         let applications = [];
         if(searchParam) {
