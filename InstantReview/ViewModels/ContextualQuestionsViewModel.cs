@@ -9,7 +9,7 @@ namespace InstantReview.ViewModels
 {
     public class ContextualQuestionsViewModel
     {
-        private static readonly ILog Log = LogManager.GetLogger<QuestionPageViewModel>();
+        private static readonly ILog Log = LogManager.GetLogger<ContextualQuestionsViewModel>();
 
         private readonly IDialogService dialogService;
         private readonly ReviewDataCollector dataCollector;
