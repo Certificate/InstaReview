@@ -32,6 +32,24 @@ namespace InstantReview.ViewModels
 
         public bool SocialContextValue { get; set; }
 
+        public bool Q1Toggled { get; set; }
+
+        public bool Q2Toggled { get; set; }
+
+        public bool Q3Toggled { get; set; }
+
+        public bool Q4Toggled { get; set; }
+
+        public bool Q5Toggled { get; set; }
+
+        public bool Q6Toggled { get; set; }
+
+        public bool Q7Toggled { get; set; }
+
+        public bool Q8Toggled { get; set; }
+
+        public bool Q9Toggled { get; set; }
+
 
         public ICommand CheckResultCommand => new Command(NavigateToThankYouPage);
 
@@ -41,9 +59,38 @@ namespace InstantReview.ViewModels
             Log.Debug("Adding questions to data collector");
             try
             {
-                dataCollector.Data.temporalContext = "Intensive";
-                dataCollector.Data.spatialContext = "Visiting";
-                dataCollector.Data.socialContext = "Constraining";
+                Console.WriteLine(Q1Toggled);
+                if (Q1Toggled || Q2Toggled || Q3Toggled)
+                {
+                    dataCollector.Data.temporalContext = "Latensive";
+                }
+                else
+                {
+                    dataCollector.Data.temporalContext = "Allocative";
+                }
+
+                if (Q4Toggled || Q5Toggled || Q6Toggled)
+                {
+                    dataCollector.Data.socialContext = "Constraining";
+                }
+                else
+                {
+                    dataCollector.Data.socialContext = "Encouraging";
+                }
+
+                if (Q7Toggled)
+                {
+                    dataCollector.Data.spatialContext = "Visiting";
+                }
+                else if (Q8Toggled)
+                {
+                    dataCollector.Data.spatialContext = "Wandering";
+                }
+                else
+                {
+                    dataCollector.Data.spatialContext = "Travelling";
+                }
+
                 success = true;
             }
             catch (Exception e)
