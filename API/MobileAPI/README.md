@@ -44,6 +44,9 @@ Please note that at this time the App works with MySQL server versions that came
 - Prepare a SQL server with an empty schema for the API
     - You need not worry about tables, the app will create them as it launches
 - Copy/Rename the .env.example as .env and change the settings according to the environment
+    - USE_SSL toggles SSL/TLS connections on and off. If on the server will enforce SSL and run on port 443 (https). If off the port will be 80 (http).
+    - SERVER_DOMAIN domain name that is required to register an ssl-certificate. However this setting is not required if no SSL is used.
+    - SSL_EMAIL the administrator's email that is also required when signing certificates. (The server automatically fetches and renews SSL certificates from Let's Encrypt)
     - DB_CONNECTION is the connection string used to communicate with the SQL server
     - IMAGE_SAVE_DIR defines the location the images for the reviews are stored on disk, this is optional and the default location is the same as the one in .env.example.
     - THUMBNAIL_SAVE_DIR defines the location review thumbnails on disk, this is optional and the default location is the same as the one in .env.example.

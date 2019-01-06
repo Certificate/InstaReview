@@ -21,7 +21,7 @@ dbSync().then(() => {
             server: 'https://acme-v02.api.letsencrypt.org/directory'
             , version: 'draft-11'
             , telemetry: false
-            , servername: process.env.SERVER_IP
+            , servername: process.env.SERVER_DOMAIN
             , approveDomains: approveDomains
             , configDir: './ssl/acme'
         });
