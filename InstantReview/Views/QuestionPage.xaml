@@ -14,6 +14,7 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                     <RowDefinition Height="*" />
+					<RowDefinition Height="*" />
                     <RowDefinition Height="*" />
                     <RowDefinition Height="*" />
                     <RowDefinition Height="*" />
@@ -36,26 +37,54 @@
 
 
               <!--Question 1-->
-                <Label Text="Question 1" Grid.Row="2" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" />
+				<Label Text="1. Are you in a hurry?" Grid.Row="2" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" />
                 <Switch IsToggled="{Binding Q1Toggled}" Grid.Row="2" Grid.Column="3" HorizontalOptions="End" VerticalOptions="Center"  />
 
 
                 <!--Question 2-->
-                <Label Text="Question 2" Grid.Row="3" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" />
+				<Label Text="2. Are you bothered by people or things?" Grid.Row="3" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" />
                 <Switch IsToggled="{Binding Q2Toggled}" Grid.Row="3" Grid.Column="3" HorizontalOptions="End" VerticalOptions="Center" />
 
 
                 <!--Question 3-->
-                <Label Text="Question 3" Grid.Row="4" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" />
+				<Label Text="3. Are you having more urgent things to do?" Grid.Row="4" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" />
                 <Switch IsToggled="{Binding Q3Toggled}" Grid.Row="4" Grid.Column="3" HorizontalOptions="End" VerticalOptions="Center" />
 
 
                 <!--Question 4-->
-                <Label Text="Question 4" Grid.Row="5" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" />
+				<Label Text="4. Is using mobile device not recommended now?" Grid.Row="5" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" />
                 <Switch IsToggled="{Binding Q4Toggled}" Grid.Row="5" Grid.Column="3" HorizontalOptions="End" VerticalOptions="Center" />
 
-                <!--Edit button-->
-                <Button Text="Edit" TextColor="White" BackgroundColor="Salmon" BorderColor="White" BorderWidth="2" Grid.Row="6"
+
+				<!--Question 5-->
+				<Label Text="5. Are you interacting with others?" Grid.Row="6" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" />
+				<Switch IsToggled="{Binding Q5Toggled}" Grid.Row="6" Grid.Column="3" HorizontalOptions="End" VerticalOptions="Center" />
+
+
+				<!--Question 6-->
+				<Label Text="6. Are you communicating on electronic devices?" Grid.Row="7" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" />
+				<Switch IsToggled="{Binding Q6Toggled}" Grid.Row="7" Grid.Column="3" HorizontalOptions="End" VerticalOptions="Center" />
+
+
+				<!--Question 7-->
+				<Label Text="7. Are you staying still in a place?" Grid.Row="9" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" />
+				<Switch IsToggled="{Binding Q7Toggled}" Grid.Row="9" Grid.Column="3" HorizontalOptions="End" VerticalOptions="Center" />
+
+
+				<!--Question 8-->
+				<Label Text="8. Are you physically moving or exercising?" Grid.Row="10" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" />
+				<Switch IsToggled="{Binding Q8Toggled}" Grid.Row="10" Grid.Column="3" HorizontalOptions="End" VerticalOptions="Center" />
+
+
+				<!--Question 9-->
+				<Label Text="9. Are you in transportation?" Grid.Row="11" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" />
+				<Switch IsToggled="{Binding Q9Toggled}" Grid.Row="11" Grid.Column="3" HorizontalOptions="End" VerticalOptions="Center" />
+
+
+
+
+				<!--Edit button-->
+                <Button Text="Edit" TextColor="White" BackgroundColor="Salmon" BorderColor="White" BorderWidth="2" Grid.Row="12"
                         Grid.Column="1" Grid.ColumnSpan="3" VerticalOptions="Center" Command="{Binding CheckResultCommand}"/>
             </Grid>
    
