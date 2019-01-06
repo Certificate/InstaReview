@@ -26,12 +26,12 @@ namespace InstantReview.ViewModels
 
         public string Category { get; set; }
 
-        public ReviewPageViewModel(IShareIntentReceiver intentReceiver, IPageFactory pageFactory, INavigation navigation, ContextualQuestionsViewModel contextualQuestionsViewModel, ReviewDataCollector dataCollector)
+        public ReviewPageViewModel(IShareIntentReceiver intentReceiver, IPageFactory pageFactory, INavigation navigation, QuestionPageViewModel questionPageViewModel, ReviewDataCollector dataCollector)
         {
             this.intentReceiver = intentReceiver;
             this.pageFactory = pageFactory;
             this.navigation = navigation;
-            this.contextualQuestionsViewModel = contextualQuestionsViewModel;
+            this.questionPageViewModel = questionPageViewModel;
             this.dataCollector = dataCollector;
             intentReceiver.ItemsReceivedEvent += IntentReceiverOnItemsReceivedEvent;
         }
@@ -66,7 +66,7 @@ namespace InstantReview.ViewModels
 
         private Page CreateQuestionsPage()
         {
-            return pageFactory.CreatePage<ContextualQuestions, ContextualQuestionsViewModel>(contextualQuestionsViewModel);
+            return pageFactory.CreatePage<QuestionPage, QuestionPageViewModel>(questionPageViewModel);
         }
     }
 }
