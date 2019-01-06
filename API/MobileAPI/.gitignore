@@ -2,3 +2,4 @@ node_modules/
 review_images/
 thumbnails/
 .env
+ssl/
