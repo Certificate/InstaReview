@@ -1,5 +1,6 @@
 ﻿using Common.Logging;
 using Common.Logging.Factory;
+using InstantReview.Login;
 using InstantReview.ViewModels;
 
 namespace InstantReview
@@ -13,6 +14,7 @@ namespace InstantReview
         public void InitializeDataCollector()
         {
             Data = new Review();
+            Data.category = new Category();
         }
 
         public string ToSerializedFormat()
