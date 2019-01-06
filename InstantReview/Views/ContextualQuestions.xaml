@@ -62,7 +62,7 @@
 				<Switch HorizontalOptions="Start" x:Name="Q9Switch"></Switch>
 
 				<BoxView  HeightRequest="25" HorizontalOptions="Fill"></BoxView>
-				<Button HorizontalOptions="Center" Text="Done"></Button>
+				<Button HorizontalOptions="Center" Text="Done" Command="{Binding CheckResultCommand}"></Button>
 			</StackLayout>
 		</ScrollView>
 	</ContentPage.Content>
