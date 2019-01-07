@@ -62,7 +62,7 @@ namespace InstantReview.ViewModels
                 Console.WriteLine(Q1Toggled);
                 if (Q1Toggled || Q2Toggled || Q3Toggled)
                 {
-                    dataCollector.Data.temporalContext = "Latensive";
+                    dataCollector.Data.temporalContext = "Intensive";
                 }
                 else
                 {
@@ -88,7 +88,7 @@ namespace InstantReview.ViewModels
                 }
                 else
                 {
-                    dataCollector.Data.spatialContext = "Travelling";
+                    dataCollector.Data.spatialContext = "Traveling";
                 }
 
                 success = true;
