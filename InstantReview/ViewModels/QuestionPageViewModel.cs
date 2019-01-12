@@ -26,6 +26,8 @@ namespace InstantReview.ViewModels
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        
+
         public QuestionPageViewModel(IDialogService dialogService, ReviewDataCollector dataCollector, IPageFactory pageFactory, INavigation navigation, ThankYouPageViewModel thankYouPageViewModel)
         {
             this.dialogService = dialogService;
@@ -384,7 +386,7 @@ namespace InstantReview.ViewModels
         public ICommand q9NoCommand => new Command(q9NoAction);
 
 
-        private void resetEverythingOnThisPage()
+        public void resetEverythingOnThisPage()
         {
             nFontSize = 15;
             questionFontSize = 25;
@@ -707,10 +709,9 @@ namespace InstantReview.ViewModels
 
         public async void NavigateToThankYouPage()
         {
-            
+            if (allQuestionsAnswered() == false) return;
             if (AddQuestionsToDataCollector())
             {
-                resetEverythingOnThisPage();
                 Log.Debug("Navigating to Reviews!");
                 await navigation.PushAsyncSingle(CreateThankYouPage());
             }
