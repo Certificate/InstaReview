@@ -17,6 +17,8 @@ namespace InstantReview.ViewModels
         private readonly INavigation navigation;
         private readonly ThankYouPageViewModel thankYouPageViewModel;
 
+        private double questionFontSize, emptySpace;
+
         public QuestionPageViewModel(IDialogService dialogService, ReviewDataCollector dataCollector, IPageFactory pageFactory, INavigation navigation, ThankYouPageViewModel thankYouPageViewModel)
         {
             this.dialogService = dialogService;
@@ -24,6 +26,9 @@ namespace InstantReview.ViewModels
             this.pageFactory = pageFactory;
             this.navigation = navigation;
             this.thankYouPageViewModel = thankYouPageViewModel;
+
+            questionFontSize = 25;
+            emptySpace = 20;
         }
 
         public bool TemporalContextValue { get; set; }
@@ -49,6 +54,29 @@ namespace InstantReview.ViewModels
         public bool Q8Toggled { get; set; }
 
         public bool Q9Toggled { get; set; }
+
+        public double qFontSize {
+            get { return questionFontSize; }
+            set
+            {
+                if(questionFontSize != value)
+                {
+                    questionFontSize = value;
+                }
+            }
+        }
+
+        public double gapBetweenQuestions
+        {
+            get { return emptySpace; }
+            set
+            {
+                if (emptySpace != value)
+                {
+                    emptySpace = value;
+                }
+            }
+        }
 
 
         public ICommand CheckResultCommand => new Command(NavigateToThankYouPage);
