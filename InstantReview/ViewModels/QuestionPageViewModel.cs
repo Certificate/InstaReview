@@ -33,12 +33,7 @@ namespace InstantReview.ViewModels
             this.pageFactory = pageFactory;
             this.navigation = navigation;
             this.thankYouPageViewModel = thankYouPageViewModel;
-
-            nFontSize = 15;
-            questionFontSize = 25;
-            emptySpace = 20;
-            qAnswers = Enumerable.Repeat(-1, 9).ToArray();
-            isDoneBEnable = q8Visible = q9Visible = false;
+            resetEverythingOnThisPage();
         }
 
         private void OnPropertyChanged(string property)
@@ -389,6 +384,40 @@ namespace InstantReview.ViewModels
         public ICommand q9NoCommand => new Command(q9NoAction);
 
 
+        private void resetEverythingOnThisPage()
+        {
+            nFontSize = 15;
+            questionFontSize = 25;
+            emptySpace = 20;
+            qAnswers = Enumerable.Repeat(-1, 9).ToArray();
+            donebColor = q1YbColor = q1NbColor = q2YbColor = q2NbColor = q3YbColor = q3NbColor = q4YbColor = q4NbColor = q5YbColor = q5NbColor = q6YbColor = q6NbColor = q7YbColor = q7NbColor = q8YbColor = q8NbColor = q9YbColor = q9NbColor = Color.Default;
+            isDoneBEnable = q8Visible = q9Visible = false;
+            OnPropertyChanged("q1YbColor");
+            OnPropertyChanged("q1NbColor");
+            OnPropertyChanged("q2YbColor");
+            OnPropertyChanged("q2NbColor");
+            OnPropertyChanged("q3YbColor");
+            OnPropertyChanged("q3NbColor");
+            OnPropertyChanged("q4YbColor");
+            OnPropertyChanged("q4NbColor");
+            OnPropertyChanged("q5YbColor");
+            OnPropertyChanged("q5NbColor");
+            OnPropertyChanged("q6YbColor");
+            OnPropertyChanged("q6NbColor");
+            OnPropertyChanged("q7YbColor");
+            OnPropertyChanged("q7NbColor");
+            OnPropertyChanged("q8YbColor");
+            OnPropertyChanged("q8NbColor");
+            OnPropertyChanged("q9YbColor");
+            OnPropertyChanged("q9NbColor");
+            OnPropertyChanged("donebColor");
+
+            OnPropertyChanged("isDoneBEnable");
+            OnPropertyChanged("q8Visible");
+            OnPropertyChanged("q9Visible");
+        }
+
+
         private bool allQuestionsAnswered()
         {
             for(int i = 0; i<6; i++)
@@ -625,7 +654,7 @@ namespace InstantReview.ViewModels
             else updateDoneButton(Color.Default, false);
         }
 
-        /*
+        
         
         private bool AddQuestionsToDataCollector()
         {
@@ -633,8 +662,7 @@ namespace InstantReview.ViewModels
             Log.Debug("Adding questions to data collector");
             try
             {
-                Console.WriteLine(Q1Toggled);
-                if (Q1Toggled || Q2Toggled || Q3Toggled)
+                if (qAnswers[0] == 1 || qAnswers[1] == 1 || qAnswers[2] == 1)
                 {
                     dataCollector.Data.temporalContext = "Intensive";
                 }
@@ -643,7 +671,7 @@ namespace InstantReview.ViewModels
                     dataCollector.Data.temporalContext = "Allocative";
                 }
 
-                if (Q4Toggled || Q5Toggled || Q6Toggled)
+                if (qAnswers[3] == 1 || qAnswers[4] == 1 || qAnswers[5] == 1)
                 {
                     dataCollector.Data.socialContext = "Constraining";
                 }
@@ -652,11 +680,11 @@ namespace InstantReview.ViewModels
                     dataCollector.Data.socialContext = "Encouraging";
                 }
 
-                if (Q7Toggled)
+                if (qAnswers[6] == 1)
                 {
                     dataCollector.Data.spatialContext = "Visiting";
                 }
-                else if (Q8Toggled)
+                else if (qAnswers[7] == 1)
                 {
                     dataCollector.Data.spatialContext = "Wandering";
                 }
@@ -675,13 +703,14 @@ namespace InstantReview.ViewModels
 
         }
 
-        */
+        
 
         public async void NavigateToThankYouPage()
         {
-            /*
+            
             if (AddQuestionsToDataCollector())
             {
+                resetEverythingOnThisPage();
                 Log.Debug("Navigating to Reviews!");
                 await navigation.PushAsyncSingle(CreateThankYouPage());
             }
@@ -692,7 +721,7 @@ namespace InstantReview.ViewModels
                 await navigation.PopToRootAsync();
 
             }
-            */
+            
         }
 
         private Page CreateThankYouPage()
