@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="InstantReview.ContextualQuestions">
+    <ContentPage.Content>
+		<ScrollView>
+			<StackLayout Spacing = "0" Padding="10, 50, 10, 50">
+				<Label x:Name="titleLabel" Text="Questions" XAlign="Center"></Label>
+
+				<BoxView  HeightRequest="40" HorizontalOptions="Fill"></BoxView>
+				<Label Text="1. Are you in a hurry?"
+					   XAlign="Start"
+					 x:Name ="Q1"/>
+				<Switch HorizontalOptions="Start"></Switch>
+
+				<BoxView  HeightRequest="25" HorizontalOptions="Fill"></BoxView>
+				<Label Text="2. Are you bothered by people or things?"
+					XAlign="Start"
+					x:Name ="Q2"/>
+				<Switch HorizontalOptions="Start"></Switch>
+
+				<BoxView  HeightRequest="25" HorizontalOptions="Fill"></BoxView>
+				<Label Text="3. Are you having more urgent things to do?"
+					XAlign="Start"
+					x:Name ="Q3"/>
+				<Switch HorizontalOptions="Start"></Switch>
+
+				<BoxView  HeightRequest="25" HorizontalOptions="Fill"></BoxView>
+				<Label Text="4. Is using mobile device not recommended now?"
+					XAlign="Start"
+					x:Name ="Q4"/>
+				<Switch HorizontalOptions="Start"></Switch>
+
+				<BoxView  HeightRequest="25" HorizontalOptions="Fill"></BoxView>
+				<Label Text="5. Are you interacting with others?"
+					   XAlign="Start"
+					   x:Name ="Q5"/>
+				<Switch HorizontalOptions="Start"></Switch>
+
+				<BoxView  HeightRequest="25" HorizontalOptions="Fill"></BoxView>
+				<Label Text="6. Are you communicating on electronic devices?"
+					XAlign="Start"
+					   x:Name ="Q6"/>
+				<Switch HorizontalOptions="Start"></Switch>
+
+				<BoxView  HeightRequest="25" HorizontalOptions="Fill"></BoxView>
+				<Label Text="7. Are you staying still in a place?"
+					XAlign="Start"
+					x:Name ="Q7"/>
+				<Switch HorizontalOptions="Start" x:Name="Q7Switch" ></Switch>
+
+				<BoxView  HeightRequest="25" HorizontalOptions="Fill"></BoxView>
+				<Label Text="8. Are you physically moving or exercising?"
+					XAlign="Start"
+					x:Name ="Q8"/>
+				<Switch HorizontalOptions="Start" x:Name="Q8Switch"></Switch>
+
+				<BoxView  HeightRequest="25" HorizontalOptions="Fill"></BoxView>
+				<Label Text="9. Are you in transportation?"
+					   XAlign="Start"
+					   x:Name ="Q9"/>
+				<Switch HorizontalOptions="Start" x:Name="Q9Switch"></Switch>
+
+				<BoxView  HeightRequest="25" HorizontalOptions="Fill"></BoxView>
+				<Button HorizontalOptions="Center" Text="Done" Command="{Binding CheckResultCommand}"></Button>
+			</StackLayout>
+		</ScrollView>
+	</ContentPage.Content>
+</ContentPage>

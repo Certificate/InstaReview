@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<StackLayout xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="InstantReview.Views.ReviewView"
+             x:Name="ViewRoot"
+             Orientation="Horizontal"
+             Spacing="10"
+             HorizontalOptions="FillAndExpand">
+    <Grid Margin="15, 5, 15, 0">
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*" />
+            <ColumnDefinition Width="7*" />
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Image Grid.Column="0" Grid.Row="0" Grid.RowSpan="4" Source="{Binding ImageSource}" HeightRequest="150" WidthRequest="84" BackgroundColor="Salmon"/>
+
+        <Label Grid.Column="1"  Grid.Row="0" Text="{Binding createdAt, StringFormat='Date Created: {0}'}"></Label>
+
+        <Label Grid.Column="1"  Grid.Row="1" Text="{Binding id, StringFormat='Review ID: {0}'}"></Label>
+
+        <Label Grid.Column="1"  Grid.Row="2" Text="{Binding userId, StringFormat='User ID: {0}'}"></Label>
+
+        <Label Grid.Column="1"  Grid.Row="3" Text="{Binding category.categoryName, StringFormat='Category: {0}'}"></Label>
+    </Grid>
+    </StackLayout>

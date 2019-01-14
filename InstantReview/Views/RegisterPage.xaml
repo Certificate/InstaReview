@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:sys="clr-namespace:System;assembly=netstandard"
+             x:Class="InstantReview.Views.RegisterPage"
+             Title="Register"
+             BackgroundColor="White">
+    <ContentPage.Content>
+        <ScrollView>
+        <StackLayout Margin="10" Spacing="5" x:Name="layout" >
+             
+             <!--Empty space over Big label text-->
+             <BoxView VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" />
+
+             <Label Text="Account creation" HeightRequest="40" FontSize="30" VerticalOptions="Center" HorizontalTextAlignment="Center" ></Label>
+
+             <!--Empty space under Big label text-->
+             <BoxView VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" />
+
+             <Entry Keyboard="Default" Placeholder="Name"  HorizontalOptions="FillAndExpand" Text="{Binding Name}"/>
+
+             <Entry x:Name="email" Keyboard="Email" Placeholder="Email" Text="{Binding Email}" PropertyChanged="EmailTextChangedEvent"/>
+            
+            <Grid Margin="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="5*" />
+                    <ColumnDefinition Width="5*" />
+                </Grid.ColumnDefinitions>
+                
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                
+                <Label Grid.Column="0" Grid.Row="0" Text="Gender" FontSize="17" ></Label>
+                <!--Gender picker-->
+                <Picker Grid.Column="0" Grid.Row="1" SelectedIndex="0" HorizontalOptions="FillAndExpand" SelectedItem="{Binding Gender}">
+                    <Picker.Items>
+                        <x:String>Male</x:String>
+                        <x:String>Female</x:String>
+                    </Picker.Items>
+                </Picker>
+
+                <Label Grid.Column="1" Grid.Row="0" Text="Birthdate" FontSize="17" ></Label>
+                <!--Birthdate picker - Datetime==systems current date - date can be chosen from 1.1.1900 to 31.12.2100-->
+                <DatePicker Grid.Column="1" Grid.Row="1" VerticalOptions="CenterAndExpand" MinimumDate="01/01/1900" MaximumDate="{x:Static sys:DateTime.Now}" Date="{Binding Birthday}">
+                    <DatePicker.Format>dd-MM-yyyy</DatePicker.Format>
+                </DatePicker>
+                
+            </Grid>
+
+            <Entry x:Name="password" IsPassword="True" Placeholder="Password" Text="{Binding Password}" PropertyChanged="PasswordTextChanged"/>
+
+            <Entry x:Name="checkPassword" IsPassword="True" Placeholder="Repeat Password" Text="{Binding CheckPassword}" PropertyChanged="PasswordTextChanged"/>
+
+            <Label x:Name="passwordErrorText" Text="Passwords must match!" TextColor="Red" FontSize="16" FontAttributes="Bold" IsVisible="False" HorizontalOptions="Center"></Label>
+
+            
+             <!--Places switch and label to same line using dark magic-->
+             <!-- <StackLayout Orientation="Horizontal"> -->
+             <!--     <Switch IsToggled="false" HorizontalOptions="Start"/> -->
+             <!--     <Label Text="I agree with the terms and conditions" FontSize="17" ></Label> -->
+             <!-- </StackLayout> -->
+             
+            <Button x:Name="registerButton"
+                    Text="Create account"
+                    Style="{StaticResource AnchorButtonStyle}"
+                    HorizontalOptions="Center"
+                    Command="{Binding RegisterCommand}"
+                    IsEnabled="False"
+                    BorderWidth="1"
+                    BorderColor="Salmon">
+            </Button>
+
+             <BoxView VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" />
+
+         </StackLayout>
+        </ScrollView>
+     </ContentPage.Content>
+</ContentPage>

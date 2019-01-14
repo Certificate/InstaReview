@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:local="clr-namespace:InstantReview"
+             xmlns:views="clr-namespace:InstantReview.Views;assembly=InstantReview"
+             x:Class="InstantReview.Views.MainPage"
+             Title="MAIN PAGE"
+             BackgroundColor="White">
+    
+    <ContentPage.ToolbarItems> 
+        <ToolbarItem  Text="ADD" Icon="baseline_add_white_36.png" Clicked="NewReview_Clicked"/>
+    </ContentPage.ToolbarItems>
+
+
+  <!--Setting content to scrollable view  -->
+    <ScrollView VerticalOptions="Fill" >
+        <ListView  x:Name="ReviewList"
+                  ItemsSource="{Binding ReviewsList}" SeparatorVisibility="None"
+                  HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" HasUnevenRows="True" Margin="0, 10, 0, 15">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <ViewCell.View>
+                            <views:ReviewView/>
+                        </ViewCell.View>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </ScrollView>
+</ContentPage>
