@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="InstantReview.Views.QuestionPage"
@@ -11,21 +11,45 @@
 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="10" />
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="{Binding gapBetweenQuestions}" />
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="{Binding gapBetweenQuestions}" />
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="{Binding gapBetweenQuestions}" />
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="{Binding gapBetweenQuestions}" />
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="{Binding gapBetweenQuestions}" />
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="{Binding gapBetweenQuestions}" />
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="{Binding gapBetweenQuestions}" />
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="{Binding gapBetweenQuestions}" />
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="{Binding gapBetweenQuestions}" />
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="{Binding gapBetweenQuestions}" />
                     <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-					<RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="10" />
+					<RowDefinition Height="{Binding gapBetweenQuestions}" />
                 </Grid.RowDefinitions>
 
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*" />
-                    <ColumnDefinition Width="2*" />
-                    <ColumnDefinition Width="2*" />
-                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="1*" />
                 </Grid.ColumnDefinitions>
 
@@ -36,55 +60,63 @@
                        Margin="20, 0"/>
 
 
-              <!--Question 1-->
-				<Label Text="1. Are you in a hurry?" Grid.Row="2" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" />
-                <Switch IsToggled="{Binding Q1Toggled}" Grid.Row="2" Grid.Column="3" HorizontalOptions="End" VerticalOptions="Center"  />
+				<Label Text="Note: You have to answer all of the quesions to proceed. One of the answers of questions 7, 8 or 9 MUST be yes. It is not realistic all of them to be NO !!" FontSize="{Binding noteFontSize}" TextColor="Red" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3"></Label>
+				<!--Question 1-->
+				<Label Text="1. Are you in a hurry?" FontSize="{Binding qFontSize}" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" HorizontalOptions="Start" VerticalOptions="Center" />
+				<Button Text="Yes" Grid.Row="5" Grid.Column="1" BackgroundColor="{Binding q1YBcolor}" Command="{Binding q1YesCommand}"></Button>
+				<Button Text="No" Grid.Row="5" Grid.Column="2" BackgroundColor="{Binding q1NBcolor}"  Command="{Binding q1NoCommand}"></Button>
 
 
-                <!--Question 2-->
-				<Label Text="2. Are you bothered by people or things?" Grid.Row="3" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" />
-                <Switch IsToggled="{Binding Q2Toggled}" Grid.Row="3" Grid.Column="3" HorizontalOptions="End" VerticalOptions="Center" />
+				<!--Question 2-->
+				<Label Text="2. Are you bothered by people or things?" FontSize="{Binding qFontSize}" Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="3" HorizontalOptions="Start" VerticalOptions="Center" />
+				<Button Text="Yes" Grid.Row="8" Grid.Column="1" BackgroundColor="{Binding q2YBcolor}"  Command="{Binding q2YesCommand}"></Button>
+				<Button Text="No" Grid.Row="8" Grid.Column="2" BackgroundColor="{Binding q2NBcolor}"  Command="{Binding q2NoCommand}"></Button>
 
 
-                <!--Question 3-->
-				<Label Text="3. Are you having more urgent things to do?" Grid.Row="4" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" />
-                <Switch IsToggled="{Binding Q3Toggled}" Grid.Row="4" Grid.Column="3" HorizontalOptions="End" VerticalOptions="Center" />
+				<!--Question 3-->
+				<Label Text="3. Are you having more urgent things to do?" FontSize="{Binding qFontSize}" Grid.Row="10" Grid.Column="1" Grid.ColumnSpan="3" HorizontalOptions="Start" VerticalOptions="Center" />
+				<Button Text="Yes" Grid.Row="11" Grid.Column="1" BackgroundColor="{Binding q3YBcolor}"  Command="{Binding q3YesCommand}"></Button>
+				<Button Text="No" Grid.Row="11" Grid.Column="2" BackgroundColor="{Binding q3NBcolor}"  Command="{Binding q3NoCommand}"></Button>
 
 
-                <!--Question 4-->
-				<Label Text="4. Is using mobile device not recommended now?" Grid.Row="5" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" />
-                <Switch IsToggled="{Binding Q4Toggled}" Grid.Row="5" Grid.Column="3" HorizontalOptions="End" VerticalOptions="Center" />
+				<!--Question 4-->
+				<Label Text="4. Is using mobile device not recommended now?" FontSize="{Binding qFontSize}" Grid.Row="13" Grid.Column="1" Grid.ColumnSpan="3" HorizontalOptions="Start" VerticalOptions="Center" />
+				<Button Text="Yes" Grid.Row="14" Grid.Column="1" BackgroundColor="{Binding q4YBcolor}"  Command="{Binding q4YesCommand}"></Button>
+				<Button Text="No" Grid.Row="14" Grid.Column="2" BackgroundColor="{Binding q4NBcolor}"  Command="{Binding q4NoCommand}"></Button>
 
 
 				<!--Question 5-->
-				<Label Text="5. Are you interacting with others?" Grid.Row="6" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" />
-				<Switch IsToggled="{Binding Q5Toggled}" Grid.Row="6" Grid.Column="3" HorizontalOptions="End" VerticalOptions="Center" />
+				<Label Text="5. Are you interacting with others?" FontSize="{Binding qFontSize}" Grid.Row="16" Grid.Column="1" Grid.ColumnSpan="3" HorizontalOptions="Start" VerticalOptions="Center" />
+				<Button Text="Yes" Grid.Row="17" Grid.Column="1" BackgroundColor="{Binding q5YBcolor}"  Command="{Binding q5YesCommand}"></Button>
+				<Button Text="No" Grid.Row="17" Grid.Column="2" BackgroundColor="{Binding q5NBcolor}"  Command="{Binding q5NoCommand}"></Button>
 
 
 				<!--Question 6-->
-				<Label Text="6. Are you communicating on electronic devices?" Grid.Row="7" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" />
-				<Switch IsToggled="{Binding Q6Toggled}" Grid.Row="7" Grid.Column="3" HorizontalOptions="End" VerticalOptions="Center" />
-
+				<Label Text="6. Are you communicating on electronic devices?" FontSize="{Binding qFontSize}" Grid.Row="19" Grid.Column="1" Grid.ColumnSpan="3" HorizontalOptions="Start" VerticalOptions="Center" />
+				<Button Text="Yes" Grid.Row="20" Grid.Column="1" BackgroundColor="{Binding q6YBcolor}"  Command="{Binding q6YesCommand}"></Button>
+				<Button Text="No" Grid.Row="20" Grid.Column="2" BackgroundColor="{Binding q6NBcolor}"  Command="{Binding q6NoCommand}"></Button>
+				
 
 				<!--Question 7-->
-				<Label Text="7. Are you staying still in a place?" Grid.Row="9" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" />
-				<Switch IsToggled="{Binding Q7Toggled}" Grid.Row="9" Grid.Column="3" HorizontalOptions="End" VerticalOptions="Center" />
+				<Label Text="7. Are you staying still in a place?" FontSize="{Binding qFontSize}" Grid.Row="22" Grid.Column="1" Grid.ColumnSpan="3" HorizontalOptions="Start" VerticalOptions="Center" />
+				<Button Text="Yes" Grid.Row="23" Grid.Column="1" BackgroundColor="{Binding q7YBcolor}"  Command="{Binding q7YesCommand}"></Button>
+				<Button Text="No" Grid.Row="23" Grid.Column="2" BackgroundColor="{Binding q7NBcolor}"  Command="{Binding q7NoCommand}"></Button>
 
 
 				<!--Question 8-->
-				<Label Text="8. Are you physically moving or exercising?" Grid.Row="10" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" />
-				<Switch IsToggled="{Binding Q8Toggled}" Grid.Row="10" Grid.Column="3" HorizontalOptions="End" VerticalOptions="Center" />
+				<Label Text="8. Are you physically moving or exercising?" IsVisible="{Binding isQ8Visible}" FontSize="{Binding qFontSize}" Grid.Row="25" Grid.Column="1" Grid.ColumnSpan="3" HorizontalOptions="Start" VerticalOptions="Center" />
+				<Button Text="Yes" Grid.Row="26" Grid.Column="1" IsVisible="{Binding isQ8Visible}" BackgroundColor="{Binding q8YBcolor}"  Command="{Binding q8YesCommand}"></Button>
+				<Button Text="No" Grid.Row="26" Grid.Column="2" IsVisible="{Binding isQ8Visible}" BackgroundColor="{Binding q8NBcolor}"  Command="{Binding q8NoCommand}"></Button>
 
 
 				<!--Question 9-->
-				<Label Text="9. Are you in transportation?" Grid.Row="11" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" />
-				<Switch IsToggled="{Binding Q9Toggled}" Grid.Row="11" Grid.Column="3" HorizontalOptions="End" VerticalOptions="Center" />
+				<Label Text="9. Are you in transportation?" IsVisible="{Binding isQ9Visible}" FontSize="{Binding qFontSize}" Grid.Row="28" Grid.Column="1" Grid.ColumnSpan="3" HorizontalOptions="Start" VerticalOptions="Center" />
+				<Button Text="Yes" Grid.Row="29" Grid.Column="1" IsVisible="{Binding isQ9Visible}" BackgroundColor="{Binding q9YBcolor}"  Command="{Binding q9YesCommand}"></Button>
+				<Button Text="No" Grid.Row="29" Grid.Column="2" IsVisible="{Binding isQ9Visible}" BackgroundColor="{Binding q9NBcolor}"  Command="{Binding q9NoCommand}"></Button>
 
 
-
-
-				<!--Edit button-->
-                <Button Text="Edit" TextColor="White" BackgroundColor="Salmon" BorderColor="White" BorderWidth="2" Grid.Row="12"
+				<!--Done button-->
+				<Button Text="Done" TextColor="White" BackgroundColor="{Binding doneBColor}" BorderColor="White" BorderWidth="2" Grid.Row="31"
                         Grid.Column="1" Grid.ColumnSpan="3" VerticalOptions="Center" Command="{Binding CheckResultCommand}"/>
             </Grid>
    

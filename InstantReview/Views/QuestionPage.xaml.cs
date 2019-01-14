@@ -17,5 +17,11 @@ namespace InstantReview.Views
             BindingContext = viewModel;
             InitializeComponent();
         }
+        
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+            (this.BindingContext as QuestionPageViewModel)?.resetEverythingOnThisPage();
+        }
     }
 }
