@@ -24,6 +24,7 @@ describe('Review route', () => {
         edit: '/review/edit',
         get: '/review/get/',
         list: '/review/list',
+        remove: '/review/remove/',
         imageUpload: '/review/image/upload',
         imageDownload: '/review/image/download',
         thumbnail: '/review/thumbnail',
@@ -488,6 +489,125 @@ describe('Review route', () => {
                     done();
                 });
         }); 
+    });
+
+    describe('remove review', () => {
+        let testReview;
+
+        //Add a removable review before each test
+        beforeEach((done) => {
+            chai
+            .request(server)
+            .post(routes.create)
+            .set('Authorization', token)
+            .send(initReview)
+            .end((err, res) => {
+                expect(res.status).to.equal(200);
+                testReview = res.body;
+                done();
+            });
+        });
+
+        it('should fail without authorization token', async () => {
+            let res = await chai
+                .request(server)
+                .get(routes.remove + testReview.id)
+                .send();
+
+            expect(res.status).to.equal(401);
+            expect(res.body).to.be.empty;
+            
+            return Promise.resolve();
+        });
+
+        it('should remove a review', async () => {
+            let res = await chai
+                .request(server)
+                .get(routes.remove + testReview.id)
+                .set('Authorization', token)
+                .send();
+
+            expect(res.status).to.equal(200);
+
+            res = await chai
+                .request(server)
+                .get(routes.get + testReview.id)
+                .set('Authorization', token)
+                .send();
+
+            expect(res.status).to.equal(404);
+
+            return Promise.resolve();
+        });
+
+        it('should remove a review with images', async () => {
+            let res = await chai
+                .request(server)
+                .post(routes.imageUpload)
+                .set('Authorization', token)
+                .attach('screenshot', './__tests__/test-image.jpg')
+                .field('reviewId', testReview.id);
+
+            expect(res.status).to.equal(200);
+            let imageName = res.body.fileName;
+            expect(imageName).to.not.be.empty;
+
+            res = await chai
+                .request(server)
+                .get(routes.remove + testReview.id)
+                .set('Authorization', token)
+                .send();
+
+            expect(res.status).to.equal(200);
+
+            res = await chai
+                .request(server)
+                .get(routes.get + testReview.id)
+                .set('Authorization', token)
+                .send();
+
+            expect(res.status).to.equal(404);
+
+            res = await chai
+                .request(server)
+                .get(routes.imageDownload + '/' + imageName)
+                .set('Authorization', token)
+                .send();
+            
+            expect(res.status).to.equal(404);
+
+            return Promise.resolve();
+        });
+
+        it('should should fail with wrong credentials', (done) => {
+            chai
+                .request(server)
+                .get(routes.remove + testReview.id)
+                .set('Authorization', wrongToken)
+                .send()
+                .end((err, res) => {
+                    expect(res.status).to.equal(404);
+                    expect(res.body).not.to.be.empty;
+                    expect(res.body.error).to.equal('Could not find a review with given id and credentials');
+
+                    done();
+                });
+        });
+
+        it('should should fail with bogus id', (done) => {
+            chai
+                .request(server)
+                .get(routes.remove + faker.random.number())
+                .set('Authorization', wrongToken)
+                .send()
+                .end((err, res) => {
+                    expect(res.status).to.equal(404);
+                    expect(res.body).not.to.be.empty;
+                    expect(res.body.error).to.equal('Could not find a review with given id and credentials');
+
+                    done();
+                });
+        });
     });
 
     describe('image upload', () => {

@@ -4,7 +4,7 @@ function approveDomains(opts, certs, cb) {
     opts.communityMember = false;
     opts.email = process.env.SSL_EMAIL;
     opts.agreeTos = true;
-    opts.domains = [ process.env.SERVER_IP ];
+    opts.domains = [ process.env.SERVER_DOMAIN ];
 
     cb(null, {options: opts, certs});
 }

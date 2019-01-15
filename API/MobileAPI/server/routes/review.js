@@ -219,6 +219,34 @@ router.use('/get/:id', passportAuth, ReviewController.fetch);
 router.use('/list', passportAuth, ReviewController.fetchAll);
 
 /**
+ * @api {get} /review/get/:id Delete Review information
+ * @apiName RemoveReview
+ * @apiGroup Review
+ * 
+ * @apiHeader (Authentication) {String} Authorization Authorization token
+ * @apiParam {Number} id Review unique ID.
+ * 
+ * @apiUse ReviewExampleObject
+ * 
+ * @apiUse UserAuthenticationFailed
+ * 
+ * @apiError NoReviewID No review ID was given (parameter missing).
+ * @apiErrorExample {json} NoReviewID
+ *  HTTP/1.1 400 Bad Request
+ *  {
+ *      "error": "No review id given!"
+ *  }
+ * 
+ * @apiError ReviewNotFound Failed to find a review with the id and user credentials
+ * @apiErrorExample {json} ReviewNotFound
+ *  HTTP/1.1 404 Not Found
+ *  {
+ *      "error": "Could not find a review with given id and credentials"
+ *  }
+ */
+router.use('/remove/:id', passportAuth, ReviewController.removeById);
+
+/**
  * @api {post} /review/image/upload Upload an image for a review
  * @apiDescription Unlike others, this requests body uses content-type 'multipart/form-data' to send files.
  * @apiName UploadReviewImage

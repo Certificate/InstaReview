@@ -176,6 +176,56 @@ module.exports = {
         return Promise.resolve('next');
     },
 
+    removeById: async(req, res, next) => {
+        const id = req.params.id;
+        if(!id) {
+            let error = 'No review id given!';
+            res.status(400)
+                .json({error});
+            return Promise.reject(new Error(error));
+        }
+
+        let review = await Review.findOne({where: {id, userId: req.user.id}, include: ['application', 'category', 'images', 'thumbnail']});
+        if(!review) {
+            let error = 'Could not find a review with given id and credentials';
+            res.status(404)
+                .json({error})
+            return Promise.reject(new Error(error));
+        }
+
+        //Remove thumbnail
+        if(review.thumbnail) {
+            await fs.unlink(thumbnailDir + review.thumbnail.fileName, error => {
+                if(error) {
+                    console.log('Failed to remove thumbnail:', error);
+                }
+            });
+
+           await Thumbnail.destroy({ where: {id: review.thumbnail.id} });
+        }
+
+        //Remove images
+        if(review.images) {
+            review.images.forEach(async (image) => {
+                await fs.unlink(saveDir + image.fileName, error => {
+                    if(error) {
+                        console.log('Failed to remove image:', error);
+                    }
+                });
+
+                await Image.destroy({ where: {id: image.id} });
+
+                return Promise.resolve();
+            });
+        }
+
+        await review.destroy();
+
+        res.status(200).json(review);
+
+        return Promise.resolve('next');
+    },
+
     imageUpload: async(req, res, next) => {
         const image = req.file;
         const { reviewId } = req.body;
