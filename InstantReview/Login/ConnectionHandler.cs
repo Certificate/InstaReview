@@ -25,7 +25,7 @@ namespace InstantReview.Login
         private readonly ReviewDataCollector dataCollector;
         private static readonly ILog Log = LogManager.GetLogger<LoginPageViewModel>();
 
-        private const string baseAddress = "http://165.227.140.152/";
+        private const string baseAddress = "https://testi.servehttp.com/";
         private const string registerExtension = "auth/signup";
         private const string loginExtension = "auth/login";
         private const string uploadReviewExtension = "review/create";
